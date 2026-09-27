@@ -19,8 +19,22 @@ Project: does eval awareness (and its framing) change reward hacking? See `ARCH.
   - Nested closures (Inspect `solve`/`score` inner functions) don't need their own docstring if the outer factory has one.
 - `src/earh/vendor/` is vendored upstream code. Keep it byte-identical: no edits, no formatting (ruff excludes it).
 
+## Worktrees and tracks
+Layout (all under `~/Documents/AI-Safety/`):
+```
+eval-project/              main worktree, branch `main` (docs, merges, shared fixes)
+eval-worktrees/track-a/    branch `track-a`: minimal scaffold (ImpossibleBench-like)
+eval-worktrees/track-b/    branch `track-b`: agentic harness (tools, stop-when-done)
+eval-logs/                 shared raw Inspect logs; each worktree's `logs` is a symlink here
+```
+See `docs/split-strategies.md` for what each track is doing.
+- **Stay in your track's worktree and scope.** Shared code (`models.py`, `inspect_provider.py`) may change on either track: keep those changes additive, and merge to `main` in small commits.
+- `.env` in each worktree is a symlink to `eval-project/.env`. Run `uv sync` once per worktree.
+- **Phase folder numbers by track:** `0x` = shared history (smoke, provider, parity, pilot), `1x` = Track A (e.g. `10-observational`, `11-prefill`), `3x` = Track B (e.g. `30-agentic-pilot`).
+- **Shared capacity:** both tracks use one DeepInfra quota (200 concurrent requests per model) and one colima VM. Default to `max_connections<=100` per track when both may run at once.
+
 ## Logs and results
-- Raw Inspect logs go in `logs/NN-phase/<model>/<run-id>/` (gitignored): `00-smoke`, `01-provider-check`, `02-parity`, `03-pilot`, then `10-observational`, `20-prefill`; throwaway runs go in `logs/scratch/`.
+- Raw Inspect logs go in `logs/NN-phase/<model>/<run-id>/` (gitignored; `logs` → `../eval-logs`), numbered per the track convention above; throwaway runs go in `logs/scratch/`.
 - **Use a new `<run-id>` folder per run** (default: timestamp). `eval_set` treats an existing folder as "resume" and skips finished samples.
 - After every real (paid) run: save the summary under `results/` (same relative path, e.g. `summarize_pilot.py <log_dir> --write`) and add a row to `results/RUNS.md` (date, commit, run, model, samples, cost, log dir, takeaway). `results/` is committed.
 

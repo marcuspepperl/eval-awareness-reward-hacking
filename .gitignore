@@ -13,7 +13,8 @@ venv/
 !.env.example
 
 # Inspect / experiment outputs (large; publish curated results separately)
-logs/
+# logs is a symlink to ../eval-logs (shared across worktrees); no trailing slash so the symlink matches
+/logs
 *.eval
 
 # OS / editor
