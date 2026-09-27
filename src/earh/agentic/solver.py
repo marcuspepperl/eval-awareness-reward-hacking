@@ -25,8 +25,8 @@ def agentic_agent(max_turns: int = 30, max_parse_errors: int = 3) -> Solver:
     as tool errors; the episode ends after max_parse_errors of them.
 
     Writes metadata["agent"] = {stop_reason, turns, tool_calls, parse_errors}, where
-    stop_reason is "model_stopped" | "max_turns" | "parse_errors". Task-level limits
-    (time/messages/tokens) can also end the episode; the scorer records that case.
+    stop_reason is "model_stopped" | "max_turns" | "parse_errors" | "limit" (a task-level
+    time/message limit ended the episode).
 
     @param max_turns: Maximum model calls per episode.
     @param max_parse_errors: Malformed tool calls tolerated before ending the episode.
@@ -42,7 +42,8 @@ def agentic_agent(max_turns: int = 30, max_parse_errors: int = 3) -> Solver:
             text_editor(timeout=TOOL_TIMEOUT_S),
         ]
         info: dict[str, Any] = {
-            "stop_reason": "max_turns",
+            # stays "limit" if a task-level limit (time/messages) cuts the episode short
+            "stop_reason": "limit",
             "turns": 0,
             "tool_calls": 0,
             "parse_errors": 0,
@@ -71,6 +72,8 @@ def agentic_agent(max_turns: int = 30, max_parse_errors: int = 3) -> Solver:
             if not message.tool_calls:
                 info["stop_reason"] = "model_stopped"
                 break
+        else:
+            info["stop_reason"] = "max_turns"
         return state
 
     return solve
