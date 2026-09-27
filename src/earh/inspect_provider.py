@@ -16,6 +16,7 @@ from __future__ import annotations
 import time
 from typing import Any
 
+import httpx
 from inspect_ai.model import (
     ChatCompletionChoice,
     ChatMessage,
@@ -44,9 +45,10 @@ from earh.models import (
 from earh.models import api_key as deepinfra_api_key
 
 PREFILL_KEY = "cot_prefill"
-# One attempt can be ~30k tokens at ~26 tok/s (Qwen3 on DeepInfra) ≈ 20 min, beyond the
-# OpenAI SDK's default 600s read timeout (which then silently retries from scratch).
-REQUEST_TIMEOUT_S = 3600
+# We stream responses: long non-streaming requests (~20 min for 30k Qwen3 tokens at
+# ~25 tok/s) exceeded the SDK's 600s default and later hung silently. With streaming,
+# the read timeout bounds the gap between chunks rather than the whole generation.
+STREAM_TIMEOUT = httpx.Timeout(connect=10.0, read=180.0, write=60.0, pool=60.0)
 
 
 def prefill_message(text: str) -> ChatMessageAssistant:
@@ -145,7 +147,7 @@ class DeepInfraRawAPI(ModelAPI):
         self.client = AsyncOpenAI(
             api_key=self.api_key or deepinfra_api_key(),
             base_url=self.base_url,
-            timeout=REQUEST_TIMEOUT_S,
+            timeout=STREAM_TIMEOUT,
             max_retries=0,
         )
 
@@ -197,27 +199,23 @@ class DeepInfraRawAPI(ModelAPI):
             request["seed"] = config.seed
 
         start = time.monotonic()
-        resp = await self.client.completions.create(**request)
-        choice = resp.choices[0]
+        text, finish_reason, usage = await self._stream(request)
 
-        reasoning, answer = split_reasoning(prefill, choice.text)
+        reasoning, answer = split_reasoning(prefill, text)
         if reasoning is None:
-            reasoning, answer = (prefill + choice.text).strip(), ""
+            reasoning, answer = (prefill + text).strip(), ""
         message = ChatMessageAssistant(
             content=[ContentReasoning(reasoning=reasoning), ContentText(text=answer)],
             model=self.spec.deepinfra_id,
             source="generate",
             metadata={"prefill": prefill} if prefill else None,
         )
-        usage = resp.usage
         output = ModelOutput(
             model=self.spec.deepinfra_id,
             choices=[
                 ChatCompletionChoice(
                     message=message,
-                    stop_reason="max_tokens"
-                    if choice.finish_reason == "length"
-                    else "stop",
+                    stop_reason="max_tokens" if finish_reason == "length" else "stop",
                 )
             ],
             usage=ModelUsage(
@@ -229,7 +227,27 @@ class DeepInfraRawAPI(ModelAPI):
             else None,
             time=time.monotonic() - start,
         )
-        return output, ModelCall.create(request=request, response=resp.model_dump())
+        response = dict(
+            text=text,
+            finish_reason=finish_reason,
+            usage=usage.model_dump() if usage else None,
+        )
+        return output, ModelCall.create(request=request, response=response)
+
+    async def _stream(self, request: dict[str, Any]) -> tuple[str, str | None, Any]:
+        """Stream one completion and return (text, finish_reason, usage)."""
+        stream = await self.client.completions.create(
+            **request, stream=True, stream_options={"include_usage": True}
+        )
+        chunks: list[str] = []
+        finish_reason, usage = None, None
+        async for chunk in stream:
+            if chunk.choices:
+                chunks.append(chunk.choices[0].text or "")
+                finish_reason = chunk.choices[0].finish_reason or finish_reason
+            if chunk.usage:
+                usage = chunk.usage
+        return "".join(chunks), finish_reason, usage
 
     def should_retry(self, ex: BaseException) -> bool:
         """Retry the same transient errors as Inspect's OpenAI provider."""
