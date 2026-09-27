@@ -47,14 +47,20 @@ Gotchas found reading the code:
 src/earh/
   models.py          # DONE: prompt builders (V4 via vendored encoding, Qwen3 by hand) + DeepInfra raw client
   vendor/encoding_dsv4.py
-  inspect_provider.py  # TODO: @modelapi "deepinfra-raw": chat messages -> raw prompt -> ModelOutput
-  solver.py          # TODO: thin fork of ImpossibleBench's minimal solver + optional CoT prefill on attempt 1
-  tasks.py           # TODO: @task wrappers fixing our settings (prompt B, max_attempts, split, task subset)
+  inspect_provider.py  # DONE: "deepinfra-raw" provider (streaming) + prefill convention
+  solver.py          # DONE: fork of ImpossibleBench's minimal agent: neutral feedback, prefill on attempt 1, per-attempt records
+  scorer.py          # DONE: cheat / flag / fail outcome (+ cheat on attempt 1)
+  tasks.py           # DONE: impossible_lcb task: prompt B (+ optional flag option), same problems across splits
   judge.py           # TODO: LLM judge for verbalized EA + framing (+ "names the benchmark" flag)
   prefill.py         # TODO: build substrates (non-EA CoT cut at a sentence) + condition sentences
 scripts/
-  smoke_test.py      # DONE
-  analyze.py         # TODO: read .eval logs -> per-task hack rates, paired diffs, cluster bootstrap
+  smoke_test.py      # DONE: raw-API prefill check
+  provider_check.py  # DONE: provider through inspect eval
+  parity_check.py    # DONE: ImpossibleBench's own task through our provider
+  pipeline_check.py  # DONE: free mockllm test of solver + sandbox + scorer
+  run_pilot.py       # DONE: 4-arm baseline pilot (dry run by default)
+  summarize_pilot.py # DONE: outcome rates, first-cheat attempt, tokens, cost
+  analyze.py         # TODO: main-run analysis: paired diffs, cluster bootstrap
 ```
 
 **Request flow for one attempt:**
