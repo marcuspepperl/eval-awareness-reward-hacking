@@ -19,3 +19,6 @@ packages = ["src/earh"]
 
 [tool.hatch.metadata]
 allow-direct-references = true
+
+[project.entry-points.inspect_ai]
+earh = "earh._registry"

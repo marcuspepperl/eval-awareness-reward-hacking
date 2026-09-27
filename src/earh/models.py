@@ -20,15 +20,24 @@ DEEPINFRA_BASE_URL = "https://api.deepinfra.com/v1/openai"
 Message = dict[str, str]
 
 
-def _build_v4(messages: list[Message], prefill: str, drop_thinking: bool) -> str:
+def _build_v4(
+    messages: list[Message], prefill: str, drop_thinking: bool, reasoning_effort: str | None
+) -> str:
     prompt = encoding_dsv4.encode_messages(
-        messages, thinking_mode="thinking", drop_thinking=drop_thinking
+        messages,
+        thinking_mode="thinking",
+        drop_thinking=drop_thinking,
+        reasoning_effort=reasoning_effort,
     )
     # encode_messages ends with "<｜Assistant｜><think>"; the prefill continues the reasoning.
     return prompt + prefill
 
 
-def _build_qwen3(messages: list[Message], prefill: str, drop_thinking: bool) -> str:
+def _build_qwen3(
+    messages: list[Message], prefill: str, drop_thinking: bool, reasoning_effort: str | None
+) -> str:
+    if reasoning_effort is not None:
+        raise ValueError("Qwen3 has no reasoning_effort setting")
     parts = []
     for m in messages:
         content = m["content"]
@@ -45,7 +54,7 @@ def _build_qwen3(messages: list[Message], prefill: str, drop_thinking: bool) -> 
 class ModelSpec:
     name: str
     deepinfra_id: str
-    build_prompt: Callable[[list[Message], str, bool], str]
+    build: Callable[[list[Message], str, bool, str | None], str]
     stop: list[str]
     temperature: float
     top_p: float
@@ -55,7 +64,7 @@ MODELS: dict[str, ModelSpec] = {
     "v4flash": ModelSpec(
         name="v4flash",
         deepinfra_id="deepseek-ai/DeepSeek-V4-Flash-0731",
-        build_prompt=_build_v4,
+        build=_build_v4,
         stop=[encoding_dsv4.eos_token],
         temperature=1.0,
         top_p=0.95,
@@ -63,7 +72,7 @@ MODELS: dict[str, ModelSpec] = {
     "qwen3-32b": ModelSpec(
         name="qwen3-32b",
         deepinfra_id="Qwen/Qwen3-32B",
-        build_prompt=_build_qwen3,
+        build=_build_qwen3,
         stop=["<|im_end|>"],
         temperature=0.6,
         top_p=0.95,
@@ -93,12 +102,37 @@ def split_reasoning(prefill: str, continuation: str) -> tuple[str | None, str | 
     return reasoning.strip(), answer.strip()
 
 
-def client() -> OpenAI:
+def normalize_prefill(prefill: str) -> str:
+    # A trailing space tokenizes unnaturally: V4-Flash then closes </think> immediately
+    # (3/4 runs in the smoke test vs 0/4 without it). Newlines are fine.
+    return prefill.rstrip(" \t")
+
+
+def build_prompt(
+    spec: ModelSpec,
+    messages: list[Message],
+    prefill: str = "",
+    *,
+    drop_thinking: bool = True,
+    reasoning_effort: str | None = None,
+) -> str:
+    """Render messages to the model's raw prompt, ending inside an open reasoning block + prefill.
+
+    Assistant messages may carry a "reasoning_content" key; it is kept only if drop_thinking=False.
+    """
+    return spec.build(messages, normalize_prefill(prefill), drop_thinking, reasoning_effort)
+
+
+def api_key() -> str:
     load_dotenv()
     key = os.environ.get("DEEPINFRA_API_KEY")
     if not key:
         raise RuntimeError("DEEPINFRA_API_KEY is not set (see .env.example)")
-    return OpenAI(api_key=key, base_url=DEEPINFRA_BASE_URL)
+    return key
+
+
+def client() -> OpenAI:
+    return OpenAI(api_key=api_key(), base_url=DEEPINFRA_BASE_URL)
 
 
 def complete(
@@ -107,13 +141,14 @@ def complete(
     prefill: str = "",
     *,
     drop_thinking: bool = True,
+    reasoning_effort: str | None = None,
     max_tokens: int = 8000,
     api: OpenAI | None = None,
 ) -> Completion:
-    # A trailing space tokenizes unnaturally: V4-Flash then closes </think> immediately
-    # (3/4 runs in the smoke test vs 0/4 without it). Newlines are fine.
-    prefill = prefill.rstrip(" \t")
-    prompt = spec.build_prompt(messages, prefill, drop_thinking)
+    prefill = normalize_prefill(prefill)
+    prompt = build_prompt(
+        spec, messages, prefill, drop_thinking=drop_thinking, reasoning_effort=reasoning_effort
+    )
     resp = (api or client()).completions.create(
         model=spec.deepinfra_id,
         prompt=prompt,
