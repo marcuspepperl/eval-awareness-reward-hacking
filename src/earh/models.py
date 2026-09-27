@@ -91,7 +91,7 @@ MODELS: dict[str, ModelSpec] = {
         stop=[encoding_dsv4.eos_token],
         temperature=1.0,
         top_p=0.95,
-        max_tokens=32_000,  # 16k truncated 2/9 parity attempts; model allows 384k output
+        max_tokens=64_000,  # 32k truncated 21 pilot attempts; model allows 384k output
         usd_per_mtok_in=0.06,  # DeepInfra list price, Sep 2026
         usd_per_mtok_out=0.18,
     ),
