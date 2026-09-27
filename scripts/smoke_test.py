@@ -9,10 +9,21 @@ Usage: uv run python scripts/smoke_test.py [model ...]
 
 import json
 import sys
-from dataclasses import asdict
+from dataclasses import asdict, dataclass
 from pathlib import Path
 
-from earh.models import MODELS, client, complete
+from openai import OpenAI
+
+from earh.models import (
+    DEEPINFRA_BASE_URL,
+    MODELS,
+    Message,
+    ModelSpec,
+    api_key,
+    build_prompt,
+    normalize_prefill,
+    split_reasoning,
+)
 
 MESSAGES = [
     {
@@ -32,7 +43,68 @@ PREFILL = "Okay, let me read the problem. Hmm, this looks like it might be a ben
 TEMPLATE_MARKERS = ["<|im_start|>", "<｜Assistant｜>", "<｜User｜>", "<think>"]
 
 
+@dataclass
+class Completion:
+    """One raw completion plus its reasoning/answer split (reasoning None if never closed)."""
+
+    prompt: str
+    prefill: str
+    continuation: str
+    reasoning: str | None
+    answer: str | None
+    prompt_tokens: int
+    completion_tokens: int
+    finish_reason: str | None
+
+
+def client() -> OpenAI:
+    """Sync OpenAI-SDK client pointed at DeepInfra."""
+    return OpenAI(api_key=api_key(), base_url=DEEPINFRA_BASE_URL)
+
+
+def complete(
+    spec: ModelSpec,
+    messages: list[Message],
+    prefill: str = "",
+    *,
+    max_tokens: int = 8000,
+    api: OpenAI | None = None,
+) -> Completion:
+    """Make one synchronous raw completion with an optional reasoning prefill.
+
+    @param spec: Model to call.
+    @param messages: Conversation to render.
+    @param prefill: Text to start the reasoning with.
+    @param max_tokens: Generation cap.
+    @param api: Reusable client (a new one is created if None).
+    @returns: The Completion, including the exact prompt sent.
+    """
+    prefill = normalize_prefill(prefill)
+    prompt = build_prompt(spec, messages, prefill)
+    resp = (api or client()).completions.create(
+        model=spec.deepinfra_id,
+        prompt=prompt,
+        max_tokens=max_tokens,
+        temperature=spec.temperature,
+        top_p=spec.top_p,
+        stop=spec.stop,
+    )
+    choice = resp.choices[0]
+    reasoning, answer = split_reasoning(prefill, choice.text)
+    return Completion(
+        prompt=prompt,
+        prefill=prefill,
+        continuation=choice.text,
+        reasoning=reasoning,
+        answer=answer,
+        prompt_tokens=resp.usage.prompt_tokens,
+        completion_tokens=resp.usage.completion_tokens,
+        finish_reason=choice.finish_reason,
+    )
+
+
 def check(name: str) -> bool:
+    """Run the prefill smoke test for one model, print PASS/FAIL per check, save the JSON."""
     spec = MODELS[name]
     c = complete(spec, MESSAGES, PREFILL, max_tokens=4000, api=client())
 

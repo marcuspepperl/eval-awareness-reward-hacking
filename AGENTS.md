@@ -13,6 +13,10 @@ Project: does eval awareness (and its framing) change reward hacking? See `ARCH.
   uv run ruff check --fix . && uv run ruff format .
   ```
   Config is in `pyproject.toml` (`[tool.ruff]`). Fix remaining lint errors rather than silencing them, unless there's a clear reason (then say why in the config or a `# noqa` comment).
+- **Docstrings** (every module, class and function outside `vendor/`):
+  - **Internal or trivial** (private helpers, thin wrappers, obvious one-liners): a one-line docstring saying what it does, e.g. `"""Strip trailing spaces that make V4 close </think> early."""`.
+  - **Public or non-trivial** (used across modules, meaningful branching/logic, or semantically important to the experiment): a short description, then one `@param name: ...` line per parameter and an `@returns: ...` line. Mention side effects (e.g. mutates `state.messages`) in the description.
+  - Nested closures (Inspect `solve`/`score` inner functions) don't need their own docstring if the outer factory has one.
 - `src/earh/vendor/` is vendored upstream code. Keep it byte-identical: no edits, no formatting (ruff excludes it).
 
 ## Git

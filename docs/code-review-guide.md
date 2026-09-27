@@ -26,14 +26,13 @@ Call frequencies are per pilot or experiment run. "Sample" means one task × one
 
 | File / symbol | Responsibility | Called |
 |---|---|---|
-| **`src/earh/models.py`** | Model-agnostic core: model registry, prompt rendering, output splitting, sync client. **No Inspect dependency.** | |
+| **`src/earh/models.py`** | Model-agnostic core of the live path: model registry, prompt rendering, output splitting. **No Inspect or HTTP dependency.** | |
 | `ModelSpec`, `MODELS` | Static per-model config: DeepInfra ID, prompt builder, stop tokens, default temperature/top_p. | Import time |
 | `_build_v4` / `_build_qwen3` | Render `[{role, content, reasoning_content?}]` to a raw prompt ending in an **open** reasoning block (`<think>`) + prefill. Honor `drop_thinking` (strip prior-turn reasoning) and `reasoning_effort` (V4 only). | Once per model call |
 | `normalize_prefill` | Strip trailing spaces/tabs (a trailing space makes V4 close `</think>` immediately). | Once per model call |
 | `build_prompt` | Public entry: normalize, then dispatch to the spec's builder. **The single place prompts are made.** | Once per model call |
 | `split_reasoning` | `prefill + continuation` → `(reasoning, answer)` split on the first `</think>`; `None` if never closed. | Once per model call |
-| `api_key` / `client` | Load `DEEPINFRA_API_KEY` from `.env`; build a sync OpenAI client. | Once per process (provider init / script) |
-| `complete` | Sync one-shot call used by scripts (smoke test). **Not used by Inspect.** | Scripts only |
+| `api_key` | Load `DEEPINFRA_API_KEY` from env / `.env`. | Once per process (provider init / script) |
 | **`src/earh/inspect_provider.py`** | Adapter between Inspect and `models.py`. | |
 | `DeepInfraRawAPI.__init__` | Resolve the model name → `ModelSpec`, read `-M` args (`drop_thinking`, `reasoning_effort`, `max_connections`), create the `AsyncOpenAI` client. | Once per eval (per model) |
 | `DeepInfraRawAPI.generate` | ① pop the trailing prefill message if present; ② convert `ChatMessage`s → dicts (`_to_messages`); ③ `build_prompt`; ④ POST `/completions`; ⑤ split into `ContentReasoning` + `ContentText`; ⑥ return `ModelOutput` (+ usage, stop reason) and `ModelCall` (raw request/response logged to `.eval`). | **Once per `generate()`**, i.e. per attempt: ≤ 5 per sample |
@@ -42,7 +41,7 @@ Call frequencies are per pilot or experiment run. "Sample" means one task × one
 | `prefill_message` / `is_prefill` / `PREFILL_KEY` | The **prefill convention**: an assistant message tagged `metadata={"cot_prefill": True}` means "start the reasoning with this text". | Per prefilled generate |
 | `generate_with_prefill` | Solver-side helper: append the prefill message → `generate` → delete the prefill message (the reply's reasoning already starts with it). | Once per prefilled attempt (attempt 1 in the prefill phase) |
 | **`src/earh/_registry.py`** | `@modelapi("deepinfra-raw")`. Found by Inspect via the `[project.entry-points.inspect_ai]` entry in `pyproject.toml`, so `--model deepinfra-raw/<name>` works. | Once at Inspect startup |
-| **`scripts/smoke_test.py`** | Raw-API sanity check per model: does a prefilled CoT continue mid-thought, close `</think>`, and answer? Writes `logs/smoke/*.json`. | Manually, rarely |
+| **`scripts/smoke_test.py`** | Raw-API sanity check per model: does a prefilled CoT continue mid-thought, close `</think>`, and answer? Owns its own sync client (`client`, `complete`, `Completion`), which are not part of the live path. Writes `logs/smoke/*.json`. | Manually, rarely |
 | **`scripts/provider_check.py`** | Inspect-level check of the provider: tasks `plain`, `prefill`, `multiturn` + a format scorer (no prefill message left behind; reasoning starts with prefill; turn-1 reasoning dropped). | Manually, after provider changes |
 
 ## 3. Walkthrough: one prefilled attempt, end to end

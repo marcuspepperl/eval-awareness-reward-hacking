@@ -58,6 +58,8 @@ def format_ok():
 
 @solver
 def prefilled():
+    """Solver: one generate with PREFILL as the start of the reasoning."""
+
     async def solve(state: TaskState, generate: Generate) -> TaskState:
         state.metadata["prefill"] = True
         return await generate_with_prefill(state, generate, PREFILL)
@@ -67,6 +69,8 @@ def prefilled():
 
 @solver
 def two_turns():
+    """Solver: generate, add a follow-up user message, generate again."""
+
     async def solve(state: TaskState, generate: Generate) -> TaskState:
         state = await generate(state)
         state.messages.append(
@@ -79,14 +83,17 @@ def two_turns():
 
 @task
 def plain():
+    """Task: plain generation."""
     return Task(dataset=DATASET, solver=generate(), scorer=format_ok())
 
 
 @task
 def prefill():
+    """Task: prefilled generation."""
     return Task(dataset=DATASET, solver=prefilled(), scorer=format_ok())
 
 
 @task
 def multiturn():
+    """Task: two-turn conversation (checks history + drop_thinking)."""
     return Task(dataset=DATASET, solver=two_turns(), scorer=format_ok())

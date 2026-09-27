@@ -8,7 +8,7 @@ Prefill convention: if the last input message is an assistant message with
 metadata {"cot_prefill": True}, its text is used as the start of the reasoning
 block and the model continues from there. The returned reasoning includes the
 prefill, so logs show the full CoT the model "wrote". Solvers should remove the
-prefill message after generate() (see earh.solver) so it isn't duplicated.
+prefill message after generate() (generate_with_prefill does this).
 """
 
 from __future__ import annotations
@@ -53,6 +53,7 @@ def prefill_message(text: str) -> ChatMessageAssistant:
 
 
 def is_prefill(message: ChatMessage) -> bool:
+    """Whether a message is a prefill marker created by prefill_message()."""
     return message.role == "assistant" and bool(
         (message.metadata or {}).get(PREFILL_KEY)
     )
@@ -61,7 +62,16 @@ def is_prefill(message: ChatMessage) -> bool:
 async def generate_with_prefill(
     state: TaskState, generate: Generate, prefill: str
 ) -> TaskState:
-    """generate() with the reasoning block prefilled; leaves no prefill message in history."""
+    """Call generate() with the model's reasoning block prefilled.
+
+    Appends a prefill marker, generates, then removes the marker so history holds only
+    the model's reply (whose reasoning already starts with the prefill).
+
+    @param state: Current task state; its messages are mutated.
+    @param generate: Inspect's generate function passed to the solver.
+    @param prefill: Text to start the reasoning with ("" = plain generate).
+    @returns: The updated task state.
+    """
     if not prefill:
         return await generate(state)
     state.messages.append(prefill_message(prefill))
@@ -73,6 +83,7 @@ async def generate_with_prefill(
 
 
 def _to_messages(input: list[ChatMessage]) -> list[Message]:
+    """Convert Inspect messages to builder dicts, carrying assistant reasoning as reasoning_content."""
     out: list[Message] = []
     for m in input:
         if m.role not in ("system", "user", "assistant"):
@@ -89,6 +100,8 @@ def _to_messages(input: list[ChatMessage]) -> list[Message]:
 
 
 class DeepInfraRawAPI(ModelAPI):
+    """Inspect ModelAPI that renders chats to raw prompts and calls DeepInfra /completions."""
+
     def __init__(
         self,
         model_name: str,
@@ -100,6 +113,17 @@ class DeepInfraRawAPI(ModelAPI):
         max_connections: int = 32,
         **model_args: Any,
     ) -> None:
+        """Create the provider (Inspect calls this once per eval per model).
+
+        @param model_name: Key in MODELS, e.g. "v4flash" (from --model deepinfra-raw/<name>).
+        @param base_url: Override DeepInfra's OpenAI-compatible base URL.
+        @param api_key: Override DEEPINFRA_API_KEY.
+        @param config: Inspect generation config defaults.
+        @param drop_thinking: Omit prior turns' reasoning from prompts (-M drop_thinking=...).
+        @param reasoning_effort: V4 only: "low" | "high" | "max".
+        @param max_connections: Concurrent request cap for this model.
+        @param model_args: Unused extra -M args.
+        """
         super().__init__(
             model_name=model_name,
             base_url=base_url or DEEPINFRA_BASE_URL,
@@ -126,6 +150,18 @@ class DeepInfraRawAPI(ModelAPI):
         tool_choice: ToolChoice,
         config: GenerateConfig,
     ) -> tuple[ModelOutput, ModelCall]:
+        """Generate one assistant turn (called once per Inspect generate()).
+
+        A trailing prefill marker (see prefill_message) becomes the start of the
+        reasoning block. Output reasoning includes the prefill; if `</think>` never
+        appears (usually max_tokens), all text is treated as reasoning with an empty answer.
+
+        @param input: Conversation so far, optionally ending with a prefill marker.
+        @param tools: Must be empty; tools are not supported.
+        @param tool_choice: Ignored.
+        @param config: Per-call generation config (max_tokens, temperature, top_p, seed).
+        @returns: (ModelOutput with ContentReasoning + ContentText, ModelCall with the raw request).
+        """
         if tools:
             raise ValueError("deepinfra-raw does not support tools")
 
@@ -159,9 +195,7 @@ class DeepInfraRawAPI(ModelAPI):
         choice = resp.choices[0]
 
         reasoning, answer = split_reasoning(prefill, choice.text)
-        if (
-            reasoning is None
-        ):  # never closed </think> (usually hit max_tokens): all of it is reasoning
+        if reasoning is None:
             reasoning, answer = (prefill + choice.text).strip(), ""
         message = ChatMessageAssistant(
             content=[ContentReasoning(reasoning=reasoning), ContentText(text=answer)],
@@ -192,10 +226,13 @@ class DeepInfraRawAPI(ModelAPI):
         return output, ModelCall.create(request=request, response=resp.model_dump())
 
     def should_retry(self, ex: BaseException) -> bool:
+        """Retry the same transient errors as Inspect's OpenAI provider."""
         return openai_should_retry(ex)
 
     def max_connections(self) -> int:
+        """Concurrent request cap (from the max_connections model arg)."""
         return self._max_connections
 
     def connection_key(self) -> str:
+        """Pool concurrency per DeepInfra model ID."""
         return self.spec.deepinfra_id
