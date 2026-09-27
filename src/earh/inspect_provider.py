@@ -44,7 +44,9 @@ from earh.models import (
 from earh.models import api_key as deepinfra_api_key
 
 PREFILL_KEY = "cot_prefill"
-DEFAULT_MAX_TOKENS = 16_000
+# One attempt can be ~30k tokens at ~26 tok/s (Qwen3 on DeepInfra) ≈ 20 min, beyond the
+# OpenAI SDK's default 600s read timeout (which then silently retries from scratch).
+REQUEST_TIMEOUT_S = 3600
 
 
 def prefill_message(text: str) -> ChatMessageAssistant:
@@ -139,8 +141,12 @@ class DeepInfraRawAPI(ModelAPI):
         self.drop_thinking = drop_thinking
         self.reasoning_effort = reasoning_effort
         self._max_connections = max_connections
+        # max_retries=0: Inspect owns retries (via should_retry), so they are logged.
         self.client = AsyncOpenAI(
-            api_key=self.api_key or deepinfra_api_key(), base_url=self.base_url
+            api_key=self.api_key or deepinfra_api_key(),
+            base_url=self.base_url,
+            timeout=REQUEST_TIMEOUT_S,
+            max_retries=0,
         )
 
     async def generate(
@@ -180,7 +186,7 @@ class DeepInfraRawAPI(ModelAPI):
         request: dict[str, Any] = dict(
             model=self.spec.deepinfra_id,
             prompt=prompt,
-            max_tokens=config.max_tokens or DEFAULT_MAX_TOKENS,
+            max_tokens=config.max_tokens or self.spec.max_tokens,
             temperature=config.temperature
             if config.temperature is not None
             else self.spec.temperature,

@@ -70,7 +70,7 @@ def _build_qwen3(
 
 @dataclass(frozen=True)
 class ModelSpec:
-    """Static per-model config: DeepInfra ID, prompt builder, stop tokens, sampling defaults."""
+    """Static per-model config: DeepInfra ID, prompt builder, stop tokens, sampling/length defaults."""
 
     name: str
     deepinfra_id: str
@@ -78,6 +78,7 @@ class ModelSpec:
     stop: list[str]
     temperature: float
     top_p: float
+    max_tokens: int
 
 
 MODELS: dict[str, ModelSpec] = {
@@ -88,6 +89,7 @@ MODELS: dict[str, ModelSpec] = {
         stop=[encoding_dsv4.eos_token],
         temperature=1.0,
         top_p=0.95,
+        max_tokens=32_000,  # 16k truncated 2/9 parity attempts; model allows 384k output
     ),
     "qwen3-32b": ModelSpec(
         name="qwen3-32b",
@@ -96,6 +98,7 @@ MODELS: dict[str, ModelSpec] = {
         stop=["<|im_end|>"],
         temperature=0.6,
         top_p=0.95,
+        max_tokens=30_000,  # DeepInfra context is ~41k; leaves room for the prompt
     ),
 }
 
