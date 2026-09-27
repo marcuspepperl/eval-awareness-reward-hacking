@@ -95,6 +95,7 @@ The endpoint is `POST https://api.deepinfra.com/v1/openai/completions`. It is a 
 - Cutting `K_PREFILL` to 2 or `C_PREFILL` to 5 cuts the prefill phase by roughly a third.
 
 ## Open decisions / risks
+- **DECIDED (MVP): option (a).** The primary outcome is hacking on attempt 1, and we log all attempts. Option 2 (tool-call format) is scoped in [option2-tool-format.md](option2-tool-format.md).
 - **Multi-turn visibility of the injected sentence.** **Both** models' default templates strip prior-turn thinking (V4: `drop_thinking=True` unless tools are present), so a sentence injected at attempt 1 is invisible at attempts 2–5. Our builders expose `drop_thinking` for both. Since we build raw prompts ourselves, we choose the policy, but it must be identical across conditions. Options:
   - (a) primary outcome = hack on attempt 1;
   - (b) keep thinking in history;
