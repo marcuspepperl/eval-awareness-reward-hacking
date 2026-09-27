@@ -19,6 +19,11 @@ Project: does eval awareness (and its framing) change reward hacking? See `ARCH.
   - Nested closures (Inspect `solve`/`score` inner functions) don't need their own docstring if the outer factory has one.
 - `src/earh/vendor/` is vendored upstream code. Keep it byte-identical: no edits, no formatting (ruff excludes it).
 
+## Logs and results
+- Raw Inspect logs go in `logs/NN-phase/<model>/<run-id>/` (gitignored): `00-smoke`, `01-provider-check`, `02-parity`, `03-pilot`, then `10-observational`, `20-prefill`; throwaway runs go in `logs/scratch/`.
+- **Use a new `<run-id>` folder per run** (default: timestamp). `eval_set` treats an existing folder as "resume" and skips finished samples.
+- After every real (paid) run: save the summary under `results/` (same relative path, e.g. `summarize_pilot.py <log_dir> --write`) and add a row to `results/RUNS.md` (date, commit, run, model, samples, cost, log dir, takeaway). `results/` is committed.
+
 ## Git
 - Commit at logical checkpoints with descriptive messages; pushing to `origin/main` is fine.
 - Never commit `.env`, `logs/`, or `*.eval` files.

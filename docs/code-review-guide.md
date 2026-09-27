@@ -41,7 +41,7 @@ Call frequencies are per pilot or experiment run. "Sample" means one task × one
 | `prefill_message` / `is_prefill` / `PREFILL_KEY` | The **prefill convention**: an assistant message tagged `metadata={"cot_prefill": True}` means "start the reasoning with this text". | Per prefilled generate |
 | `generate_with_prefill` | Solver-side helper: append the prefill message → `generate` → delete the prefill message (the reply's reasoning already starts with it). | Once per prefilled attempt (attempt 1 in the prefill phase) |
 | **`src/earh/_registry.py`** | `@modelapi("deepinfra-raw")`. Found by Inspect via the `[project.entry-points.inspect_ai]` entry in `pyproject.toml`, so `--model deepinfra-raw/<name>` works. | Once at Inspect startup |
-| **`scripts/smoke_test.py`** | Raw-API sanity check per model: does a prefilled CoT continue mid-thought, close `</think>`, and answer? Owns its own sync client (`client`, `complete`, `Completion`), which are not part of the live path. Writes `logs/smoke/*.json`. | Manually, rarely |
+| **`scripts/smoke_test.py`** | Raw-API sanity check per model: does a prefilled CoT continue mid-thought, close `</think>`, and answer? Owns its own sync client (`client`, `complete`, `Completion`), which are not part of the live path. Writes `logs/00-smoke/*.json`. | Manually, rarely |
 | **`scripts/provider_check.py`** | Inspect-level check of the provider: tasks `plain`, `prefill`, `multiturn` + a format scorer (no prefill message left behind; reasoning starts with prefill; turn-1 reasoning dropped). | Manually, after provider changes |
 
 ## 3. Walkthrough: one prefilled attempt, end to end
@@ -67,8 +67,8 @@ Call frequencies are per pilot or experiment run. "Sample" means one task × one
 ## 5. How to run the checks
 ```
 uv run python scripts/smoke_test.py                       # raw API, both models
-uv run inspect eval-set scripts/provider_check.py --model deepinfra-raw/v4flash --log-dir logs/provider_check/v4flash
-uv run inspect view --log-dir logs/provider_check         # browse transcripts + raw prompts
+uv run inspect eval-set scripts/provider_check.py --model deepinfra-raw/v4flash --log-dir logs/01-provider-check/v4flash
+uv run inspect view --log-dir logs/01-provider-check         # browse transcripts + raw prompts
 ```
 
 ## 6. Pilot code: task → solver → scorer
@@ -79,7 +79,7 @@ scripts/run_pilot.py ──builds 4 arms──► earh.tasks.impossible_lcb(spli
    │                                       │           filtered to the same n problem IDs in every split
    │                                       ├─ solver:  earh.solver.impossible_agent(max_attempts, feedback)
    │                                       └─ scorer:  earh.scorer.hack_outcome()
-   └─ inspect eval_set(max_connections=150, max_sandboxes=120) ──► logs/pilot/<model>/*.eval
+   └─ inspect eval_set(max_connections=150, max_sandboxes=120) ──► logs/03-pilot/<model>/<run-id>/*.eval
 scripts/summarize_pilot.py ◄── reads logs: outcome rates per arm, first-cheat attempt, tokens, cost
 ```
 

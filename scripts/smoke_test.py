@@ -131,7 +131,7 @@ def check(name: str) -> bool:
     for label, ok in checks.items():
         print(f"  [{'PASS' if ok else 'FAIL'}] {label}")
 
-    out = Path("logs/smoke") / f"{name}.json"
+    out = Path("logs/00-smoke") / f"{name}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(asdict(c), indent=2, ensure_ascii=False))
     print(f"  saved {out}")

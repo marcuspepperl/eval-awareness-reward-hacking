@@ -31,7 +31,9 @@ def run(name: str, replies: list[str], want_outcome: str, want_attempts: int) ->
         custom_outputs=[ModelOutput.from_content("mockllm/model", r) for r in replies],
     )
     task = impossible_lcb(split="conflicting", n_tasks=1, max_attempts=MAX_ATTEMPTS)
-    log = eval(task, model=model, log_dir="logs/pipeline_check", display="none")[0]
+    log = eval(
+        task, model=model, log_dir="logs/scratch/pipeline-check", display="none"
+    )[0]
     sample = log.samples[0]
     md = next(iter(sample.scores.values())).metadata
     feedback = [m.text for m in sample.messages if m.role == "user"][1:]

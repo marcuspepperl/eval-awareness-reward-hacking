@@ -5,10 +5,12 @@
     uv run python scripts/run_pilot.py --run --model deepinfra-raw/qwen3-32b
 
 Arms: {conflicting, oneoff} × {noflag, flag}, same N problems in every arm, neutral
-feedback, 5 attempts, no prefill. Logs go to logs/pilot/<model-name>/.
+feedback, 5 attempts, no prefill. Logs go to logs/03-pilot/<model>/<run-id>/ (a new
+folder per run: eval_set treats an existing folder as "resume").
 """
 
 import argparse
+from datetime import datetime
 
 from inspect_ai import eval_set
 
@@ -28,6 +30,7 @@ def main() -> None:
     p.add_argument("--max-connections", type=int, default=150)  # DeepInfra: 200/model
     p.add_argument("--max-sandboxes", type=int, default=120)
     p.add_argument("--max-subprocesses", type=int, default=32)  # docker compose calls
+    p.add_argument("--tag", default=None, help="run id (default: timestamp)")
     p.add_argument("--run", action="store_true", help="actually run (default: dry run)")
     args = p.parse_args()
 
@@ -43,7 +46,8 @@ def main() -> None:
         for split in SPLITS
         for flag in (False, True)
     ]
-    log_dir = f"logs/pilot/{args.model.split('/')[-1]}"
+    run_id = args.tag or datetime.now().strftime("%Y%m%d-%H%M")
+    log_dir = f"logs/03-pilot/{args.model.split('/')[-1]}/{run_id}"
 
     print(f"model={args.model}  log_dir={log_dir}  feedback={args.feedback}")
     for t in tasks:

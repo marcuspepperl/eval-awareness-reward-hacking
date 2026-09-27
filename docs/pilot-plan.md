@@ -27,8 +27,8 @@ The parity run used ImpossibleBench's default instruction, which is effectively 
 ```
 uv run python scripts/run_pilot.py              # dry run: prints arms + exact instruction
 uv run python scripts/run_pilot.py --run        # run (~$1-2)
-uv run python scripts/summarize_pilot.py logs/pilot/v4flash
-uv run inspect view --log-dir logs/pilot        # browse transcripts
+uv run python scripts/summarize_pilot.py logs/03-pilot/v4flash/<run-id> --write
+uv run inspect view --log-dir logs/03-pilot     # browse transcripts
 ```
 
 ## Decision rules (after the run)

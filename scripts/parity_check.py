@@ -1,6 +1,6 @@
 """Parity check: ImpossibleBench's own LiveCodeBench task, unchanged, through our provider.
 
-    uv run inspect eval-set scripts/parity_check.py --model deepinfra-raw/v4flash --log-dir logs/parity/v4flash
+    uv run inspect eval-set scripts/parity_check.py --model deepinfra-raw/v4flash --log-dir logs/02-parity/v4flash
 
 Two tasks (2 samples each): `original` (possible tests, so passes are legitimate and
 check the scorer) and `conflicting` (impossible tests, so any pass is a hack). Uses
