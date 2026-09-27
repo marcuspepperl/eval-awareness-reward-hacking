@@ -9,6 +9,7 @@ from __future__ import annotations
 import os
 from collections.abc import Callable
 from dataclasses import dataclass
+from typing import Any
 
 from dotenv import load_dotenv
 
@@ -16,7 +17,9 @@ from earh.vendor import encoding_dsv4
 
 DEEPINFRA_BASE_URL = "https://api.deepinfra.com/v1/openai"
 
-Message = dict[str, str]
+# {role, content, reasoning_content?, tools?, tool_calls?, tool_call_id?}; tool fields use the
+# OpenAI format, which the vendored V4 encoder accepts directly.
+Message = dict[str, Any]
 
 
 def _build_v4(
@@ -56,6 +59,10 @@ def _build_qwen3(
     """
     if reasoning_effort is not None:
         raise ValueError("Qwen3 has no reasoning_effort setting")
+    if any(
+        m.get("tools") or m.get("tool_calls") or m["role"] == "tool" for m in messages
+    ):
+        raise ValueError("Qwen3 prompt builder does not support tools")
     parts = []
     for m in messages:
         content = m["content"]
@@ -81,6 +88,7 @@ class ModelSpec:
     max_tokens: int
     usd_per_mtok_in: float
     usd_per_mtok_out: float
+    supports_tools: bool = False
 
 
 MODELS: dict[str, ModelSpec] = {
@@ -94,6 +102,7 @@ MODELS: dict[str, ModelSpec] = {
         max_tokens=32_000,  # 16k truncated 2/9 parity attempts; model allows 384k output
         usd_per_mtok_in=0.06,  # DeepInfra list price, Sep 2026
         usd_per_mtok_out=0.18,
+        supports_tools=True,
     ),
     "qwen3-32b": ModelSpec(
         name="qwen3-32b",
@@ -123,6 +132,33 @@ def split_reasoning(prefill: str, continuation: str) -> tuple[str | None, str | 
     return reasoning.strip(), answer.strip()
 
 
+def parse_v4_completion(
+    prefill: str, continuation: str, finished: bool
+) -> tuple[str, str, list[dict[str, Any]]]:
+    """Parse a V4 thinking-mode completion into reasoning, content and tool calls.
+
+    Uses DeepSeek's reference parser (DSML tool calls). The API strips our stop token
+    (EOS), so it is re-appended when generation finished normally.
+
+    @param prefill: The prefill the prompt ended with (start of the reasoning).
+    @param continuation: Raw generated text after the prompt.
+    @param finished: True if generation stopped on the stop token (not max_tokens).
+    @returns: (reasoning, content, tool_calls) with tool_calls in OpenAI format
+        ({"type", "function": {"name", "arguments": <JSON string>}}).
+    @raises ValueError: If the text is malformed (e.g. no `</think>`, broken DSML).
+    """
+    text = prefill + continuation + (encoding_dsv4.eos_token if finished else "")
+    try:
+        msg = encoding_dsv4.parse_message_from_completion_text(text, "thinking")
+    except (AssertionError, ValueError, IndexError) as ex:
+        raise ValueError(f"unparseable V4 completion: {ex}") from ex
+    return (
+        msg["reasoning_content"].strip(),
+        msg["content"].strip(),
+        msg["tool_calls"],
+    )
+
+
 def normalize_prefill(prefill: str) -> str:
     """Strip trailing spaces/tabs, which make V4-Flash close `</think>` immediately (3/4 vs 0/4 runs)."""
     return prefill.rstrip(" \t")
@@ -141,7 +177,7 @@ def build_prompt(
     The single place prompts are made; both the Inspect provider and scripts use it.
 
     @param spec: Model to render for (see MODELS).
-    @param messages: [{role, content, reasoning_content?}]; roles system/user/assistant.
+    @param messages: See Message; roles system/user/assistant (+ tool, if spec.supports_tools).
     @param prefill: Text to start the reasoning with; trailing spaces are stripped.
     @param drop_thinking: If True, prior assistant turns' reasoning_content is omitted.
     @param reasoning_effort: V4 only: "low" | "high" | "max" (None = model default).
