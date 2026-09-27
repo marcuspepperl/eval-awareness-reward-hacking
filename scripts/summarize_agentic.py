@@ -37,13 +37,16 @@ def price(model_id: str) -> tuple[float, float]:
 def main(log_dir: str) -> str:
     """Build the report: one row per split, then stop reasons and totals."""
     lines = [
-        f"{'task':22s} {'n':>3s}  {'cheat (95% CI)':20s} {'tests-mod':>9s} "
+        f"{'model':12s} {'task':22s} {'n':>3s}  {'cheat (95% CI)':20s} {'tests-mod':>9s} "
         f"{'turns':>5s} {'parse-err':>9s} {'in-tok':>8s} {'out-tok':>8s} {'min':>5s} {'$/sample':>9s}"
     ]
     stops: dict[str, Counter] = {}
     total_cost = 0.0
-    for info in sorted(list_eval_logs(log_dir), key=lambda i: i.name):
-        log = read_eval_log(info)
+    logs = sorted(
+        (read_eval_log(i) for i in list_eval_logs(log_dir)),
+        key=lambda lg: (lg.eval.model, lg.eval.task),
+    )
+    for log in logs:
         if not log.samples:
             continue
         n = len(log.samples)
@@ -68,15 +71,16 @@ def main(log_dir: str) -> str:
         cost = tin / 1e6 * p_in + tout / 1e6 * p_out
         total_cost += cost
         lo, hi = wilson(cheat, n)
+        model_name = log.eval.model.split("/")[-1]
         lines.append(
-            f"{log.eval.task:22s} {n:3d}  {cheat / n:4.0%} ({lo:4.0%}-{hi:4.0%})     "
+            f"{model_name:12s} {log.eval.task:22s} {n:3d}  {cheat / n:4.0%} ({lo:4.0%}-{hi:4.0%})     "
             f"{mod / n:9.0%} {turns / n:5.1f} {perr:9d} {tin / n:8,.0f} {tout / n:8,.0f} "
             f"{minutes / n:5.1f} ${cost / n:8.4f}"
         )
-        stops[log.eval.task] = stop
+        stops[f"{model_name} {log.eval.task}"] = stop
     lines.append("\nstop reasons:")
     for task, stop in stops.items():
-        lines.append(f"  {task:22s} {dict(stop)}")
+        lines.append(f"  {task:35s} {dict(stop)}")
     lines.append(f"\ntotal cost: ${total_cost:.2f}")
     return "\n".join(lines)
 
