@@ -9,11 +9,14 @@ from __future__ import annotations
 import os
 from collections.abc import Callable
 from dataclasses import dataclass
+from functools import partial
+from types import ModuleType
 from typing import Any
 
 from dotenv import load_dotenv
 
-from earh.vendor import encoding_dsv4
+from earh import glm
+from earh.vendor import encoding_dsv4, encoding_dsv41
 
 DEEPINFRA_BASE_URL = "https://api.deepinfra.com/v1/openai"
 
@@ -22,14 +25,15 @@ DEEPINFRA_BASE_URL = "https://api.deepinfra.com/v1/openai"
 Message = dict[str, Any]
 
 
-def _build_v4(
+def _build_deepseek(
+    encoder: ModuleType,
     messages: list[Message],
     prefill: str,
     drop_thinking: bool,
-    reasoning_effort: str | None,
+    reasoning_effort: str | int | None,
 ) -> str:
-    """Render via DeepSeek's official encoder (which ends with an open `<think>`) + prefill."""
-    prompt = encoding_dsv4.encode_messages(
+    """Render via a DeepSeek official encoder (ends with an open `<think>`) + prefill."""
+    prompt = encoder.encode_messages(
         messages,
         thinking_mode="thinking",
         drop_thinking=drop_thinking,
@@ -75,6 +79,39 @@ def _build_qwen3(
     return "".join(parts) + prefill
 
 
+def _parse_deepseek(
+    encoder: ModuleType,
+    prefill: str,
+    continuation: str,
+    finished: bool,
+    tools: list[dict[str, Any]] | None = None,
+) -> tuple[str, str, list[dict[str, Any]]]:
+    """Parse a DeepSeek V4/V4.1 thinking-mode completion into reasoning, content and tool calls.
+
+    Uses DeepSeek's reference parser (DSML tool calls). The API strips our stop token
+    (EOS), so it is re-appended when generation finished normally.
+
+    @param encoder: The vendored encoder module (encoding_dsv4 or encoding_dsv41).
+    @param prefill: The prefill the prompt ended with (start of the reasoning).
+    @param continuation: Raw generated text after the prompt.
+    @param finished: True if generation stopped on the stop token (not max_tokens).
+    @param tools: Unused (DSML carries argument types); kept for a uniform signature.
+    @returns: (reasoning, content, tool_calls) with tool_calls in OpenAI format
+        ({"type", "function": {"name", "arguments": <JSON string>}}).
+    @raises ValueError: If the text is malformed (e.g. no `</think>`, broken DSML).
+    """
+    text = prefill + continuation + (encoder.eos_token if finished else "")
+    try:
+        msg = encoder.parse_message_from_completion_text(text, "thinking")
+    except (AssertionError, ValueError, IndexError) as ex:
+        raise ValueError(f"unparseable V4 completion: {ex}") from ex
+    return (
+        msg["reasoning_content"].strip(),
+        msg["content"].strip(),
+        msg["tool_calls"],
+    )
+
+
 @dataclass(frozen=True)
 class ModelSpec:
     """Static per-model config: DeepInfra ID, prompt builder, stop tokens, sampling/length defaults, pricing."""
@@ -88,21 +125,59 @@ class ModelSpec:
     max_tokens: int
     usd_per_mtok_in: float
     usd_per_mtok_out: float
-    supports_tools: bool = False
+    # Tool support: parse(prefill, continuation, finished, tools) -> (reasoning, content,
+    # OpenAI-format tool_calls), raising ValueError if malformed; tool_call_marker is the
+    # text that signals an attempted tool call (to tell malformed calls from plain answers).
+    parse: Callable[..., tuple[str, str, list[dict[str, Any]]]] | None = None
+    tool_call_marker: str | None = None
+
+    @property
+    def supports_tools(self) -> bool:
+        """Whether this model can be given tools (has a tool-call parser)."""
+        return self.parse is not None
 
 
 MODELS: dict[str, ModelSpec] = {
     "v4flash": ModelSpec(
         name="v4flash",
         deepinfra_id="deepseek-ai/DeepSeek-V4-Flash-0731",
-        build=_build_v4,
+        build=partial(_build_deepseek, encoding_dsv4),
         stop=[encoding_dsv4.eos_token],
         temperature=1.0,
         top_p=0.95,
         max_tokens=32_000,  # 16k truncated 2/9 parity attempts; model allows 384k output
         usd_per_mtok_in=0.06,  # DeepInfra list price, Sep 2026
         usd_per_mtok_out=0.18,
-        supports_tools=True,
+        parse=partial(_parse_deepseek, encoding_dsv4),
+        tool_call_marker=f"<{encoding_dsv4.dsml_token}",
+    ),
+    "v41flash": ModelSpec(
+        name="v41flash",
+        deepinfra_id="deepseek-ai/DeepSeek-V4.1-Flash",
+        build=partial(
+            _build_deepseek, encoding_dsv41
+        ),  # default effort: "high" (75/100)
+        stop=[encoding_dsv41.eos_token],
+        temperature=1.0,
+        top_p=0.95,
+        max_tokens=32_000,
+        usd_per_mtok_in=0.14,  # DeepInfra, Sep 2026, 30% off (list $0.20 / $0.60)
+        usd_per_mtok_out=0.42,
+        parse=partial(_parse_deepseek, encoding_dsv41),
+        tool_call_marker=f"<{encoding_dsv41.dsml_token}",
+    ),
+    "glm53flash": ModelSpec(
+        name="glm53flash",
+        deepinfra_id="zai-org/GLM-5.3-Flash",
+        build=glm.build_glm,  # default effort: template's "max"
+        stop=glm.STOP,
+        temperature=1.0,  # generation_config.json
+        top_p=0.95,
+        max_tokens=32_000,
+        usd_per_mtok_in=0.075,  # DeepInfra, Sep 2026, 50% off (list $0.15 / $0.50)
+        usd_per_mtok_out=0.25,
+        parse=glm.parse_glm_completion,
+        tool_call_marker=glm.TOOL_CALL_MARKER,
     ),
     "qwen3-32b": ModelSpec(
         name="qwen3-32b",
@@ -130,33 +205,6 @@ def split_reasoning(prefill: str, continuation: str) -> tuple[str | None, str | 
         return None, None
     reasoning, answer = full.split("</think>", 1)
     return reasoning.strip(), answer.strip()
-
-
-def parse_v4_completion(
-    prefill: str, continuation: str, finished: bool
-) -> tuple[str, str, list[dict[str, Any]]]:
-    """Parse a V4 thinking-mode completion into reasoning, content and tool calls.
-
-    Uses DeepSeek's reference parser (DSML tool calls). The API strips our stop token
-    (EOS), so it is re-appended when generation finished normally.
-
-    @param prefill: The prefill the prompt ended with (start of the reasoning).
-    @param continuation: Raw generated text after the prompt.
-    @param finished: True if generation stopped on the stop token (not max_tokens).
-    @returns: (reasoning, content, tool_calls) with tool_calls in OpenAI format
-        ({"type", "function": {"name", "arguments": <JSON string>}}).
-    @raises ValueError: If the text is malformed (e.g. no `</think>`, broken DSML).
-    """
-    text = prefill + continuation + (encoding_dsv4.eos_token if finished else "")
-    try:
-        msg = encoding_dsv4.parse_message_from_completion_text(text, "thinking")
-    except (AssertionError, ValueError, IndexError) as ex:
-        raise ValueError(f"unparseable V4 completion: {ex}") from ex
-    return (
-        msg["reasoning_content"].strip(),
-        msg["content"].strip(),
-        msg["tool_calls"],
-    )
 
 
 def normalize_prefill(prefill: str) -> str:

@@ -1,8 +1,9 @@
 """Inspect model provider for DeepInfra raw completions with CoT prefill.
 
 Usage: --model deepinfra-raw/v4flash  or  --model deepinfra-raw/qwen3-32b
-Tools: supported for models with spec.supports_tools (V4-Flash, via DSML). With tools,
-V4's encoder keeps all prior reasoning in context (drop_thinking is auto-disabled).
+Tools: supported for models with a parser (spec.supports_tools): V4/V4.1-Flash (DSML)
+and GLM-5.3-Flash (<tool_call>). With tools, prior reasoning stays in context (DeepSeek's
+encoder auto-disables drop_thinking; GLM's template keeps it by default).
 Model args (-M): drop_thinking (bool, default True), reasoning_effort (V4 only: low|high|max),
                  max_connections (int, default 32).
 
@@ -42,13 +43,12 @@ from earh.models import (
     DEEPINFRA_BASE_URL,
     MODELS,
     Message,
+    ModelSpec,
     build_prompt,
     normalize_prefill,
-    parse_v4_completion,
     split_reasoning,
 )
 from earh.models import api_key as deepinfra_api_key
-from earh.vendor import encoding_dsv4
 
 PREFILL_KEY = "cot_prefill"
 # We stream responses: long non-streaming requests (~20 min for 30k Qwen3 tokens at
@@ -167,22 +167,28 @@ def _to_tool_calls(openai_calls: list[dict[str, Any]]) -> list[ToolCall]:
 
 
 def _parse_with_tools(
-    prefill: str, text: str, finish_reason: str | None
+    spec: ModelSpec,
+    prefill: str,
+    text: str,
+    finish_reason: str | None,
+    tools: list[dict[str, Any]] | None = None,
 ) -> tuple[str, str, list[ToolCall], str | None]:
-    """Parse a tools-enabled V4 completion; never raises.
+    """Parse a tools-enabled completion with the model's parser; never raises.
 
     Truncated output (no `</think>`) becomes all-reasoning with no calls. If the output
     looks like a tool call but is malformed, we return one placeholder ToolCall with
     parse_error set, so Inspect reports the error to the model and the loop continues.
 
+    @param spec: Model (provides parse and tool_call_marker).
     @param prefill: Prefill the prompt ended with.
     @param text: Generated continuation.
     @param finish_reason: API finish reason ("stop" | "length" | None).
+    @param tools: OpenAI-format tool definitions (some parsers use them to type arguments).
     @returns: (reasoning, answer, tool_calls, parse_error or None).
     """
     try:
-        reasoning, answer, calls = parse_v4_completion(
-            prefill, text, finished=finish_reason != "length"
+        reasoning, answer, calls = spec.parse(
+            prefill, text, finish_reason != "length", tools
         )
         return reasoning, answer, _to_tool_calls(calls), None
     except ValueError as ex:
@@ -190,7 +196,7 @@ def _parse_with_tools(
         reasoning, _, rest = full.partition("</think>")
         if finish_reason == "length" or not rest:
             return full.strip(), "", [], None
-        if f"<{encoding_dsv4.dsml_token}" not in rest:  # plain answer, just unparseable
+        if spec.tool_call_marker not in rest:  # plain answer, just unparseable
             return reasoning.strip(), rest.strip(), [], None
         error = f"Malformed tool call ({ex}). Use the exact tool-call format."
         placeholder = ToolCall(
@@ -277,9 +283,11 @@ class DeepInfraRawAPI(ModelAPI):
             prefill = normalize_prefill(input[-1].text)
             input = input[:-1]
 
+        messages = _to_messages(input, tools)
+        openai_tools = messages[0].get("tools") if tools else None
         prompt = build_prompt(
             self.spec,
-            _to_messages(input, tools),
+            messages,
             prefill,
             drop_thinking=self.drop_thinking,
             reasoning_effort=self.reasoning_effort,
@@ -304,7 +312,7 @@ class DeepInfraRawAPI(ModelAPI):
         tool_calls: list[ToolCall] = []
         if tools:
             reasoning, answer, tool_calls, parse_error = _parse_with_tools(
-                prefill, text, finish_reason
+                self.spec, prefill, text, finish_reason, openai_tools
             )
             if parse_error:
                 metadata["tool_parse_error"] = parse_error

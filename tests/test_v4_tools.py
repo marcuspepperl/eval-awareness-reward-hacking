@@ -156,7 +156,7 @@ def test_parse_tool_call():
             }
         ],
     )
-    reasoning, answer, calls, err = _parse_with_tools("", text, "stop")
+    reasoning, answer, calls, err = _parse_with_tools(V4, "", text, "stop")
     assert err is None and reasoning == "Run the tests." and answer == ""
     assert len(calls) == 1
     assert calls[0].function == "bash"
@@ -166,7 +166,9 @@ def test_parse_tool_call():
 def test_parse_final_answer_and_prefill():
     """No tool call = final answer; the prefill is the start of the reasoning."""
     text = _assistant_span("rest of thought.", "Done: implemented func.py.", [])
-    reasoning, answer, calls, err = _parse_with_tools("Maybe a test. ", text, "stop")
+    reasoning, answer, calls, err = _parse_with_tools(
+        V4, "Maybe a test. ", text, "stop"
+    )
     assert calls == [] and err is None
     assert reasoning.startswith("Maybe a test.") and answer.startswith("Done")
 
@@ -174,7 +176,7 @@ def test_parse_final_answer_and_prefill():
 def test_parse_malformed_tool_call():
     """Broken DSML yields one placeholder call with parse_error (loop continues)."""
     text = "thinking</think>\n\n<｜DSML｜tool_calls>\n<｜DSML｜invoke oops"
-    reasoning, _, calls, err = _parse_with_tools("", text, "stop")
+    reasoning, _, calls, err = _parse_with_tools(V4, "", text, "stop")
     assert err and reasoning == "thinking"
     assert len(calls) == 1 and calls[0].parse_error
 
@@ -182,7 +184,7 @@ def test_parse_malformed_tool_call():
 def test_parse_truncated():
     """Output cut off before </think> is all reasoning, with no calls."""
     reasoning, answer, calls, err = _parse_with_tools(
-        "pre ", "still thinking", "length"
+        V4, "pre ", "still thinking", "length"
     )
     assert reasoning == "pre still thinking" and answer == "" and calls == []
     assert err is None
