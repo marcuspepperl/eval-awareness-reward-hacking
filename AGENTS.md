@@ -1,5 +1,7 @@
 # Agent instructions
 
+> **This worktree: Track A, branch `track-a`.** Minimal ImpossibleBench-like scaffold: submit code in a block, neutral test-runner feedback, up to 5 attempts, eval-awareness prefill at the start of **every** attempt's reasoning. Scope: `src/earh/solver.py`, `scorer.py`, `tasks.py`, the judge, and Track A scripts/analysis. Logs: `logs/1x-*`. See `docs/split-strategies.md` → Track A.
+
 Project: does eval awareness (and its framing) change reward hacking? See `ARCH.md` for how the code fits together and `docs/` for design and plans.
 
 ## Environment
