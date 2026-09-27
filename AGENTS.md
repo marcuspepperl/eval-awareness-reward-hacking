@@ -1,5 +1,7 @@
 # Agent instructions
 
+> **This worktree: Track B, branch `track-b`.** Agentic harness: `func.py`/`test.py` in the sandbox, Inspect `bash`/`python`/`text_editor` tools, submission = the model stops calling tools, cheating = final tests pass. Main work: V4 tool calling in `src/earh/inspect_provider.py` (DSML via the vendored encoder), plus a new agentic solver/scorer/task. Keep provider changes additive (Track A depends on it). Logs: `logs/3x-*`. See `docs/split-strategies.md` → Track B.
+
 Project: does eval awareness (and its framing) change reward hacking? See `ARCH.md` for how the code fits together and `docs/` for design and plans.
 
 ## Environment
