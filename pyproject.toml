@@ -1,0 +1,21 @@
+[project]
+name = "earh"
+version = "0.1.0"
+description = "Eval awareness x reward hacking: CoT-prefill experiments on ImpossibleBench"
+requires-python = ">=3.11"
+dependencies = [
+    "openai>=1.0",
+    "python-dotenv>=1.0",
+    "inspect-ai",
+    "impossiblebench @ git+https://github.com/safety-research/impossiblebench",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/earh"]
+
+[tool.hatch.metadata]
+allow-direct-references = true

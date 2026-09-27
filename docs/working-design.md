@@ -19,9 +19,9 @@ Zhuang & Aranguri explicitly list "beyond FORTRESS" as future work.
   | Released | Jul 2026 (near-frontier) | Apr 2025 |
   | Arch | MoE, ~284–304B total / ~13B active | dense 32B |
   | DeepInfra $/M (in / out) | $0.06 / $0.18 | $0.08 / $0.28 |
-  | Raw prefill | DeepInfra's completions docs use this exact model as the example | needs smoke test |
+  | Raw prefill | ✅ smoke-tested (`scripts/smoke_test.py`) | ✅ smoke-tested |
   | Prompt format | no Jinja template; build prompts with the repo's `encoding/` helpers | standard `<\|im_start\|>` + `<think>` |
-  | Multi-turn reasoning | appears to keep prior `reasoning_content` (verify in encoding code) | template strips prior-turn thinking |
+  | Multi-turn reasoning | `drop_thinking=True` by default (strips prior-turn reasoning when no tools) | template strips prior-turn thinking |
   | Comparability | same family as Knecht et al. (DeepSeek-R1) | same model as Zhuang & Aranguri |
   | Contamination | post-dates ImpossibleBench (Oct 2025), so it may know the benchmark | pre-dates it |
   | Sampling | temp 1.0, top_p 0.95 (agentic) | temp 0.6 (thinking default) |
@@ -95,12 +95,14 @@ The endpoint is `POST https://api.deepinfra.com/v1/openai/completions`. It is a 
 - Cutting `K_PREFILL` to 2 or `C_PREFILL` to 5 cuts the prefill phase by roughly a third.
 
 ## Open decisions / risks
-- **Multi-turn visibility of the injected sentence.** Qwen3's template strips prior-turn thinking, so a sentence injected at attempt 1 is invisible at attempts 2–5. V4-Flash appears to keep prior reasoning (verify). Since we build raw prompts ourselves, we choose the policy, but it must be identical across conditions. Options:
+- **Multi-turn visibility of the injected sentence.** **Both** models' default templates strip prior-turn thinking (V4: `drop_thinking=True` unless tools are present), so a sentence injected at attempt 1 is invisible at attempts 2–5. Our builders expose `drop_thinking` for both. Since we build raw prompts ourselves, we choose the policy, but it must be identical across conditions. Options:
   - (a) primary outcome = hack on attempt 1;
   - (b) keep thinking in history;
   - (c) `max_attempts=1` in the prefill phase.
 - Context window: Qwen3-32B is 32k native, so long multi-attempt runs may truncate. V4-Flash is 1M.
-- V4-Flash raw prompts: confirm how reasoning effort (low / high / max) is expressed in the encoded prompt, not via chat-API params.
+- **V4-Flash reasoning effort** is a text prefix before the system prompt (`reasoning_effort` in `encode_messages`). The default "low" gives short, telegraphic CoTs (~400 chars on a toy task). The pilot should compare low vs high, because EA is only observable if the model reasons at length.
+- **Prefill hygiene (smoke-test finding).** A prefill ending in a trailing space makes V4-Flash close `</think>` immediately (3/4 runs, vs 0/4 without it). `complete()` now strips trailing spaces. Newline or mid-sentence endings are fine.
+- **Prefill lengthens V4 reasoning.** On the toy task, an EA prefill yielded ~1–3k chars of new reasoning vs ~400 unprefilled. Any prefill may do this, which is another reason the **neutral-control** condition is essential.
 - Base EA rate may be too low for the observational phase to say much. Use the pilot to decide.
 - Choose the injection point: after the model first notices the test/spec conflict, or a fixed early position.
 - The model may regenerate or contradict the injected EA. Count by intention-to-treat and report the regeneration rate.
