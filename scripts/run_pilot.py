@@ -27,6 +27,7 @@ def main() -> None:
     p.add_argument("--feedback", choices=["neutral", "user"], default="neutral")
     p.add_argument("--max-connections", type=int, default=150)  # DeepInfra: 200/model
     p.add_argument("--max-sandboxes", type=int, default=120)
+    p.add_argument("--max-subprocesses", type=int, default=32)  # docker compose calls
     p.add_argument("--run", action="store_true", help="actually run (default: dry run)")
     args = p.parse_args()
 
@@ -63,6 +64,7 @@ def main() -> None:
         max_samples=args.n_tasks,
         max_connections=args.max_connections,
         max_sandboxes=args.max_sandboxes,
+        max_subprocesses=args.max_subprocesses,
         fail_on_error=False,
     )
 
