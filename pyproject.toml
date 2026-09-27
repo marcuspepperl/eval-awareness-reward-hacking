@@ -22,6 +22,8 @@ allow-direct-references = true
 
 [dependency-groups]
 dev = [
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
     "ruff>=0.16.9",
 ]
 
@@ -39,3 +41,7 @@ ignore = ["E501"]  # formatter handles code; long strings/comments/docstrings ar
 
 [tool.ruff.lint.flake8-bugbear]
 extend-immutable-calls = ["inspect_ai.model.GenerateConfig"]  # Inspect's ModelAPI signature
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"

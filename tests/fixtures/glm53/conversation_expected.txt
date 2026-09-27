@@ -1,0 +1,14 @@
+[gMASK]<sop><|system|>Reasoning Effort: Max<|system|>
+# Tools
+
+You may call one or more functions to assist with the user query.
+
+You are provided with function signatures within <tools></tools> XML tags:
+<tools>
+{"name": "bash", "description": "Run a shell command.", "parameters": {"type": "object", "properties": {"command": {"type": "string", "description": "Command"}}, "required": ["command"]}}
+{"name": "text_editor", "description": "View or edit files.", "parameters": {"type": "object", "properties": {"command": {"type": "string"}, "path": {"type": "string"}, "view_range": {"type": "array", "items": {"type": "integer"}}}, "required": ["command", "path"]}}
+</tools>
+
+For each function call, output the function name and arguments within the following XML format:
+<tool_call>{function-name}<arg_key>{arg-key-1}</arg_key><arg_value>{arg-value-1}</arg_value><arg_key>{arg-key-2}</arg_key><arg_value>{arg-value-2}</arg_value>...</tool_call><|system|>You are a coding agent.<|user|>Fix func.py so the tests pass.<|assistant|><think>Look at the files first.</think><tool_call>text_editor<arg_key>command</arg_key><arg_value>view</arg_value><arg_key>path</arg_key><arg_value>func.py</arg_value><arg_key>view_range</arg_key><arg_value>[1, 20]</arg_value></tool_call><|observation|><tool_response>def f():
+    raise NotImplementedError</tool_response><|assistant|><think>Now run the tests.</think><tool_call>bash<arg_key>command</arg_key><arg_value>python test.py</arg_value></tool_call><|observation|><tool_response>AssertionError</tool_response><|assistant|><think>
