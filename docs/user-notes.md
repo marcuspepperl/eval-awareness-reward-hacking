@@ -5,17 +5,16 @@
 
 ## Boost Cheating
 
-### Larger Changes
+### More Attractive Changes
 
-- Full agent harness that allows code editing, etc would also be idea (higher hacking rates)
-- More attempts (e.g. 10)
-- Richer tool scaffold (bash, file editing: the existing agent_type="tools")
-    - More affordances,and more cheating in the paper; realistic
+- Full agent harness that allows code editing
+    - More affordances, and more cheating in the paper; realistic
 - More realistic task context
     - A repo, CI check, or PR under review. Give higher stakes
 - Different model
+    - GLM-5.3-Flash, MiMo-V2.6-Flash
 
-### Small Changes
+### Less Attractive Changes
 
 - Impossible-SWE-bench
     - Most realistic, highest rates, but heavy docker setup
