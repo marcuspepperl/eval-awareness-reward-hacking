@@ -37,8 +37,12 @@ def check(name: str) -> bool:
     c = complete(spec, MESSAGES, PREFILL, max_tokens=4000, api=client())
 
     checks = {
-        "no restarted turn / template tokens in continuation": not any(t in c.continuation for t in TEMPLATE_MARKERS),
-        "continued reasoning (didn't close </think> immediately)": not c.continuation.lstrip().startswith("</think>"),
+        "no restarted turn / template tokens in continuation": not any(
+            t in c.continuation for t in TEMPLATE_MARKERS
+        ),
+        "continued reasoning (didn't close </think> immediately)": not c.continuation.lstrip().startswith(
+            "</think>"
+        ),
         "reasoning closed with </think>": c.reasoning is not None,
         "non-empty answer after </think>": bool(c.answer),
         "stopped naturally (not length)": c.finish_reason == "stop",
@@ -46,7 +50,9 @@ def check(name: str) -> bool:
     }
 
     print(f"\n=== {name} ({spec.deepinfra_id}) ===")
-    print(f"tokens: prompt={c.prompt_tokens} completion={c.completion_tokens} finish={c.finish_reason}")
+    print(
+        f"tokens: prompt={c.prompt_tokens} completion={c.completion_tokens} finish={c.finish_reason}"
+    )
     print(f"continuation starts: {c.continuation[:300]!r}")
     if c.answer:
         print(f"answer starts: {c.answer[:300]!r}")

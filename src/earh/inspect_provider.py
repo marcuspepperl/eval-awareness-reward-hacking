@@ -16,7 +16,6 @@ from __future__ import annotations
 import time
 from typing import Any
 
-from openai import AsyncOpenAI
 from inspect_ai.model import (
     ChatCompletionChoice,
     ChatMessage,
@@ -32,8 +31,8 @@ from inspect_ai.model._model_call import ModelCall
 from inspect_ai.model._openai import openai_should_retry
 from inspect_ai.solver import Generate, TaskState
 from inspect_ai.tool import ToolChoice, ToolInfo
+from openai import AsyncOpenAI
 
-from earh.models import api_key as deepinfra_api_key
 from earh.models import (
     DEEPINFRA_BASE_URL,
     MODELS,
@@ -42,6 +41,7 @@ from earh.models import (
     normalize_prefill,
     split_reasoning,
 )
+from earh.models import api_key as deepinfra_api_key
 
 PREFILL_KEY = "cot_prefill"
 DEFAULT_MAX_TOKENS = 16_000
@@ -53,10 +53,14 @@ def prefill_message(text: str) -> ChatMessageAssistant:
 
 
 def is_prefill(message: ChatMessage) -> bool:
-    return message.role == "assistant" and bool((message.metadata or {}).get(PREFILL_KEY))
+    return message.role == "assistant" and bool(
+        (message.metadata or {}).get(PREFILL_KEY)
+    )
 
 
-async def generate_with_prefill(state: TaskState, generate: Generate, prefill: str) -> TaskState:
+async def generate_with_prefill(
+    state: TaskState, generate: Generate, prefill: str
+) -> TaskState:
     """generate() with the reasoning block prefilled; leaves no prefill message in history."""
     if not prefill:
         return await generate(state)
@@ -75,7 +79,9 @@ def _to_messages(input: list[ChatMessage]) -> list[Message]:
             raise ValueError(f"deepinfra-raw does not support {m.role!r} messages")
         msg: Message = {"role": m.role, "content": m.text}
         if m.role == "assistant" and not isinstance(m.content, str):
-            reasoning = "\n".join(c.reasoning for c in m.content if isinstance(c, ContentReasoning))
+            reasoning = "\n".join(
+                c.reasoning for c in m.content if isinstance(c, ContentReasoning)
+            )
             if reasoning:
                 msg["reasoning_content"] = reasoning
         out.append(msg)
@@ -102,12 +108,16 @@ class DeepInfraRawAPI(ModelAPI):
             config=config,
         )
         if model_name not in MODELS:
-            raise ValueError(f"unknown model {model_name!r}; expected one of {list(MODELS)}")
+            raise ValueError(
+                f"unknown model {model_name!r}; expected one of {list(MODELS)}"
+            )
         self.spec = MODELS[model_name]
         self.drop_thinking = drop_thinking
         self.reasoning_effort = reasoning_effort
         self._max_connections = max_connections
-        self.client = AsyncOpenAI(api_key=self.api_key or deepinfra_api_key(), base_url=self.base_url)
+        self.client = AsyncOpenAI(
+            api_key=self.api_key or deepinfra_api_key(), base_url=self.base_url
+        )
 
     async def generate(
         self,
@@ -135,7 +145,9 @@ class DeepInfraRawAPI(ModelAPI):
             model=self.spec.deepinfra_id,
             prompt=prompt,
             max_tokens=config.max_tokens or DEFAULT_MAX_TOKENS,
-            temperature=config.temperature if config.temperature is not None else self.spec.temperature,
+            temperature=config.temperature
+            if config.temperature is not None
+            else self.spec.temperature,
             top_p=config.top_p if config.top_p is not None else self.spec.top_p,
             stop=self.spec.stop,
         )
@@ -147,7 +159,9 @@ class DeepInfraRawAPI(ModelAPI):
         choice = resp.choices[0]
 
         reasoning, answer = split_reasoning(prefill, choice.text)
-        if reasoning is None:  # never closed </think> (usually hit max_tokens): all of it is reasoning
+        if (
+            reasoning is None
+        ):  # never closed </think> (usually hit max_tokens): all of it is reasoning
             reasoning, answer = (prefill + choice.text).strip(), ""
         message = ChatMessageAssistant(
             content=[ContentReasoning(reasoning=reasoning), ContentText(text=answer)],
@@ -161,7 +175,9 @@ class DeepInfraRawAPI(ModelAPI):
             choices=[
                 ChatCompletionChoice(
                     message=message,
-                    stop_reason="max_tokens" if choice.finish_reason == "length" else "stop",
+                    stop_reason="max_tokens"
+                    if choice.finish_reason == "length"
+                    else "stop",
                 )
             ],
             usage=ModelUsage(
@@ -183,4 +199,3 @@ class DeepInfraRawAPI(ModelAPI):
 
     def connection_key(self) -> str:
         return self.spec.deepinfra_id
-

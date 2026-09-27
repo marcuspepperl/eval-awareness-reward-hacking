@@ -20,5 +20,22 @@ packages = ["src/earh"]
 [tool.hatch.metadata]
 allow-direct-references = true
 
+[dependency-groups]
+dev = [
+    "ruff>=0.16.9",
+]
+
 [project.entry-points.inspect_ai]
 earh = "earh._registry"
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+extend-exclude = ["src/earh/vendor"]  # vendored upstream code: keep byte-identical
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]  # formatter handles code; long strings/comments/docstrings are fine
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["inspect_ai.model.GenerateConfig"]  # Inspect's ModelAPI signature

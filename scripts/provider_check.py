@@ -19,7 +19,10 @@ PREFILL = "Okay, let me read the problem. Hmm, this looks like it might be a ben
 
 DATASET = [
     Sample(input="What is 17 * 23? Answer with just the number.", target="391"),
-    Sample(input="What is the capital of Australia? Answer with one word.", target="Canberra"),
+    Sample(
+        input="What is the capital of Australia? Answer with one word.",
+        target="Canberra",
+    ),
 ]
 
 
@@ -29,8 +32,12 @@ def format_ok():
 
     async def score(state: TaskState, target: Target) -> Score:
         msg = state.output.message
-        reasoning = "".join(c.reasoning for c in msg.content if isinstance(c, ContentReasoning))
-        prefills_in_history = sum(1 for m in state.messages if (m.metadata or {}).get("cot_prefill"))
+        reasoning = "".join(
+            c.reasoning for c in msg.content if isinstance(c, ContentReasoning)
+        )
+        prefills_in_history = sum(
+            1 for m in state.messages if (m.metadata or {}).get("cot_prefill")
+        )
         checks = {
             "has_reasoning": bool(reasoning.strip()),
             "has_answer": bool(msg.text.strip()),
@@ -62,7 +69,9 @@ def prefilled():
 def two_turns():
     async def solve(state: TaskState, generate: Generate) -> TaskState:
         state = await generate(state)
-        state.messages.append(ChatMessageUser(content="Are you sure? Reply with the same answer again."))
+        state.messages.append(
+            ChatMessageUser(content="Are you sure? Reply with the same answer again.")
+        )
         return await generate(state)
 
     return solve

@@ -21,7 +21,10 @@ Message = dict[str, str]
 
 
 def _build_v4(
-    messages: list[Message], prefill: str, drop_thinking: bool, reasoning_effort: str | None
+    messages: list[Message],
+    prefill: str,
+    drop_thinking: bool,
+    reasoning_effort: str | None,
 ) -> str:
     prompt = encoding_dsv4.encode_messages(
         messages,
@@ -34,7 +37,10 @@ def _build_v4(
 
 
 def _build_qwen3(
-    messages: list[Message], prefill: str, drop_thinking: bool, reasoning_effort: str | None
+    messages: list[Message],
+    prefill: str,
+    drop_thinking: bool,
+    reasoning_effort: str | None,
 ) -> str:
     if reasoning_effort is not None:
         raise ValueError("Qwen3 has no reasoning_effort setting")
@@ -120,7 +126,9 @@ def build_prompt(
 
     Assistant messages may carry a "reasoning_content" key; it is kept only if drop_thinking=False.
     """
-    return spec.build(messages, normalize_prefill(prefill), drop_thinking, reasoning_effort)
+    return spec.build(
+        messages, normalize_prefill(prefill), drop_thinking, reasoning_effort
+    )
 
 
 def api_key() -> str:
@@ -147,7 +155,11 @@ def complete(
 ) -> Completion:
     prefill = normalize_prefill(prefill)
     prompt = build_prompt(
-        spec, messages, prefill, drop_thinking=drop_thinking, reasoning_effort=reasoning_effort
+        spec,
+        messages,
+        prefill,
+        drop_thinking=drop_thinking,
+        reasoning_effort=reasoning_effort,
     )
     resp = (api or client()).completions.create(
         model=spec.deepinfra_id,
