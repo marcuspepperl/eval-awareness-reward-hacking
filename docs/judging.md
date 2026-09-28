@@ -126,7 +126,7 @@ build_judge_dataset.py   source logs (e.g. 10-observational) + truncated_attempt
 earh.judge task          Task(dataset=judge_units, solver=judge_solver, scorer=judge_scorer)
   judge_solver           generate → parse + validate → on failure append the error and retry (≤ 2)
   judge_scorer           value = valid (1/0); metadata = parsed tags, n_retries, tokens
-inspect eval-set …       --model deepinfra-raw/glm53flash -M reasoning_effort=low --temperature 0
+inspect eval-set …       --model deepinfra-raw/glm53flash -M reasoning_effort=high
                          → logs/1x-judge/<judge-model>/<run-id>/*.eval
 assemble_judgments.py    judge logs → tags → spans, positions, EA measures
                          → judgments.jsonl (per attempt) + per-sample rollups
