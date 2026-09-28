@@ -76,7 +76,8 @@ def _context_block(
 ) -> str:
     """Render the shared prefix: setup, task, prior feedback, and one reasoning chunk."""
     feedback = (
-        f"\n## Feedback the model saw before this attempt (context only)\n{a.feedback_before}\n"
+        "\n## Feedback the model saw before this attempt (context only)\n"
+        f"<feedback>\n{a.feedback_before}\n</feedback>\n"
         if a.feedback_before
         else ""
     )
@@ -87,7 +88,7 @@ def _context_block(
         attempt=a.attempt,
         part=part,
         n_parts=n_parts,
-        context_lines="\n".join(f"[ctx] {s.text}" for s in ctx),
+        context_lines="".join(f"[ctx] {s.text}\n" for s in ctx),
         reasoning_lines=render(body),
     )
 
