@@ -42,6 +42,9 @@ The transcript is rendered with an **ID in front of every item**. The judge copi
 - The segmented transcript (ID → text, char offsets) is saved alongside the judge output. It is the ground truth for turning IDs into text and positions.
 - **Long attempts** (up to ~64k tokens ≈ thousands of sentences) are split into chunks of ~8–16k tokens on sentence boundaries, with **global** IDs. Results are merged across chunks.
 
+## Degenerate (looped) attempts
+Some attempts hit the output cap because the reasoning degenerated into repetition (`earh.degenerate`, zlib compression ratio of the tail < 0.12; normal reasoning is ≥ 0.19). `scripts/find_truncated_attempts.py <log_dir>` writes `results/<run>/truncated_attempts.csv` with `kind` (`exact_loop` / `circular`), `loop_start` and **`judge_cutoff`**. **The judge reads reasoning only up to `judge_cutoff`** (loop start + one window, so no pre-loop text is lost). Phase 1: 12 truncated attempts (10 exact loops, 2 circular), all in samples that ended as `fail`.
+
 ## Output: tag list (not spans)
 The judge returns only the sentences/lines that carry a label. Spans are computed by code as runs of consecutive tagged IDs with the same label.
 
