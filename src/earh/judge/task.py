@@ -1,10 +1,10 @@
 """Inspect task that runs the judge over a units file (one Sample per judge unit).
 
     uv run inspect eval src/earh/judge/task.py@judge -T units=<units.jsonl> \\
-        --model deepinfra-raw/glm53flash -M reasoning_effort=low --log-dir logs/12-judge/...
+        --model deepinfra-raw/glm53flash -M reasoning_effort=low --log-dir <run>/logs
 
 The solver parses and validates each output; on failure it shows the judge its errors
-and asks again (up to max_retries). The scorer records validity and the parsed tags.
+and asks again (up to max_retries). The scorer records validity and the parsed spans.
 """
 
 from __future__ import annotations
@@ -23,6 +23,7 @@ RETRY_PROMPT = (
     "Your output had these problems:\n{errors}\n\n"
     "Reply again with the complete corrected output only, in the required format."
 )
+META_KEYS = ("attempt_key", "pass", "chunk", "n_chunks", "taggable_ids", "meta")
 
 
 def load_units(
@@ -49,18 +50,7 @@ def load_units(
                         ChatMessageSystem(content=u["system"]),
                         ChatMessageUser(content=u["user"]),
                     ],
-                    metadata={
-                        k: u[k]
-                        for k in (
-                            "attempt_key",
-                            "pass",
-                            "chunk",
-                            "n_chunks",
-                            "taggable_ids",
-                            "mode",
-                            "meta",
-                        )
-                    },
+                    metadata={k: u[k] for k in META_KEYS},
                 )
             )
             if limit and len(samples) >= limit:
@@ -72,7 +62,7 @@ def load_units(
 def judge_solver(max_retries: int = 2) -> Solver:
     """Generate, validate, and retry with the validation errors (up to max_retries).
 
-    Writes metadata["judge"] = {tags, summary, errors, n_retries, valid}.
+    Writes metadata["judge"] = {spans, summary, errors, n_retries, valid}.
 
     @param max_retries: Extra attempts after the first when validation fails.
     @returns: An Inspect solver.
@@ -80,12 +70,9 @@ def judge_solver(max_retries: int = 2) -> Solver:
 
     async def solve(state: TaskState, generate: Generate) -> TaskState:
         md = state.metadata
-        result = None
         for attempt in range(max_retries + 1):
             state = await generate(state)
-            result = parse(
-                state.output.completion, md["pass"], md["taggable_ids"], md["mode"]
-            )
+            result = parse(state.output.completion, md["pass"], md["taggable_ids"])
             if not result.errors or attempt == max_retries:
                 break
             errors = "\n".join(f"- {e}" for e in result.errors[:10])
@@ -93,7 +80,7 @@ def judge_solver(max_retries: int = 2) -> Solver:
                 ChatMessageUser(content=RETRY_PROMPT.format(errors=errors))
             )
         state.metadata["judge"] = {
-            "tags": result.tags,
+            "spans": result.spans,
             "summary": result.summary,
             "errors": result.errors,
             "n_retries": attempt,
@@ -104,19 +91,19 @@ def judge_solver(max_retries: int = 2) -> Solver:
     return solve
 
 
-@scorer(metrics={"valid": [mean()], "n_tags": [mean()], "n_retries": [mean()]})
+@scorer(metrics={"valid": [mean()], "n_spans": [mean()], "n_retries": [mean()]})
 def judge_scorer():
-    """Score = validity, tag count, and retries (for monitoring); tags go in metadata."""
+    """Score = validity, span count, and retries (for monitoring); spans go in metadata."""
 
     async def score(state: TaskState, target: Target) -> Score:
         j = state.metadata["judge"]
         return Score(
             value={
                 "valid": float(j["valid"]),
-                "n_tags": float(len(j["tags"])),
+                "n_spans": float(len(j["spans"])),
                 "n_retries": float(j["n_retries"]),
             },
-            answer=f"{len(j['tags'])} tags" + (" (invalid)" if not j["valid"] else ""),
+            answer=f"{len(j['spans'])} spans" + ("" if j["valid"] else " (invalid)"),
             metadata=j,
         )
 

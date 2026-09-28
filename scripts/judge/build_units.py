@@ -1,7 +1,7 @@
 """Build judge units (prompts) from Track A logs. No API calls.
 
     uv run python scripts/judge/build_units.py logs/03-pilot/v4flash/promptB-5att \
-        --passes A,B1,B2 --mode list --n-attempts 12 --seed 0 --out logs/12-judge/pilot-smoke
+        --passes A,B1,B2 --n-attempts 12 --seed 0 --out logs/12-judge/pilot-smoke
 
 Writes <out>/judge_units.jsonl, <out>/attempts.jsonl (the source attempts), and
 <out>/examples/*.md (a few rendered prompts, for reading).
@@ -22,7 +22,6 @@ def main() -> None:
     p.add_argument("log_dir")
     p.add_argument("--out", required=True)
     p.add_argument("--passes", default="A,B1,B2")
-    p.add_argument("--mode", choices=["list", "all"], default="list")
     p.add_argument(
         "--n-attempts", type=int, default=None, help="random subset of attempts"
     )
@@ -37,7 +36,7 @@ def main() -> None:
         attempts = [a for a in attempts if args.task_filter in a.task]
     if args.n_attempts and args.n_attempts < len(attempts):
         attempts = random.Random(args.seed).sample(attempts, args.n_attempts)
-    units = build_units(attempts, args.passes.split(","), args.mode)
+    units = build_units(attempts, args.passes.split(","))
 
     out = Path(args.out)
     (out / "examples").mkdir(parents=True, exist_ok=True)

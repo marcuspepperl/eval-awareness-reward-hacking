@@ -1,8 +1,8 @@
 """Turn attempts into judge units: one prompt per (attempt × pass × chunk).
 
 Passes (see docs/judging.md):
-  A   eval awareness      reasoning chunks (+ [ctx] overlap)      mode "list" or "all"
-  B1  attempt summary     numbered answer code + tests + result   one unit per attempt
+  A   eval awareness      reasoning chunks (+ [ctx] overlap)      one span per occurrence
+  B1  code summary        numbered answer code + tests + result   one unit per attempt
   B2  reasoning behavior  the same reasoning chunks as A          answer code as context
 
 Prompt order is shared prefix first (system + setup + task + feedback + reasoning chunk),
@@ -38,7 +38,6 @@ class Unit:
     system: str
     user: str
     taggable_ids: list[str]
-    mode: str = ""  # pass A only: "list" | "all"
     meta: dict = field(default_factory=dict)
 
     def to_dict(self) -> dict:
@@ -93,12 +92,11 @@ def _context_block(
     )
 
 
-def reasoning_units(a: Attempt, passes: list[Pass], mode: str = "list") -> list[Unit]:
+def reasoning_units(a: Attempt, passes: list[Pass]) -> list[Unit]:
     """Pass A and/or B2 units for one attempt, one per reasoning chunk.
 
     @param a: The attempt.
     @param passes: Subset of ["A", "B2"] to build.
-    @param mode: Pass A output mode: "list" (tagged IDs only) or "all" (every ID).
     @returns: Units in chunk order; empty if the attempt has no reasoning.
     """
     segs, info = reasoning_segments(a)
@@ -109,52 +107,35 @@ def reasoning_units(a: Attempt, passes: list[Pass], mode: str = "list") -> list[
         s.text for s in segment_answer(a.answer, a.attempt) if s.kind == "code_line"
     )
     system = template("system").strip()
+    suffixes = {
+        "A": template("pass_a"),
+        "B2": fill(template("pass_b2"), answer_code=answer_code),
+    }
     units = []
     for i, body in enumerate(chunks, start=1):
         ctx = chunks[i - 2][-OVERLAP_SENTENCES:] if i > 1 else []
         prefix = _context_block(a, i, len(chunks), ctx, body)
-        ids = [s.id for s in body]
-        meta = {"n_sentences": len(segs), **info}
-        if "A" in passes:
-            out_fmt = template("output_all" if mode == "all" else "output_list")
-            suffix = fill(template("pass_a"), output_format=out_fmt)
-            units.append(
-                Unit(
-                    f"{a.key}:A:c{i}",
-                    a.key,
-                    "A",
-                    i,
-                    len(chunks),
-                    system,
-                    prefix + "\n" + suffix,
-                    ids,
-                    mode,
-                    meta,
+        for pass_ in ("A", "B2"):
+            if pass_ in passes:
+                units.append(
+                    Unit(
+                        id=f"{a.key}:{pass_}:c{i}",
+                        attempt_key=a.key,
+                        pass_=pass_,
+                        chunk=i,
+                        n_chunks=len(chunks),
+                        system=system,
+                        user=prefix + "\n" + suffixes[pass_],
+                        taggable_ids=[s.id for s in body],
+                        meta={"n_sentences": len(segs), **info},
+                    )
                 )
-            )
-        if "B2" in passes:
-            suffix = fill(template("pass_b2"), answer_code=answer_code)
-            units.append(
-                Unit(
-                    f"{a.key}:B2:c{i}",
-                    a.key,
-                    "B2",
-                    i,
-                    len(chunks),
-                    system,
-                    prefix + "\n" + suffix,
-                    ids,
-                    "",
-                    meta,
-                )
-            )
     return units
 
 
 def summary_unit(a: Attempt) -> Unit:
     """The pass B1 unit for one attempt: numbered answer code, tests, and test result."""
-    answer = segment_answer(a.answer, a.attempt)
-    code = [s for s in answer if s.kind == "code_line"]
+    code = [s for s in segment_answer(a.answer, a.attempt) if s.kind == "code_line"]
     result = (
         "PASSED" if a.passed else "FAILED\n" + a.test_output[-MAX_TEST_OUTPUT_CHARS:]
     )
@@ -166,32 +147,29 @@ def summary_unit(a: Attempt) -> Unit:
         test_result=result,
     )
     return Unit(
-        f"{a.key}:B1:c1",
-        a.key,
-        "B1",
-        1,
-        1,
-        template("system").strip(),
-        user,
-        [s.id for s in code],
+        id=f"{a.key}:B1:c1",
+        attempt_key=a.key,
+        pass_="B1",
+        chunk=1,
+        n_chunks=1,
+        system=template("system").strip(),
+        user=user,
+        taggable_ids=[s.id for s in code],
     )
 
 
-def build_units(
-    attempts: list[Attempt], passes: list[Pass], mode: str = "list"
-) -> list[Unit]:
+def build_units(attempts: list[Attempt], passes: list[Pass]) -> list[Unit]:
     """All units for the given attempts and passes.
 
     @param attempts: Attempts from earh.judge.extract.
     @param passes: Any of "A", "B1", "B2".
-    @param mode: Pass A output mode ("list" or "all").
     @returns: Units ordered by attempt, then pass, then chunk.
     """
     units: list[Unit] = []
     for a in attempts:
         rp = [p for p in passes if p in ("A", "B2")]
         if rp:
-            units += reasoning_units(a, rp, mode)
+            units += reasoning_units(a, rp)
         if "B1" in passes:
             units.append(summary_unit(a))
     return units
