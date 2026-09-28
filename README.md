@@ -38,7 +38,7 @@ The work runs as two parallel tracks that share infrastructure:
 | **B**, agentic | V4.1-Flash | 40 | 80% | 5% |
 | **B**, agentic | GLM-5.3-Flash | 40 | 45% | 40% |
 
-95% CIs are a cluster bootstrap over problems. Full ledger with costs: [`results/RUNS.md`](results/RUNS.md).
+95% CIs are a cluster bootstrap over problems. Full run ledgers with costs: `results/RUNS.md` on [`track-a`](../../blob/track-a/results/RUNS.md) and [`track-b`](../../blob/track-b/results/RUNS.md) (main has not caught up with the latest runs yet).
 
 ### Findings
 
