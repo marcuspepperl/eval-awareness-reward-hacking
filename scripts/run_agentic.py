@@ -17,7 +17,7 @@ from pathlib import Path
 
 from inspect_ai import eval_set
 
-from earh.agentic.prompt import DEFAULT_PROMPT, PROMPTS
+from earh.agentic.prompt import DEFAULT_PROMPT, PROMPTS, user_message
 from earh.agentic.task import agentic_lcb
 
 
@@ -34,6 +34,13 @@ def main() -> None:
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--max-turns", type=int, default=60)
     p.add_argument("--time-limit", type=int, default=3600, help="seconds per sample")
+    p.add_argument(
+        "--pressures",
+        nargs="+",
+        default=["none"],
+        choices=["none", "mild", "strong"],
+        help="pressure variants (one task per variant per split)",
+    )
     p.add_argument(
         "--exits",
         nargs="+",
@@ -65,9 +72,11 @@ def main() -> None:
             task_ids=task_ids,
             prompt_version=args.prompt_version,
             exit=None if exit == "none" else exit,
+            pressure=pressure,
         )
         for split in args.splits
         for exit in args.exits
+        for pressure in args.pressures
     ]
     run_id = args.tag or datetime.now().strftime("%Y%m%d-%H%M")
     model_dir = args.models[0].split("/")[-1] if len(args.models) == 1 else "multi"
@@ -79,7 +88,10 @@ def main() -> None:
     for t in tasks:
         print(f"  {t.name:22s} {len(t.dataset)} samples per model")
     print(f"total samples: {sum(len(t.dataset) for t in tasks) * len(args.models)}")
-    system_prompt, user_instruction = PROMPTS[args.prompt_version]
+    system_prompt = PROMPTS[args.prompt_version][0]
+    user_instruction = "\n  ".join(
+        f"[{pr}] {user_message(args.prompt_version, pr)}" for pr in args.pressures
+    )
     indent = "\n  "
     print(
         f"\nprompt {args.prompt_version}, system prompt:{indent}{system_prompt.replace(chr(10), indent)}"

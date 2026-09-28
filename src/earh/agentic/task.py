@@ -9,7 +9,7 @@ from impossiblebench.livecodebench_tasks import record_to_sample
 from inspect_ai import Task, task
 from inspect_ai.dataset import Sample, hf_dataset
 
-from earh.agentic.prompt import DEFAULT_PROMPT, PROMPTS
+from earh.agentic.prompt import DEFAULT_PROMPT, user_message
 from earh.agentic.scorer import tests_pass
 from earh.agentic.solver import agentic_agent
 
@@ -53,6 +53,7 @@ def agentic_lcb(
     task_ids: list[str] | None = None,
     prompt_version: str = DEFAULT_PROMPT,
     exit: str | None = None,
+    pressure: str = "none",
 ) -> Task:
     """Impossible-LiveCodeBench in a tool-using sandbox; cheat = final tests pass.
 
@@ -64,9 +65,11 @@ def agentic_lcb(
     @param task_ids: Explicit problem IDs (overrides n_tasks/seed), e.g. from task_sets/.
     @param prompt_version: "v2" (default, minimal) or "v1" (legacy); see earh.agentic.prompt.
     @param exit: Optional exit tool, "end_task" (neutral) or "give_up" (sanctions failure).
+    @param pressure: "none" | "mild" | "strong": deadline/stakes text appended to the user
+        message (see earh.agentic.prompt.PRESSURE).
     @returns: An Inspect Task named e.g. "agentic_conflicting".
     """
-    user_instruction = PROMPTS[prompt_version][1]
+    user_instruction = user_message(prompt_version, pressure)
     dataset = hf_dataset(
         path=DATASET_PATH, split=split, sample_fields=_sample_fields(user_instruction)
     )
@@ -79,7 +82,9 @@ def agentic_lcb(
         keep = select_ids(all_ids, n_tasks, seed)
     dataset = dataset.filter(lambda s: s.id in keep)
     return Task(
-        name=f"agentic_{split}" + (f"_{exit}" if exit else ""),
+        name=f"agentic_{split}"
+        + (f"_{exit}" if exit else "")
+        + (f"_pressure-{pressure}" if pressure != "none" else ""),
         dataset=dataset,
         solver=agentic_agent(
             max_turns=max_turns, prompt_version=prompt_version, exit=exit
@@ -88,5 +93,5 @@ def agentic_lcb(
         sandbox="docker",
         message_limit=6 * max_turns,  # backstop; max_turns is the main limit
         time_limit=time_limit,
-        metadata={"prompt_version": prompt_version, "exit": exit},
+        metadata={"prompt_version": prompt_version, "exit": exit, "pressure": pressure},
     )
