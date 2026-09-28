@@ -8,34 +8,59 @@ from inspect_ai.model import ChatMessageSystem
 from inspect_ai.solver import Generate, Solver, TaskState, solver
 from inspect_ai.tool import bash, python, text_editor
 
-from earh.agentic.prompt import SYSTEM_PROMPT, write_task_files
+from earh.agentic.prompt import DEFAULT_PROMPT, PROMPTS, write_task_files
 from earh.inspect_provider import generate_with_prefill
 
 TOOL_TIMEOUT_S = 60
 
 
 @solver
-def agentic_agent(max_turns: int = 30, max_parse_errors: int = 3) -> Solver:
+def agentic_agent(
+    max_turns: int = 60,
+    max_parse_errors: int = 3,
+    max_truncation_retries: int = 2,
+    prompt_version: str = DEFAULT_PROMPT,
+) -> Solver:
     """Tool-using coding agent that works until it stops calling tools.
 
-    Setup writes func.py/test.py and a system prompt. Each turn is one model call
+    Setup writes func.py/test.py and the system prompt. Each turn is one model call
     followed by execution of its tool calls (tool_calls="single"). The first call is
-    prefilled with metadata["prefill"] if present; with tools, V4 keeps that reasoning
-    in context for the rest of the episode. Malformed tool calls come back to the model
-    as tool errors; the episode ends after max_parse_errors of them.
+    prefilled with metadata["prefill"] if present; with tools, prior reasoning stays in
+    context for the rest of the episode.
 
-    Writes metadata["agent"] = {stop_reason, turns, tool_calls, parse_errors}, where
-    stop_reason is "model_stopped" | "max_turns" | "parse_errors" | "limit" (a task-level
-    time/message limit ended the episode).
+    Infrastructure limits are never read as the model's choice:
+    - A call cut off by max_tokens is discarded and resampled (up to
+      max_truncation_retries); if it keeps truncating, the episode ends as "truncated".
+    - A call rejected for exceeding the context window ends the episode as
+      "context_overflow".
+    - Malformed tool calls come back to the model as tool errors; the episode ends
+      after max_parse_errors of them.
 
-    @param max_turns: Maximum model calls per episode.
+    Writes metadata["agent"] = {stop_reason, turns, tool_calls, parse_errors,
+    truncations}. stop_reason is "model_stopped" | "max_turns" | "parse_errors" |
+    "truncated" | "context_overflow" | "limit" (a task-level time/message limit ended
+    the episode).
+
+    @param max_turns: Maximum (kept) model calls per episode.
     @param max_parse_errors: Malformed tool calls tolerated before ending the episode.
+    @param max_truncation_retries: Resamples allowed for a single truncated call.
+    @param prompt_version: Key into earh.agentic.prompt.PROMPTS (system prompt used here).
     @returns: An Inspect solver.
     """
+    system_prompt = PROMPTS[prompt_version][0]
+
+    async def call(state: TaskState, generate: Generate, first: bool) -> TaskState:
+        """One model call + tool execution; the first call carries the prefill."""
+        if first:
+            prefill = state.metadata.get("prefill", "")
+            return await generate_with_prefill(
+                state, generate, prefill, tool_calls="single"
+            )
+        return await generate(state, tool_calls="single")
 
     async def solve(state: TaskState, generate: Generate) -> TaskState:
         await write_task_files(state.metadata)
-        state.messages.insert(0, ChatMessageSystem(content=SYSTEM_PROMPT))
+        state.messages.insert(0, ChatMessageSystem(content=system_prompt))
         state.tools = [
             bash(timeout=TOOL_TIMEOUT_S),
             python(timeout=TOOL_TIMEOUT_S),
@@ -47,20 +72,26 @@ def agentic_agent(max_turns: int = 30, max_parse_errors: int = 3) -> Solver:
             "turns": 0,
             "tool_calls": 0,
             "parse_errors": 0,
+            "truncations": 0,
         }
         state.metadata["agent"] = info
 
         for turn in range(max_turns):
-            if turn == 0:
-                state = await generate_with_prefill(
-                    state,
-                    generate,
-                    state.metadata.get("prefill", ""),
-                    tool_calls="single",
-                )
-            else:
-                state = await generate(state, tool_calls="single")
+            for _attempt in range(max_truncation_retries + 1):
+                n_before = len(state.messages)
+                state = await call(state, generate, first=turn == 0)
+                if state.output.stop_reason != "max_tokens":
+                    break
+                # Truncated (no tool call, reasoning cut mid-thought): discard and resample.
+                info["truncations"] += 1
+                del state.messages[n_before:]
             message = state.output.message
+            if state.output.stop_reason == "max_tokens":
+                info["stop_reason"] = "truncated"
+                break
+            if state.output.stop_reason == "model_length":
+                info["stop_reason"] = "context_overflow"
+                break
             info["turns"] += 1
             info["tool_calls"] += len(message.tool_calls or [])
             if (message.metadata or {}).get("tool_parse_error"):

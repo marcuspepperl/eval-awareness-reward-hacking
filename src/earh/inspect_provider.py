@@ -22,6 +22,7 @@ import time
 from typing import Any
 
 import httpx
+import openai
 import pydantic
 from inspect_ai.model import (
     ChatCompletionChoice,
@@ -167,6 +168,14 @@ def _to_tool_calls(openai_calls: list[dict[str, Any]]) -> list[ToolCall]:
     return calls
 
 
+def _is_context_overflow(ex: openai.BadRequestError) -> bool:
+    """Whether a 400 from DeepInfra means the prompt exceeded the context window."""
+    msg = str(ex).lower()
+    return "context" in msg and any(
+        w in msg for w in ("length", "window", "exceed", "maximum")
+    )
+
+
 def _parse_with_tools(
     spec: ModelSpec,
     prefill: str,
@@ -291,7 +300,8 @@ class DeepInfraRawAPI(ModelAPI):
             messages,
             prefill,
             drop_thinking=self.drop_thinking,
-            reasoning_effort=self.reasoning_effort,
+            reasoning_effort=self.reasoning_effort
+            or self.spec.default_reasoning_effort,
         )
         request: dict[str, Any] = dict(
             model=self.spec.deepinfra_id,
@@ -307,7 +317,17 @@ class DeepInfraRawAPI(ModelAPI):
             request["seed"] = config.seed
 
         start = time.monotonic()
-        text, finish_reason, usage = await self._stream(request)
+        try:
+            text, finish_reason, usage = await self._stream(request)
+        except openai.BadRequestError as ex:
+            if not _is_context_overflow(ex):
+                raise
+            output = ModelOutput.from_content(
+                self.spec.deepinfra_id, "", stop_reason="model_length", error=str(ex)
+            )
+            return output, ModelCall.create(
+                request=request, response={"error": str(ex)}
+            )
 
         metadata: dict[str, Any] = {"prefill": prefill} if prefill else {}
         tool_calls: list[ToolCall] = []

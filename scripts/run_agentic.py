@@ -17,7 +17,7 @@ from pathlib import Path
 
 from inspect_ai import eval_set
 
-from earh.agentic.prompt import SYSTEM_PROMPT, USER_INSTRUCTION
+from earh.agentic.prompt import DEFAULT_PROMPT, PROMPTS
 from earh.agentic.task import agentic_lcb
 
 
@@ -32,8 +32,9 @@ def main() -> None:
     p.add_argument("--splits", nargs="+", default=["oneoff", "conflicting"])
     p.add_argument("--n-tasks", type=int, default=25)
     p.add_argument("--seed", type=int, default=0)
-    p.add_argument("--max-turns", type=int, default=30)
-    p.add_argument("--time-limit", type=int, default=1800, help="seconds per sample")
+    p.add_argument("--max-turns", type=int, default=60)
+    p.add_argument("--time-limit", type=int, default=3600, help="seconds per sample")
+    p.add_argument("--prompt-version", choices=sorted(PROMPTS), default=DEFAULT_PROMPT)
     p.add_argument("--max-connections", type=int, default=100)  # Track A shares 200
     p.add_argument("--max-sandboxes", type=int, default=100)
     p.add_argument(
@@ -55,6 +56,7 @@ def main() -> None:
             max_turns=args.max_turns,
             time_limit=args.time_limit,
             task_ids=task_ids,
+            prompt_version=args.prompt_version,
         )
         for split in args.splits
     ]
@@ -68,8 +70,12 @@ def main() -> None:
     for t in tasks:
         print(f"  {t.name:22s} {len(t.dataset)} samples per model")
     print(f"total samples: {sum(len(t.dataset) for t in tasks) * len(args.models)}")
-    print(f"\nsystem prompt:\n  {SYSTEM_PROMPT.replace(chr(10), chr(10) + '  ')}")
-    print(f"\nuser instruction:\n  {USER_INSTRUCTION.replace(chr(10), chr(10) + '  ')}")
+    system_prompt, user_instruction = PROMPTS[args.prompt_version]
+    indent = "\n  "
+    print(
+        f"\nprompt {args.prompt_version}, system prompt:{indent}{system_prompt.replace(chr(10), indent)}"
+    )
+    print(f"user instruction:{indent}{user_instruction.replace(chr(10), indent)}")
     if not args.run:
         print("\n(dry run; pass --run to execute)")
         return

@@ -1,0 +1,28 @@
+# 20 Impossible-LiveCodeBench problems for the Track B model-selection round (v2 prompt).
+# = the 10 in balanced10.txt + 10 more chosen using Track A's observational run
+# (logs/10-observational/v4flash/baseline-8att: all 103 problems x 2 epochs x 8 attempts,
+# minimal scaffold, V4-Flash). The extra 10 were sampled at random from the other 93,
+# re-seeding (first success: seed 12) until the combined 20's V4 cheat rates were within
+# 3pp of the population's: oneoff 77.5% (pop 78.6%), conflicting 55.0% (pop 57.3%).
+# Original 10
+lcbhard_39
+lcbhard_47
+lcbhard_52
+lcbhard_61
+lcbhard_65
+lcbhard_68
+lcbhard_83
+lcbhard_86
+lcbhard_94
+lcbhard_102
+# Added 10
+lcbhard_1
+lcbhard_18
+lcbhard_34
+lcbhard_45
+lcbhard_49
+lcbhard_50
+lcbhard_64
+lcbhard_73
+lcbhard_92
+lcbhard_93

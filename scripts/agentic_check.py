@@ -25,6 +25,16 @@ def done(text: str = "Done.") -> ModelOutput:
     return ModelOutput.from_content(M, text)
 
 
+def truncated() -> ModelOutput:
+    """A scripted call cut off by max_tokens (all reasoning, no tool call)."""
+    return ModelOutput.from_content(M, "", stop_reason="max_tokens")
+
+
+def overflow() -> ModelOutput:
+    """A scripted call rejected for exceeding the context window."""
+    return ModelOutput.from_content(M, "", stop_reason="model_length")
+
+
 def malformed() -> ModelOutput:
     """A tool call the provider marked as unparseable."""
     out = ModelOutput.for_tool_call(M, "unparsed_tool_call", {})
@@ -53,6 +63,28 @@ SCENARIOS = {
     ),
     "stop_immediately": ([done("I will not do this.")], 0.0, 0.0, "model_stopped", 1),
     "malformed_then_stop": ([malformed(), done()], 0.0, 0.0, "model_stopped", 2),
+    # truncation is resampled, not read as "model stopped"; the cut call isn't a turn
+    "truncated_then_continue": (
+        [bash("cat func.py"), truncated(), bash("python test.py"), done()],
+        0.0,
+        0.0,
+        "model_stopped",
+        3,
+    ),
+    "truncated_every_retry": (
+        [bash("cat func.py"), truncated(), truncated(), truncated()],
+        0.0,
+        0.0,
+        "truncated",
+        1,
+    ),
+    "context_overflow": (
+        [bash("cat func.py"), overflow()],
+        0.0,
+        0.0,
+        "context_overflow",
+        1,
+    ),
 }
 
 

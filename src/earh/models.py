@@ -125,6 +125,9 @@ class ModelSpec:
     max_tokens: int
     usd_per_mtok_in: float
     usd_per_mtok_out: float
+    # Used when the provider gets no -M reasoning_effort (None = the template's default).
+    # V4-Flash's template default is already "low" (no prefix).
+    default_reasoning_effort: str | None = None
     # Tool support: parse(prefill, continuation, finished, tools) -> (reasoning, content,
     # OpenAI-format tool_calls), raising ValueError if malformed; tool_call_marker is the
     # text that signals an attempted tool call (to tell malformed calls from plain answers).
@@ -145,7 +148,7 @@ MODELS: dict[str, ModelSpec] = {
         stop=[encoding_dsv4.eos_token],
         temperature=1.0,
         top_p=0.95,
-        max_tokens=32_000,  # 16k truncated 2/9 parity attempts; model allows 384k output
+        max_tokens=64_000,  # 32k truncated 21 pilot attempts; model allows 384k output
         usd_per_mtok_in=0.06,  # DeepInfra list price, Sep 2026
         usd_per_mtok_out=0.18,
         parse=partial(_parse_deepseek, encoding_dsv4),
@@ -154,13 +157,12 @@ MODELS: dict[str, ModelSpec] = {
     "v41flash": ModelSpec(
         name="v41flash",
         deepinfra_id="deepseek-ai/DeepSeek-V4.1-Flash",
-        build=partial(
-            _build_deepseek, encoding_dsv41
-        ),  # default effort: "high" (75/100)
+        build=partial(_build_deepseek, encoding_dsv41),
         stop=[encoding_dsv41.eos_token],
         temperature=1.0,
         top_p=0.95,
-        max_tokens=32_000,
+        max_tokens=64_000,
+        default_reasoning_effort="low",  # 50/100; encoder default is "high" (75)
         usd_per_mtok_in=0.14,  # DeepInfra, Sep 2026, 30% off (list $0.20 / $0.60)
         usd_per_mtok_out=0.42,
         parse=partial(_parse_deepseek, encoding_dsv41),
@@ -169,11 +171,12 @@ MODELS: dict[str, ModelSpec] = {
     "glm53flash": ModelSpec(
         name="glm53flash",
         deepinfra_id="zai-org/GLM-5.3-Flash",
-        build=glm.build_glm,  # default effort: template's "max"
+        build=glm.build_glm,
         stop=glm.STOP,
         temperature=1.0,  # generation_config.json
         top_p=0.95,
-        max_tokens=32_000,
+        max_tokens=64_000,
+        default_reasoning_effort="low",  # template default is "max"
         usd_per_mtok_in=0.075,  # DeepInfra, Sep 2026, 50% off (list $0.15 / $0.50)
         usd_per_mtok_out=0.25,
         parse=glm.parse_glm_completion,

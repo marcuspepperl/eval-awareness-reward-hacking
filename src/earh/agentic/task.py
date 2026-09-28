@@ -3,23 +3,17 @@
 from __future__ import annotations
 
 import random
+from typing import Any
 
-from impossiblebench.livecodebench_tasks import (
-    INSTRUCTION_SUFFIX_TOOLS,
-    record_to_sample,
-)
+from impossiblebench.livecodebench_tasks import record_to_sample
 from inspect_ai import Task, task
-from inspect_ai.dataset import hf_dataset
+from inspect_ai.dataset import Sample, hf_dataset
 
-from earh.agentic.prompt import USER_INSTRUCTION
+from earh.agentic.prompt import DEFAULT_PROMPT, PROMPTS
 from earh.agentic.scorer import tests_pass
 from earh.agentic.solver import agentic_agent
 
 DATASET_PATH = "fjzzq2002/impossible_livecodebench"
-
-# record_to_sample only omits the inline code block when this suffix is in the
-# instruction; ours ends with it verbatim.
-assert USER_INSTRUCTION.endswith(INSTRUCTION_SUFFIX_TOOLS.strip())
 
 
 def select_ids(all_ids: list[str], n_tasks: int | None, seed: int) -> set[str]:
@@ -30,14 +24,34 @@ def select_ids(all_ids: list[str], n_tasks: int | None, seed: int) -> set[str]:
     return set(random.Random(seed).sample(ids, n_tasks))
 
 
+def _sample_fields(user_instruction: str):
+    """ImpossibleBench's record_to_sample (metadata), with input = our instruction only.
+
+    Their converter inlines the signature + tests into the input unless the instruction
+    contains their tools-scaffold suffix; the files carry that content here, so we replace
+    the input with the bare instruction.
+    """
+    convert = record_to_sample(
+        instruction_prompt=user_instruction, allow_test_modifications=True
+    )
+
+    def fields(record: dict[str, Any]) -> Sample:
+        sample = convert(record)
+        sample.input = user_instruction
+        return sample
+
+    return fields
+
+
 @task
 def agentic_lcb(
     split: str = "conflicting",
     n_tasks: int | None = 25,
     seed: int = 0,
-    max_turns: int = 30,
-    time_limit: int = 1800,
+    max_turns: int = 60,
+    time_limit: int = 3600,
     task_ids: list[str] | None = None,
+    prompt_version: str = DEFAULT_PROMPT,
 ) -> Task:
     """Impossible-LiveCodeBench in a tool-using sandbox; cheat = final tests pass.
 
@@ -47,14 +61,12 @@ def agentic_lcb(
     @param max_turns: Maximum model calls per episode.
     @param time_limit: Wall-clock seconds per sample.
     @param task_ids: Explicit problem IDs (overrides n_tasks/seed), e.g. from task_sets/.
+    @param prompt_version: "v2" (default, minimal) or "v1" (legacy); see earh.agentic.prompt.
     @returns: An Inspect Task named e.g. "agentic_conflicting".
     """
+    user_instruction = PROMPTS[prompt_version][1]
     dataset = hf_dataset(
-        path=DATASET_PATH,
-        split=split,
-        sample_fields=record_to_sample(
-            instruction_prompt=USER_INSTRUCTION, allow_test_modifications=True
-        ),
+        path=DATASET_PATH, split=split, sample_fields=_sample_fields(user_instruction)
     )
     all_ids = [str(s.id) for s in dataset]
     if task_ids is not None:
@@ -67,9 +79,10 @@ def agentic_lcb(
     return Task(
         name=f"agentic_{split}",
         dataset=dataset,
-        solver=agentic_agent(max_turns=max_turns),
+        solver=agentic_agent(max_turns=max_turns, prompt_version=prompt_version),
         scorer=tests_pass(),
         sandbox="docker",
         message_limit=6 * max_turns,  # backstop; max_turns is the main limit
         time_limit=time_limit,
+        metadata={"prompt_version": prompt_version},
     )
