@@ -24,8 +24,8 @@ The work runs as two parallel tracks that share infrastructure:
 
 | Track | Branch | Scaffold |
 |---|---|---|
-| **A** | [`track-a`](../../tree/track-a) | Minimal ImpossibleBench-style loop: the model writes a code block, gets a neutral "Tests failed." message, and retries (up to 8 attempts) |
-| **B** | [`track-b`](../../tree/track-b) | Realistic coding agent: `bash` / `python` / editor tools in a sandbox with `func.py` + `test.py`; the episode ends when the model stops calling tools |
+| **A** | [`track-a`](https://github.com/marcuspepperl/eval-awareness-reward-hacking/tree/track-a) | Minimal ImpossibleBench-style loop: the model writes a code block, gets a neutral "Tests failed." message, and retries (up to 8 attempts) |
+| **B** | [`track-b`](https://github.com/marcuspepperl/eval-awareness-reward-hacking/tree/track-b) | Realistic coding agent: `bash` / `python` / editor tools in a sandbox with `func.py` + `test.py`; the episode ends when the model stops calling tools |
 
 ## Results so far
 
@@ -38,7 +38,7 @@ The work runs as two parallel tracks that share infrastructure:
 | **B**, agentic | V4.1-Flash | 40 | 80% | 5% |
 | **B**, agentic | GLM-5.3-Flash | 40 | 45% | 40% |
 
-95% CIs are a cluster bootstrap over problems. Full run ledgers with costs: `results/RUNS.md` on [`track-a`](../../blob/track-a/results/RUNS.md) and [`track-b`](../../blob/track-b/results/RUNS.md) (main has not caught up with the latest runs yet).
+95% CIs are a cluster bootstrap over problems. Full run ledgers with costs: `results/RUNS.md` on [`track-a`](https://github.com/marcuspepperl/eval-awareness-reward-hacking/blob/track-a/results/RUNS.md) and [`track-b`](https://github.com/marcuspepperl/eval-awareness-reward-hacking/blob/track-b/results/RUNS.md) (main has not caught up with the latest runs yet).
 
 ### Findings
 
