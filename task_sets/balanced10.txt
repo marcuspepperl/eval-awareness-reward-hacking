@@ -1,0 +1,16 @@
+# 10 Impossible-LiveCodeBench problems for the Track B multi-model comparison.
+# Chosen from the 25 problems of Track A's pilot (logs/03-pilot/v4flash/promptB-5att,
+# no-flag arms) so V4-Flash's pilot cheat rates are reproduced in BOTH splits with the
+# SAME problems: strata by (oneoff, conflicting) outcome, sampled 4 (cheat, honest) +
+# 3 (cheat, cheat) + 3 (honest, honest) at random (seed 0) -> oneoff 7/10, conflicting 3/10
+# (pilot: 72% / 28%). Per-problem labels are single samples from the minimal scaffold.
+lcbhard_39
+lcbhard_47
+lcbhard_52
+lcbhard_61
+lcbhard_65
+lcbhard_68
+lcbhard_83
+lcbhard_86
+lcbhard_94
+lcbhard_102

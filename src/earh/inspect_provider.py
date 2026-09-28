@@ -1,6 +1,9 @@
 """Inspect model provider for DeepInfra raw completions with CoT prefill.
 
 Usage: --model deepinfra-raw/v4flash  or  --model deepinfra-raw/qwen3-32b
+Tools: supported for models with a parser (spec.supports_tools): V4/V4.1-Flash (DSML)
+and GLM-5.3-Flash (<tool_call>). With tools, prior reasoning stays in context (DeepSeek's
+encoder auto-disables drop_thinking; GLM's template keeps it by default).
 Model args (-M): drop_thinking (bool, default True), reasoning_effort (V4 only: low|high|max),
                  max_connections (int, default 32).
 
@@ -13,6 +16,8 @@ prefill message after generate() (generate_with_prefill does this).
 
 from __future__ import annotations
 
+import json
+import secrets
 import time
 from typing import Any
 
@@ -29,15 +34,16 @@ from inspect_ai.model import (
     ModelUsage,
 )
 from inspect_ai.model._model_call import ModelCall
-from inspect_ai.model._openai import openai_should_retry
+from inspect_ai.model._openai import openai_chat_tools, openai_should_retry
 from inspect_ai.solver import Generate, TaskState
-from inspect_ai.tool import ToolChoice, ToolInfo
+from inspect_ai.tool import ToolCall, ToolChoice, ToolInfo
 from openai import AsyncOpenAI
 
 from earh.models import (
     DEEPINFRA_BASE_URL,
     MODELS,
     Message,
+    ModelSpec,
     build_prompt,
     normalize_prefill,
     split_reasoning,
@@ -64,43 +70,142 @@ def is_prefill(message: ChatMessage) -> bool:
 
 
 async def generate_with_prefill(
-    state: TaskState, generate: Generate, prefill: str
+    state: TaskState, generate: Generate, prefill: str, **generate_kwargs: Any
 ) -> TaskState:
     """Call generate() with the model's reasoning block prefilled.
 
     Appends a prefill marker, generates, then removes the marker so history holds only
-    the model's reply (whose reasoning already starts with the prefill).
+    the model's reply (whose reasoning already starts with the prefill) and any tool
+    results. With tools, pass tool_calls="single" (not "loop"): the marker must be the
+    last message only for the first model call.
 
     @param state: Current task state; its messages are mutated.
     @param generate: Inspect's generate function passed to the solver.
     @param prefill: Text to start the reasoning with ("" = plain generate).
+    @param generate_kwargs: Passed through to generate (e.g. tool_calls="single").
     @returns: The updated task state.
     """
     if not prefill:
-        return await generate(state)
-    state.messages.append(prefill_message(prefill))
-    state = await generate(state)
-    # generate() appended the model's reply after our prefill message; drop the prefill
-    # (the reply's reasoning already starts with it).
-    del state.messages[-2]
+        return await generate(state, **generate_kwargs)
+    marker = prefill_message(prefill)
+    state.messages.append(marker)
+    state = await generate(state, **generate_kwargs)
+    state.messages = [m for m in state.messages if m is not marker]
     return state
 
 
-def _to_messages(input: list[ChatMessage]) -> list[Message]:
-    """Convert Inspect messages to builder dicts, carrying assistant reasoning as reasoning_content."""
+def _to_messages(
+    input: list[ChatMessage], tools: list[ToolInfo] | None = None
+) -> list[Message]:
+    """Convert Inspect messages to builder dicts (OpenAI-format tool fields).
+
+    Assistant reasoning becomes reasoning_content (the builder decides whether to keep
+    it); assistant tool calls and tool results are carried over; tool definitions are
+    attached to the system message (one is created if absent), as V4's encoder expects.
+
+    @param input: Inspect conversation.
+    @param tools: Tool definitions offered to the model (None/empty = no tools).
+    @returns: Message dicts for earh.models.build_prompt.
+    """
     out: list[Message] = []
     for m in input:
-        if m.role not in ("system", "user", "assistant"):
-            raise ValueError(f"deepinfra-raw does not support {m.role!r} messages")
+        if m.role == "tool" and not tools:
+            raise ValueError("deepinfra-raw got a tool message but no tools")
         msg: Message = {"role": m.role, "content": m.text}
-        if m.role == "assistant" and not isinstance(m.content, str):
-            reasoning = "\n".join(
-                c.reasoning for c in m.content if isinstance(c, ContentReasoning)
-            )
-            if reasoning:
-                msg["reasoning_content"] = reasoning
+        if m.role == "assistant":
+            if not isinstance(m.content, str):
+                reasoning = "\n".join(
+                    c.reasoning for c in m.content if isinstance(c, ContentReasoning)
+                )
+                if reasoning:
+                    msg["reasoning_content"] = reasoning
+            if m.tool_calls:
+                msg["tool_calls"] = [
+                    {
+                        "type": "function",
+                        "id": tc.id,
+                        "function": {
+                            "name": tc.function,
+                            "arguments": json.dumps(tc.arguments),
+                        },
+                    }
+                    for tc in m.tool_calls
+                ]
+        elif m.role == "tool":
+            msg["tool_call_id"] = m.tool_call_id or ""
+            if m.error:
+                msg["content"] = (m.text + "\n" if m.text else "") + (
+                    f"Error: {m.error.message}"
+                )
         out.append(msg)
+    if tools:
+        if not out or out[0]["role"] != "system":
+            out.insert(0, {"role": "system", "content": ""})
+        out[0]["tools"] = [dict(t) for t in openai_chat_tools(tools)]
     return out
+
+
+def _to_tool_calls(openai_calls: list[dict[str, Any]]) -> list[ToolCall]:
+    """Convert parsed OpenAI-format tool calls to Inspect ToolCalls (bad JSON -> parse_error)."""
+    calls = []
+    for c in openai_calls:
+        fn = c["function"]
+        call_id = f"call_{secrets.token_hex(6)}"
+        try:
+            args = json.loads(fn["arguments"])
+            calls.append(ToolCall(id=call_id, function=fn["name"], arguments=args))
+        except json.JSONDecodeError as ex:
+            calls.append(
+                ToolCall(
+                    id=call_id,
+                    function=fn["name"],
+                    arguments={},
+                    parse_error=f"Invalid tool call arguments: {ex}",
+                )
+            )
+    return calls
+
+
+def _parse_with_tools(
+    spec: ModelSpec,
+    prefill: str,
+    text: str,
+    finish_reason: str | None,
+    tools: list[dict[str, Any]] | None = None,
+) -> tuple[str, str, list[ToolCall], str | None]:
+    """Parse a tools-enabled completion with the model's parser; never raises.
+
+    Truncated output (no `</think>`) becomes all-reasoning with no calls. If the output
+    looks like a tool call but is malformed, we return one placeholder ToolCall with
+    parse_error set, so Inspect reports the error to the model and the loop continues.
+
+    @param spec: Model (provides parse and tool_call_marker).
+    @param prefill: Prefill the prompt ended with.
+    @param text: Generated continuation.
+    @param finish_reason: API finish reason ("stop" | "length" | None).
+    @param tools: OpenAI-format tool definitions (some parsers use them to type arguments).
+    @returns: (reasoning, answer, tool_calls, parse_error or None).
+    """
+    try:
+        reasoning, answer, calls = spec.parse(
+            prefill, text, finish_reason != "length", tools
+        )
+        return reasoning, answer, _to_tool_calls(calls), None
+    except ValueError as ex:
+        full = prefill + text
+        reasoning, _, rest = full.partition("</think>")
+        if finish_reason == "length" or not rest:
+            return full.strip(), "", [], None
+        if spec.tool_call_marker not in rest:  # plain answer, just unparseable
+            return reasoning.strip(), rest.strip(), [], None
+        error = f"Malformed tool call ({ex}). Use the exact tool-call format."
+        placeholder = ToolCall(
+            id=f"call_{secrets.token_hex(6)}",
+            function="unparsed_tool_call",
+            arguments={},
+            parse_error=error,
+        )
+        return reasoning.strip(), rest.strip(), [placeholder], str(ex)
 
 
 class DeepInfraRawAPI(ModelAPI):
@@ -165,22 +270,24 @@ class DeepInfraRawAPI(ModelAPI):
         appears (usually max_tokens), all text is treated as reasoning with an empty answer.
 
         @param input: Conversation so far, optionally ending with a prefill marker.
-        @param tools: Must be empty; tools are not supported.
-        @param tool_choice: Ignored.
+        @param tools: Tool definitions (only for models with spec.supports_tools).
+        @param tool_choice: Ignored (the model decides; "none" is not enforced).
         @param config: Per-call generation config (max_tokens, temperature, top_p, seed).
         @returns: (ModelOutput with ContentReasoning + ContentText, ModelCall with the raw request).
         """
-        if tools:
-            raise ValueError("deepinfra-raw does not support tools")
+        if tools and not self.spec.supports_tools:
+            raise ValueError(f"deepinfra-raw/{self.spec.name} does not support tools")
 
         prefill = ""
         if input and is_prefill(input[-1]):
             prefill = normalize_prefill(input[-1].text)
             input = input[:-1]
 
+        messages = _to_messages(input, tools)
+        openai_tools = messages[0].get("tools") if tools else None
         prompt = build_prompt(
             self.spec,
-            _to_messages(input),
+            messages,
             prefill,
             drop_thinking=self.drop_thinking,
             reasoning_effort=self.reasoning_effort,
@@ -201,23 +308,34 @@ class DeepInfraRawAPI(ModelAPI):
         start = time.monotonic()
         text, finish_reason, usage = await self._stream(request)
 
-        reasoning, answer = split_reasoning(prefill, text)
-        if reasoning is None:
-            reasoning, answer = (prefill + text).strip(), ""
+        metadata: dict[str, Any] = {"prefill": prefill} if prefill else {}
+        tool_calls: list[ToolCall] = []
+        if tools:
+            reasoning, answer, tool_calls, parse_error = _parse_with_tools(
+                self.spec, prefill, text, finish_reason, openai_tools
+            )
+            if parse_error:
+                metadata["tool_parse_error"] = parse_error
+        else:
+            reasoning, answer = split_reasoning(prefill, text)
+            if reasoning is None:
+                reasoning, answer = (prefill + text).strip(), ""
         message = ChatMessageAssistant(
             content=[ContentReasoning(reasoning=reasoning), ContentText(text=answer)],
+            tool_calls=tool_calls or None,
             model=self.spec.deepinfra_id,
             source="generate",
-            metadata={"prefill": prefill} if prefill else None,
+            metadata=metadata or None,
         )
+        if finish_reason == "length":
+            stop_reason = "max_tokens"
+        elif tool_calls:
+            stop_reason = "tool_calls"
+        else:
+            stop_reason = "stop"
         output = ModelOutput(
             model=self.spec.deepinfra_id,
-            choices=[
-                ChatCompletionChoice(
-                    message=message,
-                    stop_reason="max_tokens" if finish_reason == "length" else "stop",
-                )
-            ],
+            choices=[ChatCompletionChoice(message=message, stop_reason=stop_reason)],
             usage=ModelUsage(
                 input_tokens=usage.prompt_tokens,
                 output_tokens=usage.completion_tokens,
