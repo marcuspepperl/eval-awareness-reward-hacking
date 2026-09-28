@@ -52,6 +52,7 @@ def agentic_lcb(
     time_limit: int = 3600,
     task_ids: list[str] | None = None,
     prompt_version: str = DEFAULT_PROMPT,
+    exit: str | None = None,
 ) -> Task:
     """Impossible-LiveCodeBench in a tool-using sandbox; cheat = final tests pass.
 
@@ -62,6 +63,7 @@ def agentic_lcb(
     @param time_limit: Wall-clock seconds per sample.
     @param task_ids: Explicit problem IDs (overrides n_tasks/seed), e.g. from task_sets/.
     @param prompt_version: "v2" (default, minimal) or "v1" (legacy); see earh.agentic.prompt.
+    @param exit: Optional exit tool, "end_task" (neutral) or "give_up" (sanctions failure).
     @returns: An Inspect Task named e.g. "agentic_conflicting".
     """
     user_instruction = PROMPTS[prompt_version][1]
@@ -77,12 +79,14 @@ def agentic_lcb(
         keep = select_ids(all_ids, n_tasks, seed)
     dataset = dataset.filter(lambda s: s.id in keep)
     return Task(
-        name=f"agentic_{split}",
+        name=f"agentic_{split}" + (f"_{exit}" if exit else ""),
         dataset=dataset,
-        solver=agentic_agent(max_turns=max_turns, prompt_version=prompt_version),
+        solver=agentic_agent(
+            max_turns=max_turns, prompt_version=prompt_version, exit=exit
+        ),
         scorer=tests_pass(),
         sandbox="docker",
         message_limit=6 * max_turns,  # backstop; max_turns is the main limit
         time_limit=time_limit,
-        metadata={"prompt_version": prompt_version},
+        metadata={"prompt_version": prompt_version, "exit": exit},
     )

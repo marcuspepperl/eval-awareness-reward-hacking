@@ -34,6 +34,13 @@ def main() -> None:
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--max-turns", type=int, default=60)
     p.add_argument("--time-limit", type=int, default=3600, help="seconds per sample")
+    p.add_argument(
+        "--exits",
+        nargs="+",
+        default=["none"],
+        choices=["none", "end_task", "give_up"],
+        help="exit-tool variants (one task per variant per split)",
+    )
     p.add_argument("--prompt-version", choices=sorted(PROMPTS), default=DEFAULT_PROMPT)
     p.add_argument("--max-connections", type=int, default=100)  # Track A shares 200
     p.add_argument("--max-sandboxes", type=int, default=100)
@@ -57,8 +64,10 @@ def main() -> None:
             time_limit=args.time_limit,
             task_ids=task_ids,
             prompt_version=args.prompt_version,
+            exit=None if exit == "none" else exit,
         )
         for split in args.splits
+        for exit in args.exits
     ]
     run_id = args.tag or datetime.now().strftime("%Y%m%d-%H%M")
     model_dir = args.models[0].split("/")[-1] if len(args.models) == 1 else "multi"
