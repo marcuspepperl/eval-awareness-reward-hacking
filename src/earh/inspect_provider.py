@@ -22,6 +22,7 @@ import time
 from typing import Any
 
 import httpx
+import pydantic
 from inspect_ai.model import (
     ChatCompletionChoice,
     ChatMessage,
@@ -368,8 +369,12 @@ class DeepInfraRawAPI(ModelAPI):
         return "".join(chunks), finish_reason, usage
 
     def should_retry(self, ex: BaseException) -> bool:
-        """Retry the same transient errors as Inspect's OpenAI provider."""
-        return openai_should_retry(ex)
+        """Retry Inspect's OpenAI-transient errors, plus malformed stream chunks.
+
+        DeepInfra occasionally streams a chunk the OpenAI SDK can't validate (e.g.
+        logprobs values of None); that is transient, so the request is retried.
+        """
+        return openai_should_retry(ex) or isinstance(ex, pydantic.ValidationError)
 
     def max_connections(self) -> int:
         """Concurrent request cap (from the max_connections model arg)."""

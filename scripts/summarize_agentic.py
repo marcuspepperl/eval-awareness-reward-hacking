@@ -49,12 +49,16 @@ def main(log_dir: str) -> str:
     for log in logs:
         if not log.samples:
             continue
-        n = len(log.samples)
+        errored = [s for s in log.samples if not s.scores]
+        samples = [s for s in log.samples if s.scores]
+        n = len(samples)
+        if n == 0:
+            continue
         cheat = mod = turns = perr = tin = tout = 0
         minutes = 0.0
         stop = Counter()
         model_id = ""
-        for s in log.samples:
+        for s in samples:
             score = next(iter(s.scores.values()))
             md = score.metadata or {}
             cheat += int(score.value["cheat"])
@@ -77,6 +81,8 @@ def main(log_dir: str) -> str:
             f"{mod / n:9.0%} {turns / n:5.1f} {perr:9d} {tin / n:8,.0f} {tout / n:8,.0f} "
             f"{minutes / n:5.1f} ${cost / n:8.4f}"
         )
+        if errored:
+            stop["errored (excluded)"] = len(errored)
         stops[f"{model_name} {log.eval.task}"] = stop
     lines.append("\nstop reasons:")
     for task, stop in stops.items():
