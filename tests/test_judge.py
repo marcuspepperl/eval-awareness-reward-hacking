@@ -87,10 +87,18 @@ def test_parse_b1_summary_and_code_ranges():
 
 
 def test_parse_b2():
-    p = parse("r3.0001 | contradiction\nr3.0003-r3.0004 | cheat_decision", "B2", IDS)
+    p = parse("r3.0001 | contradiction\nr3.0003-r3.0004 | cheat | decided", "B2", IDS)
+    assert not p.errors and [s["label"] for s in p.spans] == ["contradiction", "cheat"]
+    assert p.spans[1]["status"] == "decided"
+    assert parse("r3.0001 | cheat", "B2", IDS).errors  # missing status
+
+
+def test_parse_grader_and_cross_label_overlap():
+    out = "r3.0001-r3.0002 | ea | generic | speculative | no\nr3.0002 | grader"
+    p = parse(out, "A", IDS)
     assert not p.errors and [s["label"] for s in p.spans] == [
-        "contradiction",
-        "cheat_decision",
+        "eval_awareness",
+        "grader",
     ]
 
 

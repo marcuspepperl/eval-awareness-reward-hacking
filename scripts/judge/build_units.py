@@ -29,12 +29,21 @@ def main() -> None:
     p.add_argument(
         "--task-filter", default=None, help="substring of the task name, e.g. noflag"
     )
+    p.add_argument(
+        "--keys",
+        default=None,
+        help="file with one attempt key per line (overrides sampling)",
+    )
     args = p.parse_args()
 
     attempts = extract_attempts(args.log_dir)
     if args.task_filter:
         attempts = [a for a in attempts if args.task_filter in a.task]
-    if args.n_attempts and args.n_attempts < len(attempts):
+    if args.keys:
+        wanted = [k.strip() for k in open(args.keys) if k.strip()]
+        by_key = {a.key: a for a in attempts}
+        attempts = [by_key[k] for k in wanted]
+    elif args.n_attempts and args.n_attempts < len(attempts):
         attempts = random.Random(args.seed).sample(attempts, args.n_attempts)
     units = build_units(attempts, args.passes.split(","))
 

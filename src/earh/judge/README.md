@@ -15,7 +15,9 @@ Workflow:
 ```
 uv run python scripts/judge/build_units.py <track-a log dir> --out logs/12-judge/<run> [--passes A,B1,B2 --n-attempts N]
 uv run inspect eval src/earh/judge/task.py@judge -T units=logs/12-judge/<run>/judge_units.jsonl \
-    --model deepinfra-raw/glm53flash -M reasoning_effort=low --log-dir logs/12-judge/<run>/logs
+    --model deepinfra-raw/glm53flash -M reasoning_effort=high --log-dir logs/12-judge/<run>/logs
 uv run python scripts/judge/assemble.py logs/12-judge/<run>
 ```
 `build_units.py` also writes `<run>/examples/{A,B1,B2}.md`: fully rendered prompts for reading.
+
+Dev iteration helpers: `scripts/judge/iterate.sh <version> [passes]` (build + judge + assemble on the pilot10 keys), `scripts/judge/review.py <run>` (spans with context), `scripts/judge/render_html.py` (highlighted review page). History: [docs/judge-iteration.md](../../../docs/judge-iteration.md).
