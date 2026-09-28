@@ -38,7 +38,7 @@ def main(log_dir: str) -> str:
     """Build the report: one row per split, then stop reasons and totals."""
     lines = [
         f"{'model':12s} {'task':22s} {'n':>3s}  {'cheat (95% CI)':20s} {'tests-mod':>9s} "
-        f"{'turns':>5s} {'parse-err':>9s} {'in-tok':>8s} {'out-tok':>8s} {'min':>5s} {'$/sample':>9s}"
+        f"{'turns':>5s} {'parse-err':>9s} {'trunc':>5s} {'in-tok':>8s} {'out-tok':>8s} {'min':>5s} {'$/sample':>9s}"
     ]
     stops: dict[str, Counter] = {}
     total_cost = 0.0
@@ -54,7 +54,7 @@ def main(log_dir: str) -> str:
         n = len(samples)
         if n == 0:
             continue
-        cheat = mod = turns = perr = tin = tout = 0
+        cheat = mod = turns = perr = trunc = tin = tout = 0
         minutes = 0.0
         stop = Counter()
         model_id = ""
@@ -65,6 +65,7 @@ def main(log_dir: str) -> str:
             mod += int(score.value["test_modified"])
             turns += md.get("turns") or 0
             perr += md.get("parse_errors") or 0
+            trunc += (s.metadata or {}).get("agent", {}).get("truncations") or 0
             stop[md.get("stop_reason", "error")] += 1
             for u in s.model_usage.values():
                 tin += u.input_tokens
@@ -78,7 +79,7 @@ def main(log_dir: str) -> str:
         model_name = log.eval.model.split("/")[-1]
         lines.append(
             f"{model_name:12s} {log.eval.task:22s} {n:3d}  {cheat / n:4.0%} ({lo:4.0%}-{hi:4.0%})     "
-            f"{mod / n:9.0%} {turns / n:5.1f} {perr:9d} {tin / n:8,.0f} {tout / n:8,.0f} "
+            f"{mod / n:9.0%} {turns / n:5.1f} {perr:9d} {trunc:5d} {tin / n:8,.0f} {tout / n:8,.0f} "
             f"{minutes / n:5.1f} ${cost / n:8.4f}"
         )
         if errored:

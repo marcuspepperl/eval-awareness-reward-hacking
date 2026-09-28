@@ -389,12 +389,18 @@ class DeepInfraRawAPI(ModelAPI):
         return "".join(chunks), finish_reason, usage
 
     def should_retry(self, ex: BaseException) -> bool:
-        """Retry Inspect's OpenAI-transient errors, plus malformed stream chunks.
+        """Retry Inspect's OpenAI-transient errors, plus DeepInfra stream glitches.
 
-        DeepInfra occasionally streams a chunk the OpenAI SDK can't validate (e.g.
-        logprobs values of None); that is transient, so the request is retried.
+        DeepInfra occasionally fails mid-stream serializing its own chunk (server-side
+        "validation errors for OpenAICompletionStreamOut ... logprobs"; seen with GLM),
+        which surfaces as a generic error; locally, a chunk may also fail SDK validation.
+        Both are transient, so the request is retried.
         """
-        return openai_should_retry(ex) or isinstance(ex, pydantic.ValidationError)
+        return (
+            openai_should_retry(ex)
+            or isinstance(ex, pydantic.ValidationError)
+            or "OpenAICompletionStreamOut" in str(ex)
+        )
 
     def max_connections(self) -> int:
         """Concurrent request cap (from the max_connections model arg)."""
