@@ -1,0 +1,96 @@
+/* Writeup styles layered on the Distill template. Chart colors live here so figures and text agree. */
+:root {
+  --oneoff: #d9822b;
+  --conflicting: #3b6ea8;
+  --ea: #f3d27a;
+  --contradiction: #b9d7f0;
+  --cheat: #f2b8b5;
+  --muted: rgba(0, 0, 0, 0.55);
+  --rule: rgba(0, 0, 0, 0.1);
+}
+
+/* Light "paper" page for now; the Distill template has no dark theme. */
+html {
+  color-scheme: light;
+  background: #fff;
+}
+body {
+  background: #fff;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+/* Unfinished text: visible while drafting, easy to grep for ("placeholder"). */
+.placeholder,
+.placeholder-inline {
+  color: var(--muted);
+  font-style: italic;
+}
+.placeholder {
+  border-left: 3px solid var(--rule);
+  padding-left: 12px;
+}
+
+/* Charts */
+.chart-figure svg {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  overflow: visible;
+}
+.chart-controls {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.chart-controls label {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Transcript viewer */
+.transcript {
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  font-size: 14px;
+  overflow: hidden;
+}
+.transcript-header,
+.transcript-legend {
+  background: rgba(0, 0, 0, 0.03);
+  padding: 8px 14px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.transcript-body {
+  padding: 6px 14px;
+}
+.transcript-body p {
+  margin: 4px 0;
+  line-height: 1.5;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+.transcript-legend {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.transcript-legend .hl {
+  padding: 1px 6px;
+  border-radius: 3px;
+  color: rgba(0, 0, 0, 0.8);
+}
+.sid {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-right: 8px;
+}
+.hl-ea { background: var(--ea); }
+.hl-contradiction { background: var(--contradiction); }
+.hl-cheat { background: var(--cheat); }
+.tag {
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+.tag-cheat { background: var(--cheat); color: rgba(0, 0, 0, 0.8); }

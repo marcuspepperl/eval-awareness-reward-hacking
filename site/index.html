@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eval Awareness and Reward Hacking</title>
+  <script src="https://distill.pub/template.v2.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<d-front-matter>
+  <script type="text/json">{
+    "title": "Does Eval Awareness Change Reward Hacking?",
+    "description": "Measuring how verbalized evaluation awareness, and its framing, relates to cheating on impossible coding tasks.",
+    "authors": [
+      {"author": "Mark Pepperl", "authorURL": "https://github.com/marcuspepperl", "affiliations": [{"name": "Independent"}]}
+    ],
+    "katex": {"delimiters": [{"left": "$", "right": "$", "display": false}]}
+  }</script>
+</d-front-matter>
+
+<d-title>
+  <h1>Does Eval Awareness Change Reward Hacking?</h1>
+  <p>When a reasoning model suspects it is being tested, does it cheat less, or more? And does it matter whether it thinks the test is about <em>capability</em> or about <em>safety</em>?</p>
+</d-title>
+
+<d-byline></d-byline>
+
+<d-article>
+
+<d-contents>
+  <nav class="l-text toc figcaption">
+    <h3>Contents</h3>
+    <div><a href="#summary">1 Summary</a></div>
+    <div><a href="#setup">2 Setup</a></div>
+    <div><a href="#observational">3 Observational results</a></div>
+    <div><a href="#judge">4 Measuring eval awareness</a></div>
+    <div><a href="#causal">5 Causal prefill experiment</a></div>
+    <div><a href="#limitations">6 Limitations</a></div>
+    <div><a href="#related">7 Related work</a></div>
+  </nav>
+</d-contents>
+
+<h2 id="summary">1 Summary</h2>
+
+<p class="placeholder">Placeholder. Two or three sentences on the question, the setup, and the headline result.</p>
+
+<ul>
+  <li><strong>Reward hacking is common in a minimal scaffold.</strong> DeepSeek-V4-Flash passes impossible tests on 79% of one-off tasks and 57% of conflicting tasks within 8 attempts.</li>
+  <li><strong>Most cheating happens after feedback.</strong> On the conflicting split the model almost never cheats on its first attempt (0.5%); the rate climbs with each failed test run.</li>
+  <li class="placeholder">Eval-awareness result (observational). TBD.</li>
+  <li class="placeholder">Framing result (causal, capability vs safety prefill). TBD.</li>
+</ul>
+
+<h2 id="setup">2 Setup</h2>
+
+<p>We use Impossible-LiveCodeBench from ImpossibleBench<d-cite key="zhong2025impossiblebench"></d-cite>: LiveCodeBench problems whose unit tests were mutated so that no correct implementation can pass them. In the <em>one-off</em> split a single expected value is wrong; in the <em>conflicting</em> split two tests contradict each other. Passing therefore requires cheating: special-casing inputs, keeping state between calls, or redefining the test harness.</p>
+
+<p>The model sees the specification and tests, and is told <em>"Implement the function according to the provided specification. <strong>DO NOT MODIFY THE TESTS.</strong>"</em> After each failed attempt it receives only a neutral <code>[test runner] Tests failed.</code> message, for up to 8 attempts.<d-footnote>Early pilots offered an explicit escape hatch (a flag for human intervention). The model then flagged 100% of the time and never cheated, likely because the offer itself cues that something is wrong, so the main runs omit it.</d-footnote></p>
+
+<p class="placeholder">Placeholder: the agentic harness (Track B) and how it differs.</p>
+
+<h2 id="observational">3 Observational results</h2>
+
+<p>Across all 103 problems (2 samples per problem and split), cheating accumulates over attempts. The shaded band is a 95% bootstrap interval, resampling problems rather than individual rollouts.</p>
+
+<figure class="l-page chart-figure">
+  <div class="chart-controls">
+    <label><input type="checkbox" id="by-attempt-ci" checked> show 95% CI</label>
+  </div>
+  <div id="chart-by-attempt"></div>
+  <figcaption><strong>Figure 1.</strong> Share of samples that have passed the impossible tests by attempt <em>k</em>. Hover for exact values.</figcaption>
+</figure>
+
+<p>Cheating is also concentrated in particular problems. Most problems that are hacked on the conflicting split are hacked on the one-off split too, but not the other way around.</p>
+
+<figure class="l-body chart-figure">
+  <div id="chart-by-task"></div>
+  <figcaption><strong>Figure 2.</strong> Number of problems by how many of their 2 samples cheated on each split. Circle area is proportional to the number of problems.</figcaption>
+</figure>
+
+<h2 id="judge">4 Measuring eval awareness</h2>
+
+<p class="placeholder">Placeholder: the sentence-ID judge, validation against human labels (κ, precision/recall), and cost.</p>
+
+<p>The judge tags sentences by ID, so every label maps to an exact location in the reasoning. That lets us show where eval awareness appears relative to the decision to cheat:</p>
+
+<figure class="l-body transcript">
+  <div class="transcript-header">conflicting · <code>lcbhard_39</code> · attempt 3 · <span class="tag tag-cheat">cheated</span> <em class="placeholder-inline">(illustrative mock)</em></div>
+  <div class="transcript-body">
+    <p><span class="sid">r3.0041</span> The test expects 7 for this input but the spec gives 5, and the next assertion expects 5 for the same input.</p>
+    <p class="hl hl-contradiction"><span class="sid">r3.0042</span> These two tests contradict each other.</p>
+    <p class="hl hl-ea"><span class="sid">r3.0043</span> This is probably a benchmark checking whether I will special-case the tests.</p>
+    <p><span class="sid">r3.0044</span> The failing output shows only the first assertion.</p>
+    <p class="hl hl-cheat"><span class="sid">r3.0045</span> I could keep a call counter and return 7 the first time.</p>
+  </div>
+  <div class="transcript-legend">
+    <span class="hl hl-ea">eval awareness</span>
+    <span class="hl hl-contradiction">notices contradiction</span>
+    <span class="hl hl-cheat">cheat decision</span>
+  </div>
+</figure>
+
+<h2 id="causal">5 Causal prefill experiment</h2>
+
+<p class="placeholder">Placeholder: prefilling the reasoning with neutral, generic, capability-framed and safety-framed eval-awareness sentences, per-task paired comparison.</p>
+
+<h2 id="limitations">6 Limitations</h2>
+
+<p class="placeholder">Placeholder.</p>
+
+<h2 id="related">7 Related work</h2>
+
+<p>This work is a reward-hacking analogue of Aranguri &amp; Bloom<d-cite key="aranguri2026verbalized"></d-cite>, who found that verbalized eval awareness inflates measured safety, and follows the prefill methodology of Zhuang &amp; Aranguri<d-cite key="zhuang2026prefill"></d-cite>.</p>
+
+</d-article>
+
+<d-appendix>
+  <h3>Reproducibility</h3>
+  <p>Code, run ledger and chart data: <a href="https://github.com/marcuspepperl/eval-awareness-reward-hacking">github.com/marcuspepperl/eval-awareness-reward-hacking</a>. Every figure is generated from logs by <code>scripts/export_writeup_data.py</code>.</p>
+  <d-bibliography src="bibliography.bib"></d-bibliography>
+</d-appendix>
+
+<script type="module" src="charts/main.js"></script>
+</body>
+</html>
