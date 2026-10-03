@@ -37,13 +37,21 @@ def _keys(spec: str) -> list[str]:
 def _attempt(a) -> dict:
     """One attempt as the UI needs it: context, numbered reasoning, numbered answer."""
     segs, info = reasoning_segments(a)
+    # brk: what separates a sentence from the previous one in the raw text (0 same line,
+    # 1 newline, 2 blank line), so the UI can rebuild the model's paragraphs.
+    brk = [2] + [
+        min(2, a.reasoning[p.end : q.start].count("\n")) for p, q in zip(segs, segs[1:])
+    ]
     return {
         "key": a.key,
         "attempt": a.attempt,
         "feedback_before": a.feedback_before,
         "test_output": a.test_output,
         "judge_cutoff": info.get("judge_cutoff"),
-        "reasoning": [{"id": s.id, "kind": s.kind, "text": s.text} for s in segs],
+        "reasoning": [
+            {"id": s.id, "kind": s.kind, "text": s.text, "brk": b}
+            for s, b in zip(segs, brk, strict=True)
+        ],
         "answer": [
             {"id": s.id, "kind": s.kind, "text": s.text}
             for s in segment_answer(a.answer, a.attempt)

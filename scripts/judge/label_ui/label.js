@@ -16,7 +16,7 @@ const LAB = {
 const FRAMING = ["capability", "safety", "generic"];
 const TYPES = ["special_case", "redefine_check", "stateful", "operator_overload", "other"];
 
-let data, recs = {}, cur = 0, view = "label";
+let data, recs = {}, cur = 0, view = "label", paraMode = true;
 let rows = [], pos = {}, rowAtt = [], sel = null, dragging = false, moved = false, focus = [];
 let undoStack = [], saveTimer = null, lastActive = Date.now(), toastTimer = null;
 const $ = (id) => document.getElementById(id);
@@ -120,8 +120,58 @@ function pillText(s) {
 }
 
 // ---------- label view ----------
-function rowHTML(s, ans) {
-  return `<div class="row ${s.kind}${ans ? " ans" : ""}" data-id="${s.id}"><span class="id">${s.id}</span><span class="txt"><span class="pills"></span>${esc(s.text)}</span></div>`;
+// ---------- code highlighting ----------
+// Highlight a whole block, then split the HTML into lines, re-opening any spans that
+// cross a newline (so multi-line strings and docstrings stay coloured line by line).
+function hlLines(lines) {
+  if (!window.hljs) return lines.map(esc);
+  const html = hljs.highlight(lines.join("\n"), { language: "python", ignoreIllegals: true }).value;
+  const out = [], stack = [];
+  let line = "";
+  for (const t of html.split(/(<span[^>]*>|<\/span>|\n)/)) {
+    if (t === "\n") { out.push(line + "</span>".repeat(stack.length)); line = stack.join(""); }
+    else if (t.startsWith("<span")) { stack.push(t); line += t; }
+    else if (t === "</span>") { stack.pop(); line += t; }
+    else line += t;
+  }
+  out.push(line);
+  return out;
+}
+// A fenced block inside the reasoning: highlight the code between the fences.
+function hlFenced(text) {
+  const m = text.match(/^(```[^\n]*\n)([\s\S]*?)(\n```\s*)?$/);
+  if (!m) return esc(text);
+  return `<span class="fence">${esc(m[1])}</span>${hlLines(m[2].split("\n")).join("\n")}<span class="fence">${esc(m[3] || "")}</span>`;
+}
+
+function rowHTML(s, ans, html) {
+  return `<div class="row ${s.kind}${ans ? " ans" : ""}" data-id="${s.id}"><span class="id">${s.id}</span><span class="txt"><span class="pills"></span>${html ?? esc(s.text)}</span></div>`;
+}
+
+// Reasoning in paragraph mode: sentences flow inline inside the model's own paragraphs
+// (blank line = new paragraph, newline = line break); fenced code stays a block.
+function reasoningHTML(a) {
+  if (!paraMode) return a.reasoning.map((s) => rowHTML(s, false, s.kind === "code_block" ? hlFenced(s.text) : null)).join("");
+  let out = "", open = false;
+  const close = () => { if (open) { out += "</p>"; open = false; } };
+  a.reasoning.forEach((s) => {
+    if (s.kind === "code_block") { close(); out += rowHTML(s, false, hlFenced(s.text)); return; }
+    if (!open || s.brk === 2) { close(); out += "<p>"; open = true; }
+    else out += s.brk === 1 ? "<br>" : " ";
+    out += `<span class="row ${s.kind}" data-id="${s.id}" title="${s.id}"><span class="pills"></span>${esc(s.text)}</span>`;
+  });
+  close();
+  return out;
+}
+
+// Submitted answer: consecutive code lines are highlighted together, one row per line.
+function answerHTML(a) {
+  const html = {};
+  let run = [];
+  const flush = () => { hlLines(run.map((s) => s.text)).forEach((h, i) => (html[run[i].id] = h)); run = []; };
+  a.answer.forEach((s) => { if (s.kind === "code_line") run.push(s); else flush(); });
+  flush();
+  return a.answer.map((s) => rowHTML(s, true, html[s.id])).join("");
 }
 
 function renderDoc() {
@@ -133,10 +183,10 @@ function renderDoc() {
   $("doc").innerHTML = it.attempts.map((a) => `
     <div class="att">Attempt ${a.attempt}<span class="muted">${a.reasoning.length} sentences${a.judge_cutoff ? " · reasoning looped; cut at the loop start" : ""}</span></div>
     ${a.feedback_before ? `<details open><summary>Feedback the model saw before this attempt</summary><pre class="ctx">${esc(a.feedback_before)}</pre></details>` : ""}
-    <div class="rows">${a.reasoning.map((s) => rowHTML(s, false)).join("")}</div>
+    <div class="rows${paraMode ? " para" : ""}">${reasoningHTML(a)}</div>
     <h3>Submitted answer · attempt ${a.attempt}</h3>
     <div class="b1" data-key="${a.key}"></div>
-    <div>${a.answer.map((s) => rowHTML(s, true)).join("") || '<div class="muted">(empty)</div>'}</div>
+    <div>${answerHTML(a) || '<div class="muted">(empty)</div>'}</div>
     <details><summary>Test result for this attempt</summary><pre class="ctx">${esc(a.test_output || "(none)")}</pre></details>`).join("") +
     `<div class="donebar"><button id="done"></button><span class="muted" id="doneNote"></span></div>`;
   $("done").addEventListener("click", toggleDone);
@@ -309,7 +359,8 @@ async function openDrawer(kind) {
   $("drawer").classList.remove("hidden");
   if (kind === "problem") {
     $("dTitle").textContent = "Problem given to the model";
-    $("dBody").innerHTML = `<pre class="ctx">${esc(item().task_prompt)}</pre>`;
+    $("dBody").innerHTML = window.marked ? marked.parse(item().task_prompt) : `<pre class="ctx">${esc(item().task_prompt)}</pre>`;
+    $("dBody").querySelectorAll("pre code").forEach((el) => { el.innerHTML = hlLines(el.textContent.replace(/\n$/, "").split("\n")).join("\n"); el.classList.add("hljs"); });
   } else {
     $("dTitle").textContent = "Codebook";
     if (!cbHTML) {
@@ -376,6 +427,11 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+$("paraBtn").addEventListener("click", () => {
+  paraMode = !paraMode; lsSet("para", paraMode); renderParaBtn();
+  const y = $("doc").scrollTop; renderDoc(); $("doc").scrollTop = y;
+});
+function renderParaBtn() { $("paraBtn").classList.toggle("on", paraMode); $("paraBtn").title = paraMode ? "Paragraph view (click for one sentence per line)" : "One sentence per line (click for paragraph view)"; }
 $("vItems").addEventListener("click", () => setView("items"));
 $("vLabel").addEventListener("click", () => setView("label"));
 $("itemSel").addEventListener("change", (e) => go(+e.target.value));
@@ -408,6 +464,7 @@ setInterval(() => {
     recs[it.rollout] = pick ? { ...b, ...pick, attempts: { ...b.attempts, ...pick.attempts } } : b;
   });
   cur = Math.min(lsGet("cur", 0), data.items.length - 1);
+  paraMode = lsGet("para", true); renderParaBtn();
   renderDoc();
   setView(lsGet("view", "label"));
 })();
