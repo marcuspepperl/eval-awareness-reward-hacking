@@ -21,3 +21,12 @@ uv run python scripts/judge/assemble.py logs/12-judge/<run>
 `build_units.py` also writes `<run>/examples/{A,B1,B2}.md`: fully rendered prompts for reading.
 
 Dev iteration helpers: `scripts/judge/iterate.sh <version> [passes]` (build + judge + assemble on the pilot10 keys), `scripts/judge/review.py <run>` (spans with context), `scripts/judge/render_html.py` (highlighted review page). History: [docs/judge-iteration.md](../../../docs/judge-iteration.md).
+
+Gold labelling (codebook: [docs/codebook.md](../../../docs/codebook.md); plan: [docs/judge-validation-plan.md](../../../docs/judge-validation-plan.md)):
+```
+uv run python scripts/judge/build_labelset.py <track-a log dir> --keys <file or k1,k2> --name <set>
+uv run python scripts/judge/label_server.py            # launch config: label-ui (port 7581)
+open http://localhost:7581/?set=<set>&labeler=<name>
+```
+Label sets contain no judge output (labelling is blind). Labels autosave to `logs/12-judge/labels/<set>/<labeler>/<key>.json` (span format matches the judge's: `label`, `start`, `end`, `ids`, attributes, plus `unsure` / `note`; B1 fields; `active_seconds`).
+
