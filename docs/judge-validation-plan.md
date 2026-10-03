@@ -24,7 +24,7 @@ The risk: we label a gold set, agreement comes back at 60–70%, and fixing the 
 |---|---|---|---|
 | 1 | **Diff view** on review.html (judge vs reference, per label: agree / judge-only / reference-only, first-point distances; sidebar shows attempts with disagreements) + **codebook draft** from the current prompts | Claude | `review.html` diff mode, `docs/codebook.md` |
 | 2 | **Labelling UI** as a mode of the same page: click / drag to mark spans, hotkeys per label, first-only labels take one click, B1 fields per attempt, saves `reference.json` in the same format the diff view reads | Claude | labelling page |
-| 3 | **Calibration:** Mark labels **5 pilot rollouts** blind, and times himself | Mark | 5 labelled attempts; minutes per attempt |
+| 3 | **Calibration:** Mark labels **5 pilot rollouts** blind, timing each one | Mark | 5 labelled attempts; minutes per attempt |
 | 4 | Reviewer subagents (recall) and Claude (precision) label the **same 5** blind; compare all three in the diff view; fix the codebook where readings differ | Claude + subagents, Mark adjudicates | codebook v1 |
 | 5 | **Proxy reference:** subagents + Claude label **30 pilot attempts** (stratified: cheat / honest, both splits, early / late attempts, oversampled for likely EA via the keyword prior); Mark adjudicates **only disagreements** | Claude + subagents, Mark | `reference.json` for 30 |
 | 6 | **Judge iteration:** iterate on 20 of the 30, check on the other 10, against the go / no-go bars below; ≤ 3 rounds, 2× runs each | Claude | frozen prompts |
