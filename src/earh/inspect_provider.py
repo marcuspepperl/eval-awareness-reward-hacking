@@ -2,8 +2,9 @@
 
 Usage: --model deepinfra-raw/v4flash  or  --model deepinfra-raw/qwen3-32b
 Tools: supported for models with a parser (spec.supports_tools): V4/V4.1-Flash (DSML)
-and GLM-5.3-Flash (<tool_call>). With tools, prior reasoning stays in context (DeepSeek's
-encoder auto-disables drop_thinking; GLM's template keeps it by default).
+GLM-5.3-Flash and MiMo-V2.6-Flash (<tool_call>). With tools, prior reasoning stays in
+context (DeepSeek's encoder auto-disables drop_thinking; GLM's and MiMo's rules keep
+everything after the last user message).
 Model args (-M): drop_thinking (bool, default True), reasoning_effort (V4 only: low|high|max),
                  max_connections (int, default 32).
 

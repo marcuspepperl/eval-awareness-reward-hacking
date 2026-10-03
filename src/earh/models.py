@@ -15,7 +15,7 @@ from typing import Any
 
 from dotenv import load_dotenv
 
-from earh import glm
+from earh import glm, mimo
 from earh.vendor import encoding_dsv4, encoding_dsv41
 
 DEEPINFRA_BASE_URL = "https://api.deepinfra.com/v1/openai"
@@ -181,6 +181,19 @@ MODELS: dict[str, ModelSpec] = {
         usd_per_mtok_out=0.25,
         parse=glm.parse_glm_completion,
         tool_call_marker=glm.TOOL_CALL_MARKER,
+    ),
+    "mimo26flash": ModelSpec(
+        name="mimo26flash",
+        deepinfra_id="XiaomiMiMo/MiMo-V2.6-Flash",
+        build=mimo.build_mimo,
+        stop=mimo.STOP,
+        temperature=1.0,  # generation_config.json (MiMo-V2.6-Flash-MOPD)
+        top_p=0.95,
+        max_tokens=64_000,
+        usd_per_mtok_in=0.14,  # DeepInfra, Oct 2026
+        usd_per_mtok_out=0.28,
+        parse=mimo.parse_mimo_completion,
+        tool_call_marker=mimo.TOOL_CALL_MARKER,
     ),
     "qwen3-32b": ModelSpec(
         name="qwen3-32b",

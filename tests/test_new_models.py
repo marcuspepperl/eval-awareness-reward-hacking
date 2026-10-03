@@ -126,3 +126,64 @@ def test_glm_parse_final_answer_malformed_and_truncated():
     assert err and len(calls) == 1 and calls[0].parse_error
     r, a, calls, err = _parse_with_tools(GLM, "", "still thinking", "length")
     assert r == "still thinking" and a == "" and calls == [] and err is None
+
+
+# --- MiMo-V2.6-Flash -------------------------------------------------------------------
+
+MIMO = MODELS["mimo26flash"]
+
+
+def _mimo_case():
+    """Golden conversation (token counts checked against DeepInfra's chat endpoint), in our provider's convention."""
+    case = json.loads((FIX / "mimo26" / "conversation.json").read_text())
+    messages = [dict(m) for m in case["messages"]]
+    messages[0]["tools"] = case["tools"]
+    return case, messages
+
+
+def test_mimo_render_matches_golden():
+    """build_prompt renders the vendored template as checked against DeepInfra, + <think>."""
+    _, messages = _mimo_case()
+    expected = (FIX / "mimo26" / "conversation_expected.txt").read_text()
+    assert build_prompt(MIMO, messages) == expected + "<think>"
+
+
+def test_mimo_prefill_and_history_reasoning():
+    """Prompt ends with assistant\\n<think> + prefill; reasoning in history is kept."""
+    _, messages = _mimo_case()
+    prompt = build_prompt(MIMO, messages, "Maybe I'm being tested.")
+    assert prompt.endswith("<|im_start|>assistant\n<think>Maybe I'm being tested.")
+    assert "<think>Look at the file first.</think>" in prompt
+
+
+def test_mimo_parse_tool_call_with_typed_args():
+    """String params stay raw; non-string params are JSON-decoded."""
+    case, _ = _mimo_case()
+    text = (
+        "I'll view the file.</think>"
+        "<tool_call><function=text_editor><parameter=command>view</parameter>"
+        "<parameter=path>func.py</parameter><parameter=view_range>[1, 5]</parameter>"
+        "</function></tool_call>"
+    )
+    reasoning, answer, calls, err = _parse_with_tools(
+        MIMO, "", text, "stop", case["tools"]
+    )
+    assert err is None and reasoning == "I'll view the file." and answer == ""
+    assert calls[0].function == "text_editor"
+    assert calls[0].arguments == {
+        "command": "view",
+        "path": "func.py",
+        "view_range": [1, 5],
+    }
+
+
+def test_mimo_parse_final_answer_malformed_and_truncated():
+    """Final answer -> no calls; unterminated call -> placeholder; truncation -> all reasoning."""
+    r, a, calls, err = _parse_with_tools(MIMO, "pre ", "done.</think>All good.", "stop")
+    assert (r, a, calls, err) == ("pre done.", "All good.", [], None)
+    _, _, calls, err = _parse_with_tools(
+        MIMO, "", "x</think><tool_call><function=bash><parameter=command>ls", "stop"
+    )
+    assert err and len(calls) == 1 and calls[0].parse_error
+    r, a, calls, err = _parse_with_tools(MIMO, "", "still thinking", "length")
+    assert r == "still thinking" and a == "" and calls == [] and err is None

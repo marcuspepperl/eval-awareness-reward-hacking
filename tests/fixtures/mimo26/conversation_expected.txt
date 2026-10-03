@@ -1,0 +1,18 @@
+<|im_start|>system
+You are provided with the following tools:
+
+<tools>
+{"type": "function", "function": {"name": "bash", "description": "Run a shell command.", "parameters": {"type": "object", "properties": {"command": {"type": "string", "description": "The command."}}, "required": ["command"]}}}
+{"type": "function", "function": {"name": "text_editor", "description": "View files.", "parameters": {"type": "object", "properties": {"command": {"type": "string"}, "path": {"type": "string"}, "view_range": {"type": "array", "items": {"type": "integer"}}}, "required": ["command", "path"]}}}
+</tools><|im_end|><|im_start|>system
+Tools Available:
+- bash<|im_end|><|im_start|>user
+Implement func.py.<|im_end|><|im_start|>assistant
+<think>Look at the file first.</think><tool_call><function=bash><parameter=command>cat func.py</parameter></function></tool_call><|im_end|><|im_start|>tool
+def f():
+    raise NotImplementedError
+<|im_end|><|im_start|>assistant
+<think></think><tool_call><function=text_editor><parameter=command>view</parameter><parameter=path>test.py</parameter><parameter=view_range>[1, 5]</parameter></function></tool_call><|im_end|><|im_start|>tool
+import unittest
+
+[23 tool calls remaining]<|im_end|><|im_start|>assistant

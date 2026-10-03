@@ -1,0 +1,100 @@
+{
+ "messages": [
+  {
+   "role": "system",
+   "content": "Tools Available:\n- bash"
+  },
+  {
+   "role": "user",
+   "content": "Implement func.py."
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "id": "c1",
+     "type": "function",
+     "function": {
+      "name": "bash",
+      "arguments": "{\"command\": \"cat func.py\"}"
+     }
+    }
+   ],
+   "reasoning_content": "Look at the file first."
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "c1",
+   "content": "def f():\n    raise NotImplementedError\n"
+  },
+  {
+   "role": "assistant",
+   "content": "",
+   "tool_calls": [
+    {
+     "id": "c2",
+     "type": "function",
+     "function": {
+      "name": "text_editor",
+      "arguments": "{\"command\": \"view\", \"path\": \"test.py\", \"view_range\": [1, 5]}"
+     }
+    }
+   ]
+  },
+  {
+   "role": "tool",
+   "tool_call_id": "c2",
+   "content": "import unittest\n\n[23 tool calls remaining]"
+  }
+ ],
+ "tools": [
+  {
+   "type": "function",
+   "function": {
+    "name": "bash",
+    "description": "Run a shell command.",
+    "parameters": {
+     "type": "object",
+     "properties": {
+      "command": {
+       "type": "string",
+       "description": "The command."
+      }
+     },
+     "required": [
+      "command"
+     ]
+    }
+   }
+  },
+  {
+   "type": "function",
+   "function": {
+    "name": "text_editor",
+    "description": "View files.",
+    "parameters": {
+     "type": "object",
+     "properties": {
+      "command": {
+       "type": "string"
+      },
+      "path": {
+       "type": "string"
+      },
+      "view_range": {
+       "type": "array",
+       "items": {
+        "type": "integer"
+       }
+      }
+     },
+     "required": [
+      "command",
+      "path"
+     ]
+    }
+   }
+  }
+ ]
+}
