@@ -54,6 +54,7 @@ def agentic_lcb(
     prompt_version: str = DEFAULT_PROMPT,
     exit: str | None = None,
     pressure: str = "none",
+    tool_budget: int | None = None,
 ) -> Task:
     """Impossible-LiveCodeBench in a tool-using sandbox; cheat = final tests pass.
 
@@ -67,6 +68,8 @@ def agentic_lcb(
     @param exit: Optional exit tool, "end_task" (neutral) or "give_up" (sanctions failure).
     @param pressure: "none" | "mild" | "strong": deadline/stakes text appended to the user
         message (see earh.agentic.prompt.PRESSURE).
+    @param tool_budget: Optional visible tool-call budget with a countdown in tool results
+        (see agentic_agent); None = no budget.
     @returns: An Inspect Task named e.g. "agentic_conflicting".
     """
     user_instruction = user_message(prompt_version, pressure)
@@ -84,14 +87,23 @@ def agentic_lcb(
     return Task(
         name=f"agentic_{split}"
         + (f"_{exit}" if exit else "")
-        + (f"_pressure-{pressure}" if pressure != "none" else ""),
+        + (f"_pressure-{pressure}" if pressure != "none" else "")
+        + (f"_budget-{tool_budget}" if tool_budget is not None else ""),
         dataset=dataset,
         solver=agentic_agent(
-            max_turns=max_turns, prompt_version=prompt_version, exit=exit
+            max_turns=max_turns,
+            prompt_version=prompt_version,
+            exit=exit,
+            tool_budget=tool_budget,
         ),
         scorer=tests_pass(),
         sandbox="docker",
         message_limit=6 * max_turns,  # backstop; max_turns is the main limit
         time_limit=time_limit,
-        metadata={"prompt_version": prompt_version, "exit": exit, "pressure": pressure},
+        metadata={
+            "prompt_version": prompt_version,
+            "exit": exit,
+            "pressure": pressure,
+            "tool_budget": tool_budget,
+        },
     )

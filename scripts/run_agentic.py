@@ -17,7 +17,7 @@ from pathlib import Path
 
 from inspect_ai import eval_set
 
-from earh.agentic.prompt import DEFAULT_PROMPT, PROMPTS, user_message
+from earh.agentic.prompt import BUDGET_SYSTEM, DEFAULT_PROMPT, PROMPTS, user_message
 from earh.agentic.task import agentic_lcb
 
 
@@ -48,6 +48,12 @@ def main() -> None:
         choices=["none", "end_task", "give_up"],
         help="exit-tool variants (one task per variant per split)",
     )
+    p.add_argument(
+        "--tool-budget",
+        type=int,
+        default=None,
+        help="visible tool-call budget with countdown (default: none)",
+    )
     p.add_argument("--prompt-version", choices=sorted(PROMPTS), default=DEFAULT_PROMPT)
     p.add_argument("--max-connections", type=int, default=100)  # Track A shares 200
     p.add_argument("--max-sandboxes", type=int, default=100)
@@ -73,6 +79,7 @@ def main() -> None:
             prompt_version=args.prompt_version,
             exit=None if exit == "none" else exit,
             pressure=pressure,
+            tool_budget=args.tool_budget,
         )
         for split in args.splits
         for exit in args.exits
@@ -84,11 +91,16 @@ def main() -> None:
 
     print(f"models={args.models}  log_dir={log_dir}")
     print(f"task set: {args.task_set or f'{args.n_tasks} seeded (seed {args.seed})'}")
-    print(f"max_turns={args.max_turns}  time_limit={args.time_limit}s")
+    print(
+        f"max_turns={args.max_turns}  time_limit={args.time_limit}s  "
+        f"tool_budget={args.tool_budget}"
+    )
     for t in tasks:
         print(f"  {t.name:22s} {len(t.dataset)} samples per model")
     print(f"total samples: {sum(len(t.dataset) for t in tasks) * len(args.models)}")
     system_prompt = PROMPTS[args.prompt_version][0]
+    if args.tool_budget is not None:
+        system_prompt += "\n\n" + BUDGET_SYSTEM.format(n=args.tool_budget)
     user_instruction = "\n  ".join(
         f"[{pr}] {user_message(args.prompt_version, pr)}" for pr in args.pressures
     )
