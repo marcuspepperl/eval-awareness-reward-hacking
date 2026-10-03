@@ -2,7 +2,7 @@
 
 *Agreed 2026-10-03. Status: codebook v0 and labelling UI built (`label-ui`); UI test set `uitest` (2 pilot attempts, excluded from calibration); next: Mark's UI feedback, then the 5 calibration attempts.*
 
-* Goal: be confident in the judge **before** spending gold-set effort, so the held-out gold result confirms rather than surprises.*
+*Goal: be confident in the judge **before** spending gold-set effort, so the held-out gold result confirms rather than surprises.*
 
 The risk: we label a gold set, agreement comes back at 60–70%, and fixing the rubric then means tuning on the answers. The defence is to find rubric and judge problems on cheap pilot data first, and to touch the gold set only once.
 
