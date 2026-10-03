@@ -1,15 +1,18 @@
-"""Build a label set: segmented attempts for the labelling UI (no judge output, so labelling stays blind).
+"""Build a label set: full rollouts, segmented, for the labelling UI (no judge output, so labelling stays blind).
 
     uv run python scripts/judge/build_labelset.py logs/03-pilot/v4flash/promptB-5att \
-        --keys lcb_oneoff_noflag:lcbhard_86:e1:a2,lcb_conflicting_noflag:lcbhard_102:e1:a4 \
+        --keys lcb_oneoff_noflag:lcbhard_86:e1,lcb_conflicting_noflag:lcbhard_102:e1 \
         --name uitest
 
-Writes logs/12-judge/labelsets/<name>/data.json. `--keys` is a comma list or a file with one
-key per line. Segmentation is the judge's (same IDs, loop cutoff applied).
+One work item = one rollout (`<task>:<sample_id>:e<epoch>`) with all its attempts in order.
+`--keys` is a comma list or a file with one key per line; attempt keys (`...:a3`) are
+accepted and mapped to their rollout. Segmentation is the judge's (same IDs, loop cutoff
+applied). Writes logs/12-judge/labelsets/<name>/data.json.
 """
 
 import argparse
 import json
+from collections import defaultdict
 from pathlib import Path
 
 from earh.judge.extract import extract_attempts
@@ -20,52 +23,64 @@ ROOT = Path("logs/12-judge/labelsets")
 
 
 def _keys(spec: str) -> list[str]:
-    """Keys from a comma list or a file (one per line)."""
+    """Rollout keys from a comma list or a file (one per line); attempt keys are truncated."""
     p = Path(spec)
     raw = p.read_text().split() if p.exists() else spec.split(",")
-    return [k.strip() for k in raw if k.strip()]
+    out = []
+    for k in (k.strip() for k in raw if k.strip()):
+        r = ":".join(k.split(":")[:3])
+        if r not in out:
+            out.append(r)
+    return out
+
+
+def _attempt(a) -> dict:
+    """One attempt as the UI needs it: context, numbered reasoning, numbered answer."""
+    segs, info = reasoning_segments(a)
+    return {
+        "key": a.key,
+        "attempt": a.attempt,
+        "feedback_before": a.feedback_before,
+        "test_output": a.test_output,
+        "judge_cutoff": info.get("judge_cutoff"),
+        "reasoning": [{"id": s.id, "kind": s.kind, "text": s.text} for s in segs],
+        "answer": [
+            {"id": s.id, "kind": s.kind, "text": s.text}
+            for s in segment_answer(a.answer, a.attempt)
+        ],
+    }
 
 
 def main() -> None:
-    """Extract the requested attempts, segment them, and write the label set."""
+    """Group the requested rollouts' attempts and write the label set."""
     ap = argparse.ArgumentParser()
     ap.add_argument("log_dir")
     ap.add_argument("--keys", required=True)
     ap.add_argument("--name", required=True)
     args = ap.parse_args()
-    want = _keys(args.keys)
-    by_key = {a.key: a for a in extract_attempts(args.log_dir)}
-    missing = [k for k in want if k not in by_key]
-    if missing:
-        raise SystemExit(f"keys not found in {args.log_dir}: {missing}")
-    out = []
-    for k in want:
-        a = by_key[k]
-        segs, info = reasoning_segments(a)
-        out.append(
+    by_rollout = defaultdict(list)
+    for a in extract_attempts(args.log_dir):
+        by_rollout[f"{a.task}:{a.sample_id}:e{a.epoch}"].append(a)
+    items = []
+    for r in _keys(args.keys):
+        atts = sorted(by_rollout.get(r, []), key=lambda a: a.attempt)
+        if not atts:
+            raise SystemExit(f"rollout not found in {args.log_dir}: {r}")
+        items.append(
             {
-                "key": a.key,
-                "split": a.split,
-                "attempt": a.attempt,
-                "task_prompt": a.task_prompt,
-                "feedback_before": a.feedback_before,
-                "test_output": a.test_output,
-                "judge_cutoff": info.get("judge_cutoff"),
-                "reasoning": [
-                    {"id": s.id, "kind": s.kind, "text": s.text} for s in segs
-                ],
-                "answer": [
-                    {"id": s.id, "kind": s.kind, "text": s.text}
-                    for s in segment_answer(a.answer, a.attempt)
-                ],
+                "rollout": r,
+                "split": atts[0].split,
+                "task_prompt": atts[0].task_prompt,
+                "attempts": [_attempt(a) for a in atts],
             }
         )
     d = ROOT / args.name
     d.mkdir(parents=True, exist_ok=True)
     (d / "data.json").write_text(
-        json.dumps({"name": args.name, "source": args.log_dir, "attempts": out})
+        json.dumps({"name": args.name, "source": args.log_dir, "items": items})
     )
-    print(f"wrote {d / 'data.json'}: {len(out)} attempts")
+    n = sum(len(i["attempts"]) for i in items)
+    print(f"wrote {d / 'data.json'}: {len(items)} rollouts, {n} attempts")
 
 
 if __name__ == "__main__":

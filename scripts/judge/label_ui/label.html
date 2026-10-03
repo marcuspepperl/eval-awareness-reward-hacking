@@ -9,32 +9,46 @@
 <body>
 <header>
   <h1>Labelling</h1>
-  <span id="who" class="muted"></span>
-  <button id="prev" title="Previous attempt ([)">◀</button>
-  <span id="pos" class="muted"></span>
-  <button id="next" title="Next attempt (])">▶</button>
+  <div class="seg" role="tablist">
+    <button id="vItems" role="tab">Work items</button>
+    <button id="vLabel" role="tab">Label view</button>
+  </div>
+  <select id="itemSel" title="Rollout"></select>
   <span class="grow"></span>
-  <span id="timer" class="muted" title="Active labelling time for this attempt (pauses after 90 s idle or when the tab is hidden)"></span>
   <span id="saved" class="muted"></span>
+  <button id="probBtn" title="Problem (p)">Problem</button>
   <button id="cbBtn" title="Codebook (?)">Codebook</button>
 </header>
-<main>
-  <nav id="list"></nav>
+
+<main id="labelView">
   <section id="doc"></section>
   <aside id="panel">
-    <div id="selBox"></div>
-    <h3>Labels in this attempt</h3>
+    <div id="labelBox"></div>
+    <h3>Labels by attempt</h3>
     <div id="allBox"></div>
   </aside>
 </main>
-<div id="cb" class="hidden"><div class="cbHead"><b>Codebook</b><button id="cbClose">Close (Esc)</button></div><div id="cbBody">Loading…</div></div>
+
+<main id="itemsView" class="hidden"><section id="items"></section></main>
+
+<div id="drawer" class="hidden">
+  <div class="dHead"><b id="dTitle"></b><button id="dClose">Close (Esc)</button></div>
+  <div id="dBody"></div>
+</div>
+
 <footer id="keys">
-  <span><kbd>click</kbd>/<kbd>drag</kbd>/<kbd>⇧click</kbd> select · <kbd>j</kbd><kbd>k</kbd> move (⇧ extend)</span>
-  <span class="k ea"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> EA capability / safety / generic, speculative · <kbd>⇧</kbd>+same = confident</span>
-  <span class="k gr"><kbd>4</kbd> grader</span>
-  <span class="k bt"><kbd>5</kbd> first bad test</span>
-  <span class="k cc"><kbd>6</kbd> first cheat considered</span>
-  <span><kbd>b</kbd> benchmark · <kbd>u</kbd> unsure · <kbd>n</kbd> note · <kbd>⌫</kbd> delete · <kbd>⌘Z</kbd> undo · <kbd>m</kbd> read-to-here · <kbd>[</kbd><kbd>]</kbd> attempt · <kbd>?</kbd> codebook</span>
+  <span class="k"><i class="sw" style="background:var(--c-eval_awareness)"></i><kbd>1</kbd> EA capability</span>
+  <span class="k"><i class="sw" style="background:var(--c-eval_awareness)"></i><kbd>2</kbd> EA safety</span>
+  <span class="k"><i class="sw" style="background:var(--c-eval_awareness)"></i><kbd>3</kbd> EA generic</span>
+  <span class="k"><i class="sw" style="background:var(--c-grader)"></i><kbd>4</kbd> grader</span>
+  <span class="k"><i class="sw" style="background:var(--c-bad_test)"></i><kbd>5</kbd> first bad test</span>
+  <span class="k"><i class="sw" style="background:var(--c-cheat_considered)"></i><kbd>6</kbd> first cheat considered</span>
+  <span class="sep"></span>
+  <span><kbd>u</kbd> speculative</span>
+  <span><kbd>⌘Z</kbd> undo</span>
+  <span><kbd>m</kbd> read-to-here</span>
+  <span><kbd>p</kbd> problem</span>
+  <span><kbd>?</kbd> codebook</span>
 </footer>
 <div id="toast" class="hidden"></div>
 <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>

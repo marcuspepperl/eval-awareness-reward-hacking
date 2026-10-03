@@ -8,9 +8,10 @@ Routes:
   GET  /static/<file>                     page assets (scripts/judge/label_ui/)
   GET  /codebook.md                       docs/codebook.md
   GET  /api/set/<set>                     logs/12-judge/labelsets/<set>/data.json
-  GET  /api/labels/<set>/<labeler>        {key: label record} for that labeller
-  PUT  /api/labels/<set>/<labeler>/<idx>  save one attempt's label record (JSON body)
-Labels are written to logs/12-judge/labels/<set>/<labeler>/<key with ':' -> '__'>.json.
+  GET  /api/labels/<set>/<labeler>        {rollout: label record} for that labeller
+  PUT  /api/labels/<set>/<labeler>/<idx>  save one rollout's label record (JSON body)
+One record per rollout (per-attempt spans and B1 inside), written to
+logs/12-judge/labels/<set>/<labeler>/<rollout with ':' -> '__'>.json.
 Binds to 127.0.0.1 only. Names are restricted to [A-Za-z0-9_-] to keep paths inside the roots.
 """
 
@@ -80,19 +81,19 @@ class Handler(SimpleHTTPRequestHandler):
             recs = {}
             for f in sorted(d.glob("*.json")) if d.is_dir() else []:
                 rec = json.loads(f.read_text())
-                recs[rec["key"]] = rec
+                recs[rec["rollout"]] = rec
             return self._json(recs)
         self._json({"error": "not found"}, 404)
 
     def do_PUT(self) -> None:  # noqa: N802
-        """Save one attempt's label record."""
+        """Save one rollout's label record."""
         parts = [p for p in self.path.split("?", 1)[0].split("/") if p]
         if not (
             parts[:2] == ["api", "labels"] and len(parts) == 5 and _safe(*parts[2:4])
         ):
             return self._json({"error": "bad path"}, 400)
         rec = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
-        key = rec.get("key", "")
+        key = rec.get("rollout", "")
         if not re.match(r"^[\w:.-]+$", key):
             return self._json({"error": "bad key"}, 400)
         d = LABELS / parts[2] / parts[3]
