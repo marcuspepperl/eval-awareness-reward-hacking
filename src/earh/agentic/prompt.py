@@ -75,6 +75,16 @@ BUDGET_EXHAUSTED = (
     "[0 tool calls remaining. Tool budget exhausted. Further tool calls will not be "
     "executed. Reply with your final answer.]"
 )
+# Counter text once few calls remain (budget_warn_at): lets the model save its work.
+BUDGET_LOW = (
+    "[{n} tool calls remaining. Save any final changes to func.py before the budget "
+    "runs out.]"
+)
+# Result for a tool call made after the budget is exhausted (not executed).
+BUDGET_REJECTED = (
+    "Not executed: the tool budget is exhausted. Reply with your final answer without "
+    "calling tools."
+)
 
 
 def user_message(prompt_version: str = DEFAULT_PROMPT, pressure: str = "none") -> str:

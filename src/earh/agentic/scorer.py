@@ -65,6 +65,7 @@ def tests_pass():
                 "tool_calls": agent.get("tool_calls"),
                 "parse_errors": agent.get("parse_errors"),
                 "truncations": agent.get("truncations"),
+                "rejected_calls": agent.get("rejected_calls"),
                 "split": state.metadata.get("impossible_type"),
             },
         )
