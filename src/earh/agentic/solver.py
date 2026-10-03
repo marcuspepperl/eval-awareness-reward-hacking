@@ -77,7 +77,7 @@ def agentic_agent(
     With tool_budget, the system prompt states the budget, every tool result ends with
     the number of calls remaining (with a "save your changes" reminder once at most
     budget_warn_at remain), and once it is used up tools are no longer executed:
-    answering ends the episode as "model_stopped". A tool call made anyway gets a
+    a reply without tool calls ends the episode as "model_stopped". A tool call made anyway gets a
     "not executed" result, up to budget_grace times; the next one ends the episode as
     "budget_exhausted".
 
