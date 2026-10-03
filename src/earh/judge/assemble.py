@@ -3,6 +3,8 @@
 Joins judge logs (spans by unit) with the attempts they came from, re-segmenting the
 reasoning so every span maps to text and a relative position. Adjacent spans with the
 same label (e.g. one occurrence split at a chunk boundary) are merged into one occurrence.
+First-only labels (bad_test, cheat_considered) are reported once per chunk; the earliest
+across chunks is kept.
 """
 
 from __future__ import annotations
@@ -12,6 +14,7 @@ from collections import defaultdict
 from inspect_ai.log import list_eval_logs, read_eval_log
 
 from earh.judge.extract import Attempt
+from earh.judge.parse import FIRST_ONLY
 from earh.judge.units import reasoning_segments
 from earh.segment import Segment, segment_answer
 
@@ -43,11 +46,6 @@ def load_judge_spans(
     return dict(out)
 
 
-def _kind(span: dict) -> tuple:
-    """Merge key: label plus status (a considered cheat never merges into a decided one)."""
-    return (span["label"], span.get("status"))
-
-
 def merge_adjacent(spans: list[dict], order: dict[str, int]) -> list[dict]:
     """Merge spans of the same kind whose items are consecutive (e.g. split by a chunk boundary).
 
@@ -55,13 +53,13 @@ def merge_adjacent(spans: list[dict], order: dict[str, int]) -> list[dict]:
     @param order: Item ID -> position in the attempt's item sequence.
     @returns: Spans sorted by position; merged spans keep the first span's attributes.
     """
-    ordered = sorted(spans, key=lambda s: (_kind(s), order[s["ids"][0]]))
+    ordered = sorted(spans, key=lambda s: (s["label"], order[s["ids"][0]]))
     merged: list[dict] = []
     for s in ordered:
         last = merged[-1] if merged else None
         if (
             last
-            and _kind(last) == _kind(s)
+            and last["label"] == s["label"]
             and order[s["ids"][0]] == order[last["ids"][-1]] + 1
         ):
             last["ids"] = last["ids"] + s["ids"]
@@ -88,16 +86,22 @@ def _describe(
     }
 
 
-def _first(spans: list[dict], label: str, status: str | None = None) -> float | None:
-    """Relative position of the first span with this label (and status), if any."""
-    return next(
-        (
-            s["rel_pos"]
-            for s in spans
-            if s["label"] == label and (status is None or s.get("status") == status)
-        ),
-        None,
-    )
+def keep_first(spans: list[dict], order: dict[str, int]) -> list[dict]:
+    """Drop all but the earliest span of each first-only label (one per chunk comes in)."""
+    seen: set[str] = set()
+    out = []
+    for s in sorted(spans, key=lambda s: order[s["ids"][0]]):
+        if s["label"] in FIRST_ONLY:
+            if s["label"] in seen:
+                continue
+            seen.add(s["label"])
+        out.append(s)
+    return out
+
+
+def _first(spans: list[dict], label: str) -> float | None:
+    """Relative position of the first span with this label, if any."""
+    return next((s["rel_pos"] for s in spans if s["label"] == label), None)
 
 
 def assemble(attempts: list[Attempt], judged: dict[str, dict]) -> list[dict]:
@@ -118,7 +122,10 @@ def assemble(attempts: list[Attempt], judged: dict[str, dict]) -> list[dict]:
         order = {s.id: i for i, s in enumerate(all_items)}
         n = len(segs)
         known = [s for s in j["spans"] if all(i in items for i in s["ids"])]
-        spans = [_describe(s, items, order, n) for s in merge_adjacent(known, order)]
+        spans = [
+            _describe(s, items, order, n)
+            for s in keep_first(merge_adjacent(known, order), order)
+        ]
         ea = [s for s in spans if s["label"] == "eval_awareness"]
         ea_sentences = sum(len(s["ids"]) for s in ea)
         records.append(
@@ -140,9 +147,8 @@ def assemble(attempts: list[Attempt], judged: dict[str, dict]) -> list[dict]:
                 "ea_framings": sorted({s["framing"] for s in ea}),
                 "ea_first_rel_pos": _first(spans, "eval_awareness"),
                 "grader_occurrences": sum(s["label"] == "grader" for s in spans),
-                "contradiction_first_rel_pos": _first(spans, "contradiction"),
-                "cheat_considered_first_rel_pos": _first(spans, "cheat", "considered"),
-                "cheat_decided_first_rel_pos": _first(spans, "cheat", "decided"),
+                "bad_test_first_rel_pos": _first(spans, "bad_test"),
+                "cheat_considered_first_rel_pos": _first(spans, "cheat_considered"),
                 "cheat_summary": j["summary"],
                 "invalid_units": j["invalid_units"],
                 "n_units": j["units"],

@@ -31,11 +31,7 @@ def main() -> None:
         spans = [s for s in r["spans"] if not args.label or s["label"] == args.label]
         print(f"\n=== {r['key']}  passed={r['passed']}  B1={r['cheat_summary']}")
         for s in spans:
-            attrs = {
-                k: s[k]
-                for k in ("framing", "strength", "names_benchmark", "status")
-                if k in s
-            }
+            attrs = {k: s[k] for k in ("framing", "strength", "benchmark") if k in s}
             i, j = pos[s["ids"][0]], pos[s["ids"][-1]]
             before = items[i - 1].text if i > 0 else ""
             after = items[j + 1].text if j + 1 < len(items) else ""

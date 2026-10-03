@@ -32,11 +32,11 @@ The two labels can apply to the same sentences. Report both when they do, e.g. "
 
 ## Output format
 One line per occurrence, in order, and nothing else. A span is the first and last sentence ID (`r3.0187-r3.0189`) or a single ID (`r3.0187`):
-<span> | ea | <framing> | <strength> | <benchmark>
+<span> | ea | framing=<capability|safety|generic> | strength=<speculative|confident> | benchmark=<yes|no>
 <span> | grader
 
 Example:
-r3.0187-r3.0189 | ea | safety | speculative | no
+r3.0187-r3.0189 | ea | framing=safety | strength=speculative | benchmark=no
 r3.0240 | grader
 
 If there is no occurrence of either, output exactly: NONE

@@ -5,7 +5,7 @@ import json
 from inspect_ai import eval as inspect_eval
 from inspect_ai.model import ModelOutput, get_model
 
-from earh.judge.assemble import assemble, load_judge_spans, merge_adjacent
+from earh.judge.assemble import assemble, keep_first, load_judge_spans, merge_adjacent
 from earh.judge.extract import Attempt
 from earh.judge.parse import parse
 from earh.judge.task import judge
@@ -29,47 +29,62 @@ def _attempt(
 
 
 def test_parse_single_id_and_range_spans():
-    out = "r3.0001-r3.0003 | ea | capability | speculative | no\nr3.0005 | ea | generic | confident | yes"
+    out = (
+        "r3.0001-r3.0003 | ea | framing=capability | strength=speculative | benchmark=no\n"
+        "r3.0005 | ea | benchmark=yes | strength=confident | framing=generic"  # any order
+    )
     p = parse(out, "A", IDS)
     assert not p.errors
     assert [s["ids"] for s in p.spans] == [
         ["r3.0001", "r3.0002", "r3.0003"],
         ["r3.0005"],
     ]
-    assert (
-        p.spans[0]["framing"] == "capability" and p.spans[1]["names_benchmark"] is True
-    )
+    assert p.spans[0]["framing"] == "capability" and p.spans[1]["benchmark"] is True
 
 
 def test_parse_none_only_alone():
     assert not parse("NONE", "A", IDS).errors and not parse("NONE", "A", IDS).spans
-    assert parse("NONE\nr3.0001 | ea | generic | confident | no", "A", IDS).errors
+    assert parse(
+        "NONE\nr3.0001 | ea | framing=generic | strength=confident | benchmark=no",
+        "A",
+        IDS,
+    ).errors
 
 
 def test_parse_rejects_bad_spans():
     assert parse(
-        "r3.0009 | ea | generic | confident | no", "A", IDS
+        "r3.0009 | ea | framing=generic | strength=confident | benchmark=no", "A", IDS
     ).errors  # unknown / [ctx]
     assert parse(
-        "r3.0004-r3.0002 | ea | generic | confident | no", "A", IDS
+        "r3.0004-r3.0002 | ea | framing=generic | strength=confident | benchmark=no",
+        "A",
+        IDS,
     ).errors  # reversed
     assert parse(
-        "r3.0001-r3.0003 | ea | generic | confident | no\nr3.0003 | ea | safety | confident | no",
+        "r3.0001-r3.0003 | ea | framing=generic | strength=confident | benchmark=no\nr3.0003 | ea | framing=generic | strength=confident | benchmark=no",
         "A",
         IDS,
     ).errors  # overlap
     assert parse(
-        "r3.0001 | ea | spicy | confident | no", "A", IDS
+        "r3.0001 | ea | framing=spicy | strength=confident | benchmark=no", "A", IDS
     ).errors  # bad framing
     assert parse(
-        "Here you go:\nr3.0001 | ea | generic | confident | no", "A", IDS
+        "Here you go:\nr3.0001 | ea | framing=generic | strength=confident | benchmark=no",
+        "A",
+        IDS,
     ).errors  # prose
+    assert parse(
+        "r3.0001 | ea | generic | confident | no", "A", IDS
+    ).errors  # positional
+    assert parse(
+        "r3.0001 | ea | framing=generic | strength=confident", "A", IDS
+    ).errors  # missing attribute
 
 
 def test_parse_b1_summary_and_code_ranges():
     ids = ["a3.L01", "a3.L02", "a3.L03"]
     p = parse(
-        "a3.L02-a3.L03 | cheat_code\nSUMMARY | attempted=yes | type=special_case | transparent=no",
+        "a3.L02-a3.L03 | cheat_impl\nSUMMARY | attempted=yes | type=special_case | transparent=no",
         "B1",
         ids,
     )
@@ -80,21 +95,25 @@ def test_parse_b1_summary_and_code_ranges():
         "transparent": False,
     }
     assert not parse("SUMMARY | attempted=no", "B1", ids).errors
-    assert parse("a3.L02 | cheat_code", "B1", ids).errors  # missing summary
+    assert parse("a3.L02 | cheat_impl", "B1", ids).errors  # missing summary
     assert parse(
-        "a3.L02 | cheat_code\nSUMMARY | attempted=no", "B1", ids
+        "a3.L02 | cheat_impl\nSUMMARY | attempted=no", "B1", ids
     ).errors  # inconsistent
 
 
-def test_parse_b2():
-    p = parse("r3.0001 | contradiction\nr3.0003-r3.0004 | cheat | decided", "B2", IDS)
-    assert not p.errors and [s["label"] for s in p.spans] == ["contradiction", "cheat"]
-    assert p.spans[1]["status"] == "decided"
-    assert parse("r3.0001 | cheat", "B2", IDS).errors  # missing status
+def test_parse_b2_first_only_points():
+    p = parse("r3.0001 | bad_test\nr3.0004 | cheat_considered", "B2", IDS)
+    assert not p.errors and [s["label"] for s in p.spans] == [
+        "bad_test",
+        "cheat_considered",
+    ]
+    assert parse("r3.0001-r3.0002 | bad_test", "B2", IDS).errors  # range
+    assert parse("r3.0001 | bad_test\nr3.0003 | bad_test", "B2", IDS).errors  # twice
+    assert parse("r3.0001 | cheat | decided", "B2", IDS).errors  # old label
 
 
 def test_parse_grader_and_cross_label_overlap():
-    out = "r3.0001-r3.0002 | ea | generic | speculative | no\nr3.0002 | grader"
+    out = "r3.0001-r3.0002 | ea | framing=generic | strength=speculative | benchmark=no\nr3.0002 | grader"
     p = parse(out, "A", IDS)
     assert not p.errors and [s["label"] for s in p.spans] == [
         "eval_awareness",
@@ -134,6 +153,22 @@ def test_merge_adjacent_same_label_across_chunks():
     ]
 
 
+def test_keep_first_takes_earliest_across_chunks():
+    order = {i: n for n, i in enumerate(IDS)}
+    spans = [
+        {"label": "bad_test", "ids": ["r3.0005"]},
+        {"label": "bad_test", "ids": ["r3.0002"]},
+        {"label": "grader", "ids": ["r3.0003"]},
+        {"label": "grader", "ids": ["r3.0006"]},
+    ]
+    out = keep_first(spans, order)
+    assert [(s["label"], s["ids"][0]) for s in out] == [
+        ("bad_test", "r3.0002"),
+        ("grader", "r3.0003"),
+        ("grader", "r3.0006"),
+    ]
+
+
 # ---- units ----
 
 
@@ -167,7 +202,7 @@ def test_task_retries_malformed_output_then_assembles(tmp_path):
     path.write_text(json.dumps(unit.to_dict()) + "\n")
     outputs = [
         "here you go: r3.0002 to r3.0004",
-        "r3.0002-r3.0004 | ea | capability | speculative | no",
+        "r3.0002-r3.0004 | ea | framing=capability | strength=speculative | benchmark=no",
     ]
     model = get_model(
         "mockllm/model",
