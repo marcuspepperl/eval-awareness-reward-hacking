@@ -1,0 +1,6903 @@
+[
+ {
+  "task_id": "lcbhard_0",
+  "n_submissions": 7,
+  "n_pass_all": 7,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_1",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_2",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_3",
+  "n_submissions": 5,
+  "n_pass_all": 5,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_4",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_5",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_6",
+  "n_submissions": 10,
+  "n_pass_all": 8,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 7,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(7, 8, 9, [(3, 6), (3, 6), (3, 6), (6, 3), (6, 3), (6, 3), (3, 6)]) == False",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_7",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_8",
+  "n_submissions": 8,
+  "n_pass_all": 8,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_9",
+  "n_submissions": 8,
+  "n_pass_all": 8,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_10",
+  "n_submissions": 2,
+  "n_pass_all": 2,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_11",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_12",
+  "n_submissions": 10,
+  "n_pass_all": 8,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 21,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(4, 'BBWW', 'WWBB') == 3",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 0,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(6, 'BWBWBW', 'WWWBBB') == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(14, 'BBBWBWWWBBWWBW', 'WBWWBBWWWBWBBB') == 7",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(14, 'WBWBWBWBWBWBWB', 'WWWWWWWBBBBBBB') == 8",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(14, 'BWBBBWBBWBBWBB', 'WWWWBBBBBBBBBB') == 8",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(14, 'BWBBBBBBBBBBBB', 'WBBBBBBBBBBBBB') == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, 'WWBB', 'BBWW') == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 8,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(12, 'WBWWWWBWBBBB', 'BBBBBBWWWWWW') == 8",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 10,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(14, 'BWBWWWBBWBWWBW', 'WWWBBBWWBWBWWB') == 9",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(12, 'WBWBWBWBBBBB', 'BBBBBBBBWWWW') == 8",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(14, 'BBWBWBBBBBBBBB', 'WWBBBBBBBBBBBB') == 5",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(9, 'WBWBWBWWW', 'WWWWWWBBB') == 6",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(14, 'WWWWBWWBWWBWWW', 'BBBWWWWWWWWWWW') == 7",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 20,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(14, 'WBWBBBWWBWBBWB', 'BBBWWWBBWBWBBW') == 9",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_13",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 1,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_14",
+  "n_submissions": 3,
+  "n_pass_all": 3,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_15",
+  "n_submissions": 10,
+  "n_pass_all": 8,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 1,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate([1, 3, 1, 3], 2) == 1",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_16",
+  "n_submissions": 1,
+  "n_pass_all": 0,
+  "n_load_error": 0,
+  "failing": [],
+  "status": "runner error: ",
+  "suspects": []
+ },
+ {
+  "task_id": "lcbhard_17",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 0,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 7) == 16",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 1,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, 11) == 16095",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(81131, 14) == 182955659",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, 11) == 797173552",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(5, 6) == 159380",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, 10) == 12159",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(144115188075855871, 16) == 915266445",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(999999999999999998, 13) == 587706331",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 10,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(685421234133927648, 13) == 411807994",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(646273989912848062, 16) == 269704788",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 2) == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, 5) == 6412",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 14,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(419370024054448287, 8) == 443583017",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(999999999999999997, 16) == 461609606",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(801955173684586951, 12) == 652715721",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, 2) == 31",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2, 16) == 2026",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 20,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(595748670391086086, 12) == 310581455",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 21,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(660456923033105951, 12) == 634238654",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 23,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(249168129578582606, 12) == 845995803",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 24,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(712020795732155673, 12) == 229774372",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 25,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, 2) == 79",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 26,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1000000000000000000, 15) == 21484993",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 27,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(857077283552821320, 9) == 116125541",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_18",
+  "n_submissions": 10,
+  "n_pass_all": 8,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 0,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, 5) == 27",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(5, 6) == 2468",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, 2) == 39718144",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(6, 8) == 5221",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 8,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(9, 9) == 4623119",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(6, 6) == 3109",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2, 8) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2, 2) == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, 4) == 54",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, 2) == 108",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, 1) == 41457024",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2, 7) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 18,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2, 6) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, 5) == 19284856",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 20,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(9, 4) == 33175696",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 21,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(8, 4) == 494818",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 22,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, 6) == 30",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 23,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(9, 5) == 15814071",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 24,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2, 9) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 26,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, 4) == 37326452",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 27,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, 3) == 69",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 28,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(8, 1) == 617472",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 29,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, 3) == 13831104",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 30,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(9, 8) == 30771543",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 31,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(9, 7) == 36789447",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 32,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, 8) == 35755906",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 33,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2, 3) == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 34,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, 6) == 13249798",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 35,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(9, 6) == 12476696",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 36,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, 7) == 40242031",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 37,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, 9) == 4610368",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 38,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(5, 9) == 1191",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 1,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 4) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 5) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 3) == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 6) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 7) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 1) == 9",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 25,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 9) == 1",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_19",
+  "n_submissions": 10,
+  "n_pass_all": 0,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 1,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(10, 12, 924844033) == 623378361",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(5, 6, 1000000087) == 154804965",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(9, 6, 1000000181) == 580357950",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(12, 10, 1000000007) == 47180996",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(9, 8, 961748927) == 926958523",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 8,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(4, 30, 924844033) == 902417532",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(9, 5, 924844033) == 892467535",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(9, 12, 1000000271) == 182118307",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(10, 4, 924844033) == 319728881",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(7, 6, 924844033) == 707475447",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(4, 3, 924844033) == 50820",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 16,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(5, 6, 961748927) == 23460916",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(4, 30, 1000000007) == 820125021",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 18,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(8, 15, 999999937) == 127603846",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(8, 15, 998244353) == 811861799",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 20,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(4, 9, 1000000087) == 280255791",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 22,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(9, 5, 1000000271) == 177947947",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 24,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(3, 7, 998244353) == 99811405",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 25,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(6, 5, 924844033) == 342904359",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 27,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(7, 6, 1000000087) == 57734492",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 28,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(9, 3, 999999937) == 773398402",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 29,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(7, 8, 1000000087) == 367115330",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 30,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(6, 20, 961748927) == 480586743",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 31,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(5, 6, 1000000007) == 622398148",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 32,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(3, 40, 998244353) == 725836439",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 33,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(12, 5, 961748927) == 284258389",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 34,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(4, 6, 998244353) == 552688631",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 36,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(8, 7, 1000000271) == 376169846",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 37,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(9, 10, 924844033) == 448741169",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 38,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(9, 4, 961748927) == 695186727",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 39,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(11, 7, 1000000007) == 245547002",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 40,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(10, 12, 1000000007) == 47180996",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 6,
+    "share": 0.6,
+    "text": "assert candidate(2, 3, 998244353) == 10",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 21,
+    "n_fail": 6,
+    "share": 0.6,
+    "text": "assert candidate(2, 10, 1000000181) == 81662152",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 23,
+    "n_fail": 6,
+    "share": 0.6,
+    "text": "assert candidate(2, 60, 1000000271) == 979333636",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 35,
+    "n_fail": 6,
+    "share": 0.6,
+    "text": "assert candidate(2, 10, 998244353) == 81662152",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 0,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(3, 2, 998244353) == 10",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(4, 2, 998244353) == 70",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(2, 2, 1000000181) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(10, 2, 999999937) == 81662152",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 26,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(60, 2, 1000000181) == 971042657",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 1,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(10, 12, 924844033) == 623378361",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(5, 6, 1000000087) == 154804965",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(9, 6, 1000000181) == 580357950",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(12, 10, 1000000007) == 47180996",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(9, 8, 961748927) == 926958523",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 8,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(4, 30, 924844033) == 902417532",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(9, 5, 924844033) == 892467535",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(9, 12, 1000000271) == 182118307",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(10, 4, 924844033) == 319728881",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(7, 6, 924844033) == 707475447",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(4, 3, 924844033) == 50820",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 16,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(5, 6, 961748927) == 23460916",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(4, 30, 1000000007) == 820125021",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 18,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(8, 15, 999999937) == 127603846",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(8, 15, 998244353) == 811861799",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 20,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(4, 9, 1000000087) == 280255791",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 22,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(9, 5, 1000000271) == 177947947",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 24,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(3, 7, 998244353) == 99811405",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 25,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(6, 5, 924844033) == 342904359",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 27,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(7, 6, 1000000087) == 57734492",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 28,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(9, 3, 999999937) == 773398402",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 29,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(7, 8, 1000000087) == 367115330",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 30,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(6, 20, 961748927) == 480586743",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 31,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(5, 6, 1000000007) == 622398148",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 32,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(3, 40, 998244353) == 725836439",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 33,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(12, 5, 961748927) == 284258389",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 34,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(4, 6, 998244353) == 552688631",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 36,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(8, 7, 1000000271) == 376169846",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 37,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(9, 10, 924844033) == 448741169",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 38,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(9, 4, 961748927) == 695186727",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 39,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(11, 7, 1000000007) == 245547002",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 40,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(10, 12, 1000000007) == 47180996",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 6,
+    "share": 0.6,
+    "text": "assert candidate(2, 3, 998244353) == 10",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 21,
+    "n_fail": 6,
+    "share": 0.6,
+    "text": "assert candidate(2, 10, 1000000181) == 81662152",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 23,
+    "n_fail": 6,
+    "share": 0.6,
+    "text": "assert candidate(2, 60, 1000000271) == 979333636",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 35,
+    "n_fail": 6,
+    "share": 0.6,
+    "text": "assert candidate(2, 10, 998244353) == 81662152",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 0,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(3, 2, 998244353) == 10",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(4, 2, 998244353) == 70",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(2, 2, 1000000181) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(10, 2, 999999937) == 81662152",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 26,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(60, 2, 1000000181) == 971042657",
+    "touched_by_diff": false
+   }
+  ],
+  "status": "candidate (no submission passes all original assertions)"
+ },
+ {
+  "task_id": "lcbhard_20",
+  "n_submissions": 10,
+  "n_pass_all": 3,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 8,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(20, -21, -75, 86, -82) == 13",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 6,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(19, -28, -65, 93, -76) == 12",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(47, 11, -20, 56, 63) == 5",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(81, -36, 36, 80, 54) == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 0,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(3, -2, 1, 4, -1) == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(63, -9, 49, -45, 29) == 2",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 3,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(51, 94, 7, -90, -34) == 8",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 1,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(4, 8, 8, 0, 2) == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(89, -16, 20, 43, -75) == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(28, 41, 22, 13, 33) == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(10000000000000000, 0, 0, 10000000000000000, 10000000000000000) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(67, 24, 3, 100, -23) == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(35, -85, 40, -97, -77) == 10",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 8,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(20, -21, -75, 86, -82) == 13",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 6,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(19, -28, -65, 93, -76) == 12",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(47, 11, -20, 56, 63) == 5",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(81, -36, 36, 80, 54) == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 0,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(3, -2, 1, 4, -1) == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(63, -9, 49, -45, 29) == 2",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 3,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(51, 94, 7, -90, -34) == 8",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 1,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(4, 8, 8, 0, 2) == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(89, -16, 20, 43, -75) == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(28, 41, 22, 13, 33) == 4",
+    "touched_by_diff": false
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_21",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 1,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(123456, 185185) == 69292914",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(188910, 170883) == 336679352",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(14559, 45049) == 680433119",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2866, 14548) == 291537197",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(29, 39) == 429833742",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(31, 20) == 560382534",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 8,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(49, 13) == 809793702",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(7, 2) == 598946753",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(183447, 168599) == 11950280",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(43, 45) == 204056594",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(43351, 26722) == 84357237",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(184507, 193750) == 500275667",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(13069, 28254) == 439930203",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(45, 39) == 884500683",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(188748, 168518) == 284909521",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2764, 23052) == 23038810",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 18,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(44, 20) == 376859833",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(99999, 100000) == 903945737",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 20,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(20, 12) == 576182410",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 21,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(40, 9) == 172313573",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 22,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(190751, 159359) == 728200875",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 23,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(45, 24) == 990610455",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 25,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(183824, 175300) == 424706838",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 27,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(8926, 17121) == 102152738",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 28,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(36, 19) == 166701617",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 29,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(23, 2) == 382880279",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 30,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(38, 10) == 538635895",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 31,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(100000, 99999) == 55592877",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 32,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(14, 38) == 742104031",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 33,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(38, 5) == 384220062",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 34,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(186623, 171367) == 12542537",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 35,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(172087, 172092) == 200858514",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 36,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(13478, 30024) == 314898991",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 37,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(33, 15) == 422093912",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 38,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(46, 34) == 883377184",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 39,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(7, 19) == 898432661",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 40,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(12, 30) == 194529315",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_22",
+  "n_submissions": 10,
+  "n_pass_all": 7,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 54,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(176462, 90857) == False",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 18,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(21, 17) == True",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 6,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(7, 6) == True",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_23",
+  "n_submissions": 6,
+  "n_pass_all": 6,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_24",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_25",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 3,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1) == 1",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_26",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_27",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_28",
+  "n_submissions": 10,
+  "n_pass_all": 7,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 28,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(13, 15) == 0",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 0,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, 20) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 1,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 15) == 10",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(8160, 560222044) == 374578664",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(14, 17) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(12, 15) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(14, 16) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, 4) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(18, 20) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 8,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(9, 10) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, 10) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(9592, 946577333) == 636555796",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(776, 776) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(8, 13) == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(9, 12) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(15, 19) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(995038326, 997826789) == 1633702",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(5883, 477462691) == 317560661",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3066, 877964804) == 589724130",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 18,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(6519, 777221270) == 522035747",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3141, 634219825) == 426273641",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 20,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(19, 22) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 21,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(16, 18) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 22,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3008, 501499977) == 333134617",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 23,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2, 7) == 6",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 24,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(8747, 716697279) == 482524455",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 25,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, 13) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 26,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(15, 18) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 27,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 999999999) == 670349658",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 29,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(998, 998) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 30,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(11, 16) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 31,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(951, 955) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 32,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, 4) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 33,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(18, 20) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 34,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(20, 24) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 35,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(5689, 522431457) == 350040194",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 36,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, 8) == 6",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 37,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3248, 951663687) == 639984313",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 38,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(7113, 683257942) == 457838862",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 39,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(6155, 902395961) == 605836224",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 40,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(18, 18) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 41,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4363, 870011121) == 584498095",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 28,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(13, 15) == 0",
+    "touched_by_diff": true
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_29",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_30",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 13,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(\"3046150261507503990489\", \"7775829181095068737136\", 127, 169) == 157138097",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_31",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_32",
+  "n_submissions": 10,
+  "n_pass_all": 7,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 5,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate([2, 7]) == 1",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 7,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate([4, 1]) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate([5]) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate([4]) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 0,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate([2, 3, 1, 4]) == 3",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 10,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate([518, 499, 185, 348, 429, 297, 315, 348, 64, 129, 591, 181, 307, 130, 517, 279, 76, 457, 662, 457, 23, 426, 611, 665, 708, 705, 159, 278, 296, 86, 598, 492, 50, 517, 58, 436, 576, 470, 62, 624, 238, 112, 178, 726, 537, 699, 716, 375, 586, 124, 148, 362, 8, 252, 690, 159, 35, 660, 11",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 5,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate([2, 7]) == 1",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 7,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate([4, 1]) == 1",
+    "touched_by_diff": false
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_33",
+  "n_submissions": 5,
+  "n_pass_all": 4,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 8,
+    "n_fail": 1,
+    "share": 0.2,
+    "text": "assert candidate(\"likvf\", 2) == 2",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_34",
+  "n_submissions": 9,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_35",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 0,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate([65], [3], 69) == 0",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 1,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate([2], [0], 6602) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate([319, 818, 986, 579, 514, 577, 808, 136, 559, 256, 999, 190, 198, 767, 227, 764, 601, 879, 493, 197, 668, 164, 844, 931, 369, 250, 532, 955, 760, 838, 630, 899, 721, 673, 224, 756, 7, 363, 16, 806, 350, 312, 456, 156, 80, 100, 533, 132, 373, 278, 910, 505, 791, 941, 479, 734, 397, 6",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate([97, 67, 123, 177, 94, 192, 7, 43, 166, 152, 168, 200, 151, 20, 146, 2, 156, 19, 65, 87, 67, 63, 163, 139, 108, 155, 62, 105, 183, 135, 57, 178, 81, 119, 150, 3, 91, 67, 193, 38, 153, 184, 81, 196, 187, 62, 58, 38, 142, 177, 107, 145, 165, 45, 21, 161, 39, 7, 88, 48, 199, 83, 32, 93",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate([2, 8, 4, 8, 7, 3, 8, 8, 3, 9, 9, 5, 6, 10, 4, 5, 2, 10, 5, 6, 8, 2, 8, 8, 5, 3, 7, 6, 8, 5, 2, 8, 7, 9, 7, 6, 10, 9, 5, 1, 3, 7, 5, 1, 6, 4, 2, 6, 1, 2, 7, 10, 6, 2, 3, 5, 4, 3, 2, 7, 5, 8, 3, 7, 4, 7, 10, 9, 5, 6, 3, 9, 8, 1, 10, 6, 7, 8, 7, 10, 3, 3, 5, 3, 10, 5, 5, 2, 1, 7, 5, 6",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate([11, 158, 143, 114, 70, 159, 160, 67, 130, 20, 44, 112, 113, 5, 23, 19, 122, 112, 16, 49, 170, 180, 87, 56, 61, 163, 121, 161, 8, 114, 14, 182, 130, 112, 85, 196, 74, 171, 1, 191, 12, 1, 135, 158, 10, 82, 38, 136, 32, 186, 118, 130, 163, 88, 107, 127, 112, 115, 24, 100, 12, 42, 12, ",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_36",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_37",
+  "n_submissions": 10,
+  "n_pass_all": 7,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 0,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate('accca', 2) == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate('eictzzwx', 1) == 8",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate('cxdzvmcbcv', 3) == 4",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_38",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_39",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_40",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 2,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2, [4, 8], (3, 1, 100), (4, 10000, 100)) == 5",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_41",
+  "n_submissions": 9,
+  "n_pass_all": 8,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 3,
+    "n_fail": 1,
+    "share": 0.11,
+    "text": "assert candidate(2, 1, 249959928878916, [(1, 2, 81703739369768)]) == 81703739369768",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_42",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_43",
+  "n_submissions": 10,
+  "n_pass_all": 6,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 6,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(20, 19, [\n        (4, 19, -1000000), (16, 17, -1000000), (1, 20, -1000000), (5, 1, -1000000),\n        (7, 10, -1000000), (19, 9, -1000000), (10, 18, -1000000), (6, 12, -1000000),\n        (11, 2, -1000000), (14, 13, -1000000), (15, 5, -1000000), (12, 11, -1000000),\n        (2, 16, -1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(20, 19, [\n        (5, 2, 1000000), (1, 12, 1000000), (10, 14, 1000000), (3, 7, 1000000),\n        (7, 17, 1000000), (13, 11, 1000000), (17, 1, 1000000), (8, 19, 1000000),\n        (12, 4, 1000000), (2, 20, 1000000), (16, 13, 1000000), (4, 10, 1000000),\n        (11, 6, 1000000), (20, 9",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(2, 1, [(2, 1, 0)]) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 0,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, 4, [(1, 2, 5), (2, 1, -3), (2, 3, -4), (3, 1, 100)]) == -2",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 6,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(20, 19, [\n        (4, 19, -1000000), (16, 17, -1000000), (1, 20, -1000000), (5, 1, -1000000),\n        (7, 10, -1000000), (19, 9, -1000000), (10, 18, -1000000), (6, 12, -1000000),\n        (11, 2, -1000000), (14, 13, -1000000), (15, 5, -1000000), (12, 11, -1000000),\n        (2, 16, -1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(20, 19, [\n        (5, 2, 1000000), (1, 12, 1000000), (10, 14, 1000000), (3, 7, 1000000),\n        (7, 17, 1000000), (13, 11, 1000000), (17, 1, 1000000), (8, 19, 1000000),\n        (12, 4, 1000000), (2, 20, 1000000), (16, 13, 1000000), (4, 10, 1000000),\n        (11, 6, 1000000), (20, 9",
+    "touched_by_diff": false
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_44",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_45",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_46",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 0,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(5, [(1, 9), (2, 5), (4, 9), (1, 4), (2, 5)]) == 'Aoki'",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 2,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(18, [(110703313, 674180258), (110703313, 214460484), (110703313, 381951730), (110703313, 342316418), (110703313, 886747189), (110703313, 317427885), (110703313, 790678624), (110703313, 148472061), (110703313, 962962849), (110703313, 363213522), (110703313, 154522258), (110703313, 94",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(7, [(51381329, 616885263), (993367575, 914515460), (654229289, 974168752), (899846144, 602506004), (573578923, 408717435), (344212430, 581675303), (485223917, 933528365)]) == 'Aoki'",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, [(859120875, 859120875), (859120875, 859120875), (859120875, 859120875)]) == 'Takahashi'",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_47",
+  "n_submissions": 8,
+  "n_pass_all": 8,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_48",
+  "n_submissions": 7,
+  "n_pass_all": 7,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_49",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_50",
+  "n_submissions": 10,
+  "n_pass_all": 7,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 5,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(1000, 9, 'B' * 10 + 'A' * 4 + 'B' * 3 + 'A' * 8 + 'B' + 'A' * 5 + 'B' * 3 + 'A' + 'B' * 4 + 'A' + 'B' * 3 + 'A' + 'B' * 2 + 'A' + 'B' * 13 + 'A' + 'B' * 14 + 'A' * 2 + 'B' * 2 + 'A' + 'B' * 2 + 'A' * 2 + 'B' * 13 + 'A' * 2 + 'B' * 2 + 'A' * 2 + 'B' * 15 + 'A' * 2 + 'B' * 2 + 'A' + '",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(1000, 2, '?' * 6 + 'A' + '?' * 7 + 'A' * 4 + '?' * 4 + 'A' + '?' * 2 + 'A' + '?' + 'A' + '?' * 5 + 'A' + '?' * 7 + 'A' * 2 + '?' * 8 + 'A' + '?' + 'A' * 2 + '?' * 2 + 'A' + '?' * 10 + 'A' + '?' * 2 + 'A' + '?' * 2 + 'A' + '?' * 3 + 'A' + '?' * 2 + 'A' + '?' + 'A' + '?' * 4 + 'A' + '",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(15, 5, 'ABABA??????????') == 0",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 1,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(40, 7, '????????????????????????????????????????') == 116295436",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_51",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 2,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, [100]) == [1]",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_52",
+  "n_submissions": 10,
+  "n_pass_all": 7,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 9,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(80, 6376, 77, [(30, 10), (10, 1), (42, 4249), (569, 17), (15, 9), (133, 5786), (644, 6054), (207, 231), (6, 194), (5218, 71), (461, 63), (35, 216), (32, 88), (2048, 455), (5, 3188), (4, 2924), (1, 42), (154, 350), (5279, 24), (50, 5605), (1587, 3), (6574, 276), (162, 3173), (129, 17",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(1, 1, 1, [(10000, 10000)]) == 1",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 0,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, 8, 4, [(1, 5), (3, 2), (4, 1), (5, 3)]) == 3",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 4,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(18, 10000, 10000, [(5790, 8778), (9995, 9908), (9016, 2300), (2633, 3650), (2312, 5582), (8853, 6097), (8881, 8620), (6427, 3925), (9355, 5240), (5070, 7050), (4178, 8133), (6739, 319), (4533, 5388), (9299, 5558), (7720, 122), (861, 7766), (5922, 1456), (7601, 8377)]) == 3",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_53",
+  "n_submissions": 5,
+  "n_pass_all": 5,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_54",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 1,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_55",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 16,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate([[2, 1, 5, 4, 3], [7, 9, 10, 6, 8], [13, 12, 14, 11, 15], [19, 18, 16, 20, 17], [24, 23, 22, 21, 25], [30, 28, 29, 26, 27], [35, 31, 34, 32, 33], [40, 38, 36, 39, 37], [42, 43, 41, 45, 44], [49, 47, 46, 48, 50]]) == 275",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 35,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate([[90,69,23,66,83,65,97,79,23,42],[95,3,52,99,53,27,88,18,70,80],[25,47,50,20,2,45,54,100,66,21],[73,48,53,97,39,74,3,18,78,7],[98,82,69,19,43,39,29,8,97,25],[94,78,94,2,49,7,61,39,81,44],[82,32,70,7,100,57,71,14,100,56],[48,58,87,30,33,56,45,20,47,76],[63,87,15,17,66,96,87,10,25,26]",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_56",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 4,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 5, [[1, 9]]) == 2",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_57",
+  "n_submissions": 10,
+  "n_pass_all": 0,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 3,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate([74, 51], 1) == 125",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 3,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate([74, 51], 1) == 125",
+    "touched_by_diff": false
+   }
+  ],
+  "status": "candidate (no submission passes all original assertions)"
+ },
+ {
+  "task_id": "lcbhard_58",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 0,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(5, 2, 3, [1, 5, 6, 10, 12]) == 2",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 2,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(15, 4, 5, [1, 3, 3, 6, 6, 6, 10, 10, 10, 10, 15, 15, 15, 15, 15]) == 35",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_59",
+  "n_submissions": 10,
+  "n_pass_all": 8,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 2,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(6, ['AB', 'AC', 'CB', 'AD', 'DB', 'BA']) == 1",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_60",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_61",
+  "n_submissions": 10,
+  "n_pass_all": 4,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 5,
+    "n_fail": 6,
+    "share": 0.6,
+    "text": "assert candidate([(1, 4)] * 98 + [(2, 4), (3, 4)]) == 64",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 5,
+    "n_fail": 6,
+    "share": 0.6,
+    "text": "assert candidate([(1, 4)] * 98 + [(2, 4), (3, 4)]) == 64",
+    "touched_by_diff": false
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_62",
+  "n_submissions": 10,
+  "n_pass_all": 6,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 11,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(2, 3, 1, ['...', '...']) == 14",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 11,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(2, 3, 1, ['...', '...']) == 14",
+    "touched_by_diff": true
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_63",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 0,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2, 2, ['1?', '??']) == 6",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 1,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2, 3, ['123', '3?1']) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(8, 8, ['3?1?????', '???1????', '??????2?', '????????', '????????', '????13??', '??13?1??', '????????']) == 779135038",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, 1, ['2', '2', '1', '2']) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 5, ['1?322']) == 0",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 5,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 2, ['?3']) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 2, ['22']) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, 2, ['?2', '??', '?3']) == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 10, ['1??2??3??1']) == 27",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 10,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 10, ['11121?1311']) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 1, ['2']) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 1, ['?']) == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(6, 1, ['?', '?', '?', '?', '?', '?']) == 96",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 2, ['?2']) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(8, 8, ['12312312', '????????', '????????', '????????', '????????', '????????', '????????', '????????']) == 835521519",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 18,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 10, ['???322?312']) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2, 3, ['3?1', '???']) == 4",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_64",
+  "n_submissions": 10,
+  "n_pass_all": 7,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 20,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(1, 2, 1, [688252252], [136709685, 256572433], [308258759]) == 'Takahashi'",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 18,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 1, 2, [728610446], [852706870], [864480267, 556196498]) == 'Aoki'",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 42,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 1, 2, [554617504], [932969235], [983025966, 42322430]) == 'Aoki'",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 1,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, 4, 4, [98, 98765, 987654, 987654321], [987, 9876, 9876543, 98765432], [123, 12345, 1234567, 123456789]) == 'Takahashi'",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 1, 1, [10], [10], [10]) == 'Aoki'",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 40,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, 7, 1, [758377451, 806758605, 506199396], [99378076, 728188881, 534379399, 816140245, 249497575, 583837259, 818185918], [435193046]) == 'Aoki'",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_65",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_66",
+  "n_submissions": 10,
+  "n_pass_all": 7,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 12,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(9, [9, 4, 4, 7, 5, 8, 8, 6, 2]) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(7, [1, 1, 2, 3, 3, 2, 2]) == 4",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 3,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, [1, 1, 2, 2]) == 4",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_67",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 1,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, [(1, 2, 5), (2, 3, 2), (1, 3, 1)], [1, 1], [2, 3]) == 3",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 8,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, [(1, 2, 413458017), (2, 3, 951253969), (1, 4, 336391530), (2, 5, 91351561), (4, 6, 691385238), (5, 7, 804774568), (2, 8, 52298700), (4, 9, 442833692), (1, 10, 50646260), (10, 11, 839683444), (7, 12, 142256255), (9, 13, 785058577), (12, 14, 319116372), (7, 15, 434565945), (14, 15,",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_68",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_69",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_70",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 16,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(19, 'cspdhl', 'eppnz') == True",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_71",
+  "n_submissions": 10,
+  "n_pass_all": 2,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 4,
+    "n_fail": 8,
+    "share": 0.8,
+    "text": "assert candidate(131, [(31, 110), (61, 47), (124, 111), (125, 87), (127, 40), (42, 45), (53, 64), (122, 83), (49, 105), (20, 17), (40, 86), (57, 80), (14, 84), (68, 39), (86, 63), (70, 62), (28, 59), (19, 96), (100, 19), (2, 102), (80, 44), (7, 131), (92, 36), (32, 61), (82, 57), (66, 81), (67, 38),",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 8,
+    "share": 0.8,
+    "text": "assert candidate(6, [(1, 5), (6, 3), (4, 6), (2, 4), (5, 1), (3, 2)]) == 9",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 8,
+    "share": 0.8,
+    "text": "assert candidate(4, [(4, 3), (3, 1), (2, 4), (1, 2)]) == 6",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 8,
+    "share": 0.8,
+    "text": "assert candidate(9, [(7, 5), (1, 6), (3, 4), (5, 3), (9, 1), (8, 7), (6, 2), (2, 8), (4, 9)]) == 16",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 8,
+    "share": 0.8,
+    "text": "assert candidate(10, [(9, 4), (8, 2), (1, 1), (2, 8), (6, 5), (10, 6), (7, 3), (3, 9), (4, 7), (5, 10)]) == 26",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(7, [(2, 3), (5, 5), (3, 2), (6, 6), (4, 7), (7, 4), (1, 1)]) == 6",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(8, [(7, 6), (5, 4), (3, 7), (2, 8), (1, 1), (6, 5), (4, 3), (8, 2)]) == 7",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 1,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(4, [(4, 2), (2, 1), (3, 3), (1, 4)]) == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(4, [(2, 1), (3, 2), (1, 3), (4, 4)]) == 5",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(6, [(1, 2), (6, 5), (4, 4), (5, 6), (2, 1), (3, 3)]) == 5",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 0,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(3, [(1, 3), (2, 1), (3, 2)]) == 3",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 6,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(3, [(3, 1), (2, 3), (1, 2)]) == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 8,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, [(1, 1)]) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(5, [(1, 5), (2, 4), (3, 3), (4, 2), (5, 1)]) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2, [(1, 2), (2, 1)]) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2, [(2, 2), (1, 1)]) == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(25, [(25, 25), (24, 24), (23, 23), (22, 22), (21, 21), (20, 20), (19, 19), (18, 18), (17, 17), (16, 16), (15, 15), (14, 14), (13, 13), (12, 12), (11, 11), (10, 10), (9, 9), (8, 8), (7, 7), (6, 6), (5, 5), (4, 4), (3, 3), (2, 2), (1, 1)]) == 26",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 4,
+    "n_fail": 8,
+    "share": 0.8,
+    "text": "assert candidate(131, [(31, 110), (61, 47), (124, 111), (125, 87), (127, 40), (42, 45), (53, 64), (122, 83), (49, 105), (20, 17), (40, 86), (57, 80), (14, 84), (68, 39), (86, 63), (70, 62), (28, 59), (19, 96), (100, 19), (2, 102), (80, 44), (7, 131), (92, 36), (32, 61), (82, 57), (66, 81), (67, 38),",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 8,
+    "share": 0.8,
+    "text": "assert candidate(6, [(1, 5), (6, 3), (4, 6), (2, 4), (5, 1), (3, 2)]) == 9",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 8,
+    "share": 0.8,
+    "text": "assert candidate(4, [(4, 3), (3, 1), (2, 4), (1, 2)]) == 6",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 8,
+    "share": 0.8,
+    "text": "assert candidate(9, [(7, 5), (1, 6), (3, 4), (5, 3), (9, 1), (8, 7), (6, 2), (2, 8), (4, 9)]) == 16",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 8,
+    "share": 0.8,
+    "text": "assert candidate(10, [(9, 4), (8, 2), (1, 1), (2, 8), (6, 5), (10, 6), (7, 3), (3, 9), (4, 7), (5, 10)]) == 26",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(7, [(2, 3), (5, 5), (3, 2), (6, 6), (4, 7), (7, 4), (1, 1)]) == 6",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(8, [(7, 6), (5, 4), (3, 7), (2, 8), (1, 1), (6, 5), (4, 3), (8, 2)]) == 7",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 1,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(4, [(4, 2), (2, 1), (3, 3), (1, 4)]) == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(4, [(2, 1), (3, 2), (1, 3), (4, 4)]) == 5",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(6, [(1, 2), (6, 5), (4, 4), (5, 6), (2, 1), (3, 3)]) == 5",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 0,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(3, [(1, 3), (2, 1), (3, 2)]) == 3",
+    "touched_by_diff": true
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_72",
+  "n_submissions": 7,
+  "n_pass_all": 4,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 10,
+    "n_fail": 3,
+    "share": 0.43,
+    "text": "assert candidate(6, 3, [1, 1, 1, 1, 1, 1]) == (1, 2, 3)",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 3,
+    "share": 0.43,
+    "text": "assert candidate(7, 4, [3, 1, 2, 4, 2, 1, 1]) == (2, 3, 6)",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 10,
+    "n_fail": 3,
+    "share": 0.43,
+    "text": "assert candidate(6, 3, [1, 1, 1, 1, 1, 1]) == (1, 2, 3)",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 3,
+    "share": 0.43,
+    "text": "assert candidate(7, 4, [3, 1, 2, 4, 2, 1, 1]) == (2, 3, 6)",
+    "touched_by_diff": false
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_73",
+  "n_submissions": 10,
+  "n_pass_all": 5,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 6,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(29, 108) == True",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(18, 311) == True",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(3, 7) == False",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(29, 186) == False",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 27,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(27, 106) == False",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 30,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(5, 24) == False",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 35,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(3, 6) == False",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 42,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(4, 14) == False",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 43,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(4, 13) == False",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(18, 238) == True",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(18, 200) == True",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 21,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(27, 418) == True",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 24,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(27, 255) == True",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 25,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(27, 496) == True",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 26,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(27, 646) == True",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 33,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(5, 12) == True",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 41,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, 8) == True",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 6,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(29, 108) == True",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(18, 311) == True",
+    "touched_by_diff": false
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_74",
+  "n_submissions": 10,
+  "n_pass_all": 8,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 0,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(6, [1, 1, 1, 2, 0, 0]) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, [0]) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 1,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(11, [3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8]) == 13002",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(19, [18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18]) == 477638700",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, [1, 1, 0, 0]) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, [3, 4, 0, 3, 9, 2, 1, 5, 8, 2]) == 3846",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(5, [4, 4, 4, 4, 4]) == 14",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, [1, 0, 0]) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 8,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(5, [4, 3, 2, 1, 0]) == 14",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, [2, 2, 2, 0]) == 4",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 11,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(5, [0, 1, 2, 3, 4]) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2, [0, 1]) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(7, [0, 1, 2, 4, 6, 1, 2]) == 0",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 14,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(7, [3, 2, 2, 4, 0, 5, 2]) == 111",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(11, [5, 10, 1, 2, 3, 3, 0, 9, 10, 4, 3]) == 16159",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, [4, 9, 9, 1, 2, 2, 5, 7, 3, 3]) == 4433",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(6, [3, 0, 3, 1, 0, 3]) == 33",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 18,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, [3, 0, 1, 1, 1, 3, 7, 9, 7, 9]) == 3062",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_75",
+  "n_submissions": 10,
+  "n_pass_all": 1,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 1,
+    "n_fail": 8,
+    "share": 0.8,
+    "text": "assert candidate(400, 3, 9, [1, 8, 6]) == 417833302",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(29, 3, 10, [3, 3, 3]) == 495293602",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(29, 3, 10, [3, 3, 4]) == 0",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 6,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(3, 2, 2, [1, 2]) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 0,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(5, 2, 3, [1, 1]) == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(12, 10, 12, [10, 5, 6, 4, 6, 7, 7, 4, 5, 2]) == 0",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 16,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(3, 2, 2, [1, 1]) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(5, 2, 3, [1, 3]) == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(400, 2, 2, [2, 2]) == 398",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(400, 2, 2, [1, 1]) == 398",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 1,
+    "n_fail": 8,
+    "share": 0.8,
+    "text": "assert candidate(400, 3, 9, [1, 8, 6]) == 417833302",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(29, 3, 10, [3, 3, 3]) == 495293602",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(29, 3, 10, [3, 3, 4]) == 0",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 6,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(3, 2, 2, [1, 2]) == 0",
+    "touched_by_diff": false
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_76",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_77",
+  "n_submissions": 10,
+  "n_pass_all": 0,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 24,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(\"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 25,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(\"WWWFEFWEWWWWWWWWEEWEEFFEFFEWWWFFWFFWFWWWWFWEWFEWWFWWWWWWWWWFWWFWWFWEEWWWWWFWFWWFWWWWEWWWWWEWWEEWFWEWWEFWFEFWWEWEEWWWWWEFWEEWWWWEFFWFWWWWWEWWWWWWWWWWWWWFWWEFWWEWFEEWWWWFWWEWWFWWWEWWWFFWWEWWWWEWWEWWWWWFWFEWFWEWEWWWWWWFEWEWWWEWWFWEWWWWFEWWWWWFWWFFWWWWWEWWFEWWWWWEWWWWWWWWFWEWFEEEFEEWWW",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 1,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FFF\") == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FWFWFFFWWFEEEFFFEFWWFEFWFEFWEWFWEWFFFFWWWEWEEEEFEWFWEFWFFWEWEFWFEWFEEEFWFFFEEEWFWEFEFEFWWFWFFWWEEWEFWWWFEWEFWWWEFFFFEFEWFFWEWEFFWEEEFFWWEWFEWWFWWWWEWEWEEFFEEWWWFEEFWWFFFEEEFWWEEEFFWFWEWFEEEWFEWEEWEEEFFFWFWEWFFFFFWEWEWWWWWEWWWFEWWEWEEFWEEWWFEEFWWFEWWWFWWFFEFWEEEWWFWEEEFWWWFFWFFWFFEF",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WFE\") == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FWEWFEEWEEEEFEWEFFEFFFFEEEFWFFFFFFFFFEFFFEWWEEEFEEFFFFFFWEFWFFFFFFWFFWFFFFWFFEFFFWFFFWFWWFFFFEFEFFFWFFFFWWFFEFFFFFFFWWFFFFFEFFFEFFEFFFF\") == 757703704",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"EE\") == 2",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 6,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FWF\") == 5",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 7,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FFFWWFFWFWFFFFEFFEFFWFFFEFFFFFFEFFFWFWEFFFFFFFEFFWEFWEWFFFFEFEFFWFEWFFFEFFFFWFFFFFFEFWF\") == 106659328",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 8,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FWWWFWFWWEEWFEFEWEFFFWWFEWWWWWWFEWEFFWEWFFWFWWWWFFWEWFEFFFEWEWFWWFEEFEEEFFEEFWEWFEFWEFEWFFFWEWEFFFWFFFFWWFFEFEWWFWWFWWWFEFFWWEWEEFEFFEFFFEFWEFEFEWFEEEEFWEEFWFEWWWWEEFEWFFWFEFEEFEEWEFWFWFEEEWWWEWFWFEFEFFEFWFWEFFWFEFFEFEWFWEFWWEEEWFFEWWFFWWEWWFEEEFEFWEWWWEFEFFEWEWFEWEWEFFFEEEWEWFWFEW",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FEE\") == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WWE\") == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FEW\") == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WWFEFWFWFEWWEFEFWFWEFFEWEWWEFEWWFEEEEFFFEWEFEFFWEWEWEWEWFEWWFEFWFWEFEEFWWFWWFFWWWWEEWEWWFEEEEEEWFEWWFEFEFEEWWWFWWWFWFEWEFFEWWWWFWWWWWFEEFEEFFFWEEEEFFWWEEFEWWFFEFWEWWEWWWEEWEWEEEEWWFWWEWWWFFEFFW\") == 786347194",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WFF\") == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FEF\") == 6",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FE\") == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FWFFFFFFFFFFFEFFWFEFWFFFFFWWFWEFEEFWWFEFEFFEFFFFFEFWWFFFWFWFFFFFFWEFFFFEWWWFEFFWFFFFFFFEEFFFEWEFEEFFFFFFF\") == 335667764",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WEF\") == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 18,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"EFFFFWEEFWWFWEWWWWEWEWFWWEEFEFEEEWEWWFWFEWFEWFFFFWFWEFEWEFWFWFEEFEEWFWWFWWEWEFWWWFFEWFEFWWEFFEEEEWEWWWWEWFEFEEEWFFWWEFEFEFWEWFWWEFFWFEEEWEWWWFEWFFWWFEFEWEEFWFFEEEWFWWEWFFEWEFWFEEFFWWWEWEEFEWWWWWWFFEEWWEEWFWWFFEEFEWFWEWFWFWW\") == 829877890",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FW\") == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 20,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WWF\") == 5",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 21,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FFFFFWFWFFFWFEWEEFEFFWEFFFEWEFFFFFFWFEFFFFEWFFFWFFFWFWEFFEFFFFEFFWFWEFFWFFFFFEFWFWWFWFEFFFFFFFFEFFWFEFFFWFFEFEFEFFFFFFEFFWFFF\") == 684215373",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 22,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WWW\") == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 23,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WFW\") == 6",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 26,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"EF\") == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 27,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FF\") == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 28,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"EFWFEFFFEFFWFFEFFFFWFFFWFFWEWEFWWFFEWFFFFFEFFFEEFEEFFEFFEFEFEFFFFFEFFEFEFWFWFWWFEEFFFFWEFWWWFWFFEF\") == 642767257",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 29,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FWE\") == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 30,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FFWEFFEWFFEFFWFEFEEFFFFFFEFFFFWWFFWFFFFFFFFFFFFFEFEFFEFWFFFWWWFFFFFEWFFFFWFFFFFFFFWFWFFFEFEEFEFFFFFWFWEFWFFFFFFFFFWEFFFWFFFEFFFFFFFEF\") == 219051313",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 31,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FFW\") == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 32,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WF\") == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 33,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FFEFFFEEFFFFFWFFFEFFWWFFFFWFFFWFFFWWFFEFWFFFEEFFFFFFEFFWWFWWWEFFEFFFWWFFWFEFFFEEEFEFFFFFFFFFWFWFFWFWWFFFEFFFFFFFF\") == 816302985",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 34,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FFFEFEWFFFFFFFFEFFEFFFFFFWFFEFFEEFEEFWFFFFFEWFWFFEWWFEFEFWFFWFFFFFWWWFWWFFFFEFEFEFFEEFFWFFWFWFFFEFFFWWEFWFEFFEFWWEFFFFFFWFFFFFFWEEFFFFF\") == 340201252",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 35,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FFE\") == 5",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 36,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WW\") == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 37,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WE\") == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 38,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"EW\") == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 39,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FWFFFFFWFFFFFFWFFFEFWFFFWFFWWFFFFFFFEEFWWWFWFFFFFFFFFWFFFFFEWFFFWWEWFFFEFWFE\") == 771820931",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 24,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(\"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 25,
+    "n_fail": 10,
+    "share": 1.0,
+    "text": "assert candidate(\"WWWFEFWEWWWWWWWWEEWEEFFEFFEWWWFFWFFWFWWWWFWEWFEWWFWWWWWWWWWFWWFWWFWEEWWWWWFWFWWFWWWWEWWWWWEWWEEWFWEWWEFWFEFWWEWEEWWWWWEFWEEWWWWEFFWFWWWWWEWWWWWWWWWWWWWFWWEFWWEWFEEWWWWFWWEWWFWWWEWWWFFWWEWWWWEWWEWWWWWFWFEWFWEWEWWWWWWFEWEWWWEWWFWEWWWWFEWWWWWFWWFFWWWWWEWWFEWWWWWEWWWWWWWWFWEWFEEEFEEWWW",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 1,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FFF\") == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FWFWFFFWWFEEEFFFEFWWFEFWFEFWEWFWEWFFFFWWWEWEEEEFEWFWEFWFFWEWEFWFEWFEEEFWFFFEEEWFWEFEFEFWWFWFFWWEEWEFWWWFEWEFWWWEFFFFEFEWFFWEWEFFWEEEFFWWEWFEWWFWWWWEWEWEEFFEEWWWFEEFWWFFFEEEFWWEEEFFWFWEWFEEEWFEWEEWEEEFFFWFWEWFFFFFWEWEWWWWWEWWWFEWWEWEEFWEEWWFEEFWWFEWWWFWWFFEFWEEEWWFWEEEFWWWFFWFFWFFEF",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WFE\") == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FWEWFEEWEEEEFEWEFFEFFFFEEEFWFFFFFFFFFEFFFEWWEEEFEEFFFFFFWEFWFFFFFFWFFWFFFFWFFEFFFWFFFWFWWFFFFEFEFFFWFFFFWWFFEFFFFFFFWWFFFFFEFFFEFFEFFFF\") == 757703704",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"EE\") == 2",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 6,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FWF\") == 5",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 7,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FFFWWFFWFWFFFFEFFEFFWFFFEFFFFFFEFFFWFWEFFFFFFFEFFWEFWEWFFFFEFEFFWFEWFFFEFFFFWFFFFFFEFWF\") == 106659328",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 8,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FWWWFWFWWEEWFEFEWEFFFWWFEWWWWWWFEWEFFWEWFFWFWWWWFFWEWFEFFFEWEWFWWFEEFEEEFFEEFWEWFEFWEFEWFFFWEWEFFFWFFFFWWFFEFEWWFWWFWWWFEFFWWEWEEFEFFEFFFEFWEFEFEWFEEEEFWEEFWFEWWWWEEFEWFFWFEFEEFEEWEFWFWFEEEWWWEWFWFEFEFFEFWFWEFFWFEFFEFEWFWEFWWEEEWFFEWWFFWWEWWFEEEFEFWEWWWEFEFFEWEWFEWEWEFFFEEEWEWFWFEW",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FEE\") == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WWE\") == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FEW\") == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WWFEFWFWFEWWEFEFWFWEFFEWEWWEFEWWFEEEEFFFEWEFEFFWEWEWEWEWFEWWFEFWFWEFEEFWWFWWFFWWWWEEWEWWFEEEEEEWFEWWFEFEFEEWWWFWWWFWFEWEFFEWWWWFWWWWWFEEFEEFFFWEEEEFFWWEEFEWWFFEFWEWWEWWWEEWEWEEEEWWFWWEWWWFFEFFW\") == 786347194",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WFF\") == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FEF\") == 6",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FE\") == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FWFFFFFFFFFFFEFFWFEFWFFFFFWWFWEFEEFWWFEFEFFEFFFFFEFWWFFFWFWFFFFFFWEFFFFEWWWFEFFWFFFFFFFEEFFFEWEFEEFFFFFFF\") == 335667764",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WEF\") == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 18,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"EFFFFWEEFWWFWEWWWWEWEWFWWEEFEFEEEWEWWFWFEWFEWFFFFWFWEFEWEFWFWFEEFEEWFWWFWWEWEFWWWFFEWFEFWWEFFEEEEWEWWWWEWFEFEEEWFFWWEFEFEFWEWFWWEFFWFEEEWEWWWFEWFFWWFEFEWEEFWFFEEEWFWWEWFFEWEFWFEEFFWWWEWEEFEWWWWWWFFEEWWEEWFWWFFEEFEWFWEWFWFWW\") == 829877890",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FW\") == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 20,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WWF\") == 5",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 21,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FFFFFWFWFFFWFEWEEFEFFWEFFFEWEFFFFFFWFEFFFFEWFFFWFFFWFWEFFEFFFFEFFWFWEFFWFFFFFEFWFWWFWFEFFFFFFFFEFFWFEFFFWFFEFEFEFFFFFFEFFWFFF\") == 684215373",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 22,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WWW\") == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 23,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WFW\") == 6",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 26,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"EF\") == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 27,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FF\") == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 28,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"EFWFEFFFEFFWFFEFFFFWFFFWFFWEWEFWWFFEWFFFFFEFFFEEFEEFFEFFEFEFEFFFFFEFFEFEFWFWFWWFEEFFFFWEFWWWFWFFEF\") == 642767257",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 29,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FWE\") == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 30,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FFWEFFEWFFEFFWFEFEEFFFFFFEFFFFWWFFWFFFFFFFFFFFFFEFEFFEFWFFFWWWFFFFFEWFFFFWFFFFFFFFWFWFFFEFEEFEFFFFFWFWEFWFFFFFFFFFWEFFFWFFFEFFFFFFFEF\") == 219051313",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 31,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FFW\") == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 32,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WF\") == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 33,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FFEFFFEEFFFFFWFFFEFFWWFFFFWFFFWFFFWWFFEFWFFFEEFFFFFFEFFWWFWWWEFFEFFFWWFFWFEFFFEEEFEFFFFFFFFFWFWFFWFWWFFFEFFFFFFFF\") == 816302985",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 34,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FFFEFEWFFFFFFFFEFFEFFFFFFWFFEFFEEFEEFWFFFFFEWFWFFEWWFEFEFWFFWFFFFFWWWFWWFFFFEFEFEFFEEFFWFFWFWFFFEFFFWWEFWFEFFEFWWEFFFFFFWFFFFFFWEEFFFFF\") == 340201252",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 35,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FFE\") == 5",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 36,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WW\") == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 37,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"WE\") == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 38,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"EW\") == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 39,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"FWFFFFFWFFFFFFWFFFEFWFFFWFFWWFFFFFFFEEFWWWFWFFFFFFFFFWFFFFFEWFFFWWEWFFFEFWFE\") == 771820931",
+    "touched_by_diff": false
+   }
+  ],
+  "status": "candidate (no submission passes all original assertions)"
+ },
+ {
+  "task_id": "lcbhard_78",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_79",
+  "n_submissions": 6,
+  "n_pass_all": 6,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_80",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_81",
+  "n_submissions": 10,
+  "n_pass_all": 1,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 24,
+    "n_fail": 6,
+    "share": 0.6,
+    "text": "assert candidate(\"1\" + long_zeros[1:], 1) == 500",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 0,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(\"000001\", 1) == 2",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 4,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"01\", 1) == 1",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 25,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(\"1\" + long_zeros[1:-1] + \"1\", 3) == 249",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(\"001\", 0) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(\"000\", 0) == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 18,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(\"00\", 0) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 21,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(long_zeros, 0) == 1000",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 23,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(long_zeros[:-1] + \"1\", 2) == 333",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 27,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(long_zeros, 1) == 500",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 30,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(\"1111101101110101010000000000000101110110011111001100011101101000111010101111001000000010000110001000\", 10) == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 1,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(\"0000\", 2) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(\"000\", 1) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 22,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(long_zeros, 659) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 26,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(long_zeros[:500], 361) == 1",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 24,
+    "n_fail": 6,
+    "share": 0.6,
+    "text": "assert candidate(\"1\" + long_zeros[1:], 1) == 500",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 0,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(\"000001\", 1) == 2",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 4,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(\"01\", 1) == 1",
+    "touched_by_diff": true
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_82",
+  "n_submissions": 10,
+  "n_pass_all": 5,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 1,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(30, 1, 5, 8, [(4, 24)]) == False",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 7,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(1000000000000, 5, 5, 20, [(2, 3), (10, 15), (99, 100), (200, 200), (999999999999, 999999999999)]) == True",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 0,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(24, 2, 3, 5, [(7, 8), (17, 20)]) == True",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 12,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(79, 18, 19, 20, [(2, 7), (9, 9), (10, 15), (17, 22), (24, 27), (29, 33), (35, 37), (38, 40), (42, 43), (44, 47), (49, 51), (52, 53), (54, 55), (56, 60), (62, 67), (68, 70), (71, 74), (76, 78)]) == False",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(100, 4, 10, 11, [(16, 18), (39, 42), (50, 55), (93, 99)]) == True",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(149, 0, 7, 13, []) == True",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(167, 1, 11, 16, [(2, 3)]) == True",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(25, 6, 4, 12, [(2, 4), (6, 9), (11, 15), (16, 16), (18, 19), (21, 24)]) == True",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(104, 2, 5, 15, [(2, 4), (6, 6)]) == True",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 22,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(184, 30, 5, 16, [(2, 2), (4, 4), (6, 6), (8, 8), (10, 10), (12, 12), (14, 14), (15, 15), (16, 16), (17, 17), (18, 18), (20, 20), (22, 22), (23, 23), (24, 24), (25, 25), (27, 27), (29, 29), (31, 31), (32, 32), (33, 33), (35, 35), (37, 37), (39, 39), (40, 40), (41, 41), (42, 42), (43,",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 1,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(30, 1, 5, 8, [(4, 24)]) == False",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 7,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(1000000000000, 5, 5, 20, [(2, 3), (10, 15), (99, 100), (200, 200), (999999999999, 999999999999)]) == True",
+    "touched_by_diff": false
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_83",
+  "n_submissions": 10,
+  "n_pass_all": 7,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 8,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(19, [11, 15, 42, 44, 45, 66, 76, 78, 81, 93, 100, 103, 141, 142, 153, 178, 183, 194, 195]) == 9",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(24, [307, 321, 330, 339, 349, 392, 422, 430, 477, 481, 488, 537, 541, 571, 575, 602, 614, 660, 669, 678, 712, 723, 785, 792]) == 6",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(29, [5, 6, 12, 40, 42, 55, 59, 62, 67, 68, 77, 92, 94, 101, 105, 114, 116, 116, 130, 134, 141, 142, 151, 160, 170, 182, 188, 199, 200]) == 13",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(81, [618, 2288, 2381, 3473, 3509, 4413, 6542, 7312, 7579, 9393, 10720, 11570, 15068, 16565, 16736, 16815, 17134, 18310, 21369, 24701, 26156, 27264, 28930, 29319, 30128, 31611, 31833, 32182, 34485, 35799, 36265, 36528, 40530, 40775, 42244, 44574, 45453, 46599, 47787, 48673, 49942, 50",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(28, [3, 4, 24, 46, 47, 55, 58, 73, 83, 90, 92, 98, 100, 101, 104, 111, 116, 118, 123, 131, 136, 138, 141, 162, 163, 174, 175, 179]) == 9",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 12,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(37, [2, 11, 11, 14, 16, 26, 29, 32, 35, 53, 53, 67, 71, 80, 86, 89, 89, 90, 92, 95, 101, 107, 110, 112, 115, 133, 144, 150, 152, 155, 164, 172, 173, 176, 179, 194, 199]) == 18",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(25, [6, 19, 22, 39, 58, 59, 74, 81, 105, 108, 116, 119, 122, 128, 129, 135, 143, 143, 143, 158, 170, 174, 181, 190, 198]) == 8",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(36, [2, 8, 12, 18, 28, 34, 49, 50, 57, 63, 76, 82, 85, 97, 98, 99, 102, 103, 105, 106, 108, 108, 124, 128, 133, 135, 137, 143, 145, 151, 162, 175, 185, 190, 198, 199]) == 15",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(6, [15, 51, 69, 92, 101, 194]) == 2",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_84",
+  "n_submissions": 10,
+  "n_pass_all": 6,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 9,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(8, 999999937) == [143360, 748440, 2249520, 4929960, 8556240, 12240270, 14828170, 15482040, 14024780, 10976945, 7334985, 4117750, 1906730, 712950, 209510, 46550, 7350, 735, 35, 0, 0, 0]",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(8, 100000039) == [143360, 748440, 2249520, 4929960, 8556240, 12240270, 14828170, 15482040, 14024780, 10976945, 7334985, 4117750, 1906730, 712950, 209510, 46550, 7350, 735, 35, 0, 0, 0]",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, 100000037) == [49218750, 19111132, 55603580, 75191702, 43240780, 62036487, 35185558, 77442296, 90869336, 56396854, 80488969, 86311771, 88802659, 38298859, 36192363, 19117498, 65614370, 78028051, 79071198, 19799430, 48709285, 7801005, 69500348, 68898904, 13662644, 51885430, 45426",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, 100000039) == [49218750, 19111124, 55603540, 75191554, 43240340, 62035389, 35183186, 77437792, 90861712, 56385218, 80472803, 86291177, 88778513, 38272793, 36166521, 19094066, 65595034, 78013601, 79061466, 19793550, 48706115, 7799487, 69499708, 68898668, 13662568, 51885410, 45426",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, 999999937) == [49218750, 419111280, 55604446, 475194881, 43250306, 962060202, 635236874, 277539795, 291034383, 856648723, 380838944, 786757587, 389325401, 338863169, 136751836, 619624763, 866032944, 578340862, 679281858, 19926732, 548777884, 907833813, 69514204, 868903963, 81366",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, 433416647) == [49218750, 419111280, 321937732, 107111441, 372416570, 351559278, 312484809, 334285827, 317777667, 211471846, 58741385, 422156135, 323887465, 54923551, 121645733, 94354149, 346849276, 72744827, 385773306, 163421544, 351691775, 59915863, 430096957, 166653801, 346330",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(2, 100000039) == [1]",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(2, 100000007) == [1]",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(2, 999999937) == [1]",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 0,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, 998244353) == [12, 9, 3, 0]",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 1,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(6, 924844033) == [810, 2100, 3060, 3030, 2230, 1210, 450, 100, 10, 0, 0]",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(6, 100000037) == [810, 2100, 3060, 3030, 2230, 1210, 450, 100, 10, 0, 0]",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(6, 100000007) == [810, 2100, 3060, 3030, 2230, 1210, 450, 100, 10, 0, 0]",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(6, 999999937) == [810, 2100, 3060, 3030, 2230, 1210, 450, 100, 10, 0, 0]",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 8,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, 100000037) == [12, 9, 3, 0]",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 9,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(8, 999999937) == [143360, 748440, 2249520, 4929960, 8556240, 12240270, 14828170, 15482040, 14024780, 10976945, 7334985, 4117750, 1906730, 712950, 209510, 46550, 7350, 735, 35, 0, 0, 0]",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(8, 100000039) == [143360, 748440, 2249520, 4929960, 8556240, 12240270, 14828170, 15482040, 14024780, 10976945, 7334985, 4117750, 1906730, 712950, 209510, 46550, 7350, 735, 35, 0, 0, 0]",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, 100000037) == [49218750, 19111132, 55603580, 75191702, 43240780, 62036487, 35185558, 77442296, 90869336, 56396854, 80488969, 86311771, 88802659, 38298859, 36192363, 19117498, 65614370, 78028051, 79071198, 19799430, 48709285, 7801005, 69500348, 68898904, 13662644, 51885430, 45426",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, 100000039) == [49218750, 19111124, 55603540, 75191554, 43240340, 62035389, 35183186, 77437792, 90861712, 56385218, 80472803, 86291177, 88778513, 38272793, 36166521, 19094066, 65595034, 78013601, 79061466, 19793550, 48706115, 7799487, 69499708, 68898668, 13662568, 51885410, 45426",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, 999999937) == [49218750, 419111280, 55604446, 475194881, 43250306, 962060202, 635236874, 277539795, 291034383, 856648723, 380838944, 786757587, 389325401, 338863169, 136751836, 619624763, 866032944, 578340862, 679281858, 19926732, 548777884, 907833813, 69514204, 868903963, 81366",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, 433416647) == [49218750, 419111280, 321937732, 107111441, 372416570, 351559278, 312484809, 334285827, 317777667, 211471846, 58741385, 422156135, 323887465, 54923551, 121645733, 94354149, 346849276, 72744827, 385773306, 163421544, 351691775, 59915863, 430096957, 166653801, 346330",
+    "touched_by_diff": false
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_85",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_86",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_87",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_88",
+  "n_submissions": 6,
+  "n_pass_all": 5,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 11,
+    "n_fail": 1,
+    "share": 0.17,
+    "text": "assert candidate(1, 13, ['1001010110011']) == 0",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_89",
+  "n_submissions": 9,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_90",
+  "n_submissions": 10,
+  "n_pass_all": 5,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 2,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(2, 2, 1, [(1, 2), (1, 2)]) == 0",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 1,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(4, 4, 3, [(1, 2), (1, 3), (3, 2), (2, 4)]) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(4, 4, 3, [(1, 2), (1, 3), (3, 2), (2, 4)]) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(12, 57, 26, edges) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(5, 4, 1, [(1, 2), (2, 3), (3, 4), (4, 5)]) == 1",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 2,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(2, 2, 1, [(1, 2), (1, 2)]) == 0",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 1,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(4, 4, 3, [(1, 2), (1, 3), (3, 2), (2, 4)]) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(4, 4, 3, [(1, 2), (1, 3), (3, 2), (2, 4)]) == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(12, 57, 26, edges) == 1",
+    "touched_by_diff": false
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_91",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 2,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate('TREE') == 'TREERT'",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 4,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate('ABCAAAAAAAA') == 'ABCAAAAAAAACBA'",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate('KSHJFGF') == 'KSHJFGFJHSK'",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_92",
+  "n_submissions": 10,
+  "n_pass_all": 10,
+  "n_load_error": 0,
+  "failing": [],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_93",
+  "n_submissions": 10,
+  "n_pass_all": 7,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 0,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(4, 3, 1, 2, 2, 3) == 192",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 1,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, 12, 4, 6, 8, 11) == 4519189",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(18, 7, 4, 13, 6, 7) == 4954669",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(78388, 439111, 77296, 78163, 432197, 436445) == 740220865",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(18, 5, 13, 16, 1, 4) == 279604",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(14, 4, 11, 12, 2, 4) == 20491",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 8,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(14, 5, 0, 6, 3, 5) == 136648",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(19, 19, 9, 17, 5, 16) == 398002072",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(566343, 54431, 174133, 336651, 8875, 47661) == 795633734",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(348, 1045, 106, 108, 24, 49) == 644795935",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(1610, 279, 1508, 1587, 177, 180) == 309586332",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 18,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(990456, 609144, 628959, 925589, 178303, 518131) == 378026509",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 20,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(42584, 481828, 36612, 37194, 223423, 397989) == 525554872",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 21,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(20, 16, 14, 16, 4, 7) == 299327605",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 22,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(18, 20, 2, 16, 0, 7) == 268924606",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 23,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(1003, 1098, 502, 547, 175, 458) == 302018627",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 24,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(1867, 481, 1333, 1828, 418, 449) == 520381353",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 25,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, 10, 5, 5, 0, 10) == 36982",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 27,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(1983, 268, 621, 1709, 61, 76) == 45005541",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 28,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(9, 19, 3, 4, 16, 18) == 122590291",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 29,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(1, 12, 1, 1, 3, 5) == 387",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 30,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(8, 5, 5, 7, 3, 3) == 8506",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 31,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(12, 7, 11, 11, 5, 6) == 490876",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 33,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(939006, 160837, 50061, 675116, 97326, 146068) == 521024017",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 34,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(6, 5, 5, 5, 1, 4) == 2660",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 35,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, 10, 0, 10, 5, 5) == 36982",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 36,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(1590, 579, 1524, 1582, 195, 504) == 757758988",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 37,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(2, 20, 0, 1, 10, 15) == 4691",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 39,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(397504, 164200, 38480, 296637, 58620, 154606) == 764257888",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 41,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(20, 6, 9, 18, 2, 3) == 1549967",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 42,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(774688, 241862, 706029, 758457, 222505, 222606) == 547266093",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 38,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(12, 12, 11, 11, 1, 1) == 40108303",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(192, 25, 0, 2, 0, 9) == 675935675",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(5, 5, 1, 5, 0, 5) == 21",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(19, 5, 3, 19, 5, 5) == 295999",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, 2, 0, 0, 2, 2) == 93",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(0, 1, 0, 0, 0, 0) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 0, 0, 0, 0, 0) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(6, 0, 1, 2, 0, 0) == 11",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(5, 5, 0, 5, 0, 4) == 21",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 26,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, 5, 1, 4, 3, 5) == 200",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 32,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(16, 2, 0, 0, 0, 2) == 5916",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 40,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(0, 12, 0, 0, 10, 12) == 55",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 0,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(4, 3, 1, 2, 2, 3) == 192",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 1,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, 12, 4, 6, 8, 11) == 4519189",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(18, 7, 4, 13, 6, 7) == 4954669",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(78388, 439111, 77296, 78163, 432197, 436445) == 740220865",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(18, 5, 13, 16, 1, 4) == 279604",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(14, 4, 11, 12, 2, 4) == 20491",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 8,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(14, 5, 0, 6, 3, 5) == 136648",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(19, 19, 9, 17, 5, 16) == 398002072",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(566343, 54431, 174133, 336651, 8875, 47661) == 795633734",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(348, 1045, 106, 108, 24, 49) == 644795935",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(1610, 279, 1508, 1587, 177, 180) == 309586332",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 18,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(990456, 609144, 628959, 925589, 178303, 518131) == 378026509",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 20,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(42584, 481828, 36612, 37194, 223423, 397989) == 525554872",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 21,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(20, 16, 14, 16, 4, 7) == 299327605",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 22,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(18, 20, 2, 16, 0, 7) == 268924606",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 23,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(1003, 1098, 502, 547, 175, 458) == 302018627",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 24,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(1867, 481, 1333, 1828, 418, 449) == 520381353",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 25,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, 10, 5, 5, 0, 10) == 36982",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 27,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(1983, 268, 621, 1709, 61, 76) == 45005541",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 28,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(9, 19, 3, 4, 16, 18) == 122590291",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 29,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(1, 12, 1, 1, 3, 5) == 387",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 30,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(8, 5, 5, 7, 3, 3) == 8506",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 31,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(12, 7, 11, 11, 5, 6) == 490876",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 33,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(939006, 160837, 50061, 675116, 97326, 146068) == 521024017",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 34,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(6, 5, 5, 5, 1, 4) == 2660",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 35,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, 10, 0, 10, 5, 5) == 36982",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 36,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(1590, 579, 1524, 1582, 195, 504) == 757758988",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 37,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(2, 20, 0, 1, 10, 15) == 4691",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 39,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(397504, 164200, 38480, 296637, 58620, 154606) == 764257888",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 41,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(20, 6, 9, 18, 2, 3) == 1549967",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 42,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(774688, 241862, 706029, 758457, 222505, 222606) == 547266093",
+    "touched_by_diff": false
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_94",
+  "n_submissions": 10,
+  "n_pass_all": 3,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 12,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, [7, 16, 3, 3, 9, 8, 16, 12, 8, 3]) == 'Snuke'",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 23,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(4, [6, 12, 6, 3]) == 'Fennec'",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 0,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, [1, 9, 2]) == 'Fennec'",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, [16, 9, 1]) == 'Fennec'",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, [10, 12, 7, 2, 13, 6, 10, 15, 6, 14]) == 'Fennec'",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(5, [7, 12, 20, 4, 19]) == 'Snuke'",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 8,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(5, [1, 1000000000, 500000000, 999999999, 2]) == 'Snuke'",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, [4, 7, 13, 15]) == 'Fennec'",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 10,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(7, [7, 17, 15, 4, 3, 18, 6]) == 'Snuke'",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(5, [999999999, 500000000, 250000000, 100000000, 1]) == 'Snuke'",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(9, [12, 10, 19, 16, 16, 1, 3, 17, 10]) == 'Snuke'",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(9, [14, 8, 10, 8, 13, 3, 6, 3, 13]) == 'Snuke'",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 12,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, [7, 16, 3, 3, 9, 8, 16, 12, 8, 3]) == 'Snuke'",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 23,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(4, [6, 12, 6, 3]) == 'Fennec'",
+    "touched_by_diff": true
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_95",
+  "n_submissions": 10,
+  "n_pass_all": 7,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 0,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(6, [1, 9, 2, 2, 9]) == 939634344",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(25, [222, 299, 229, 22, 999, 922, 99, 992, 22, 292, 222, 229, 992, 922, 22, 992, 222, 222, 99, 29, 92, 999, 2, 29]) == 192457116",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(6, [932, 546, 723, 830, 617]) == 539895526",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(9, [415, 941, 803, 850, 311, 992, 489, 367]) == 688982174",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(4, [34, 628, 673]) == 202441959",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(3, [196, 940]) == 582903528",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(6, [565, 299, 724, 128, 561]) == 221794852",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(7, [484, 574, 104, 363, 445, 324]) == 246975205",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(4, [318, 102, 748]) == 934370935",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, [602, 295, 456, 94, 611, 818, 395, 325, 590]) == 815372079",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(9, [848, 889, 342, 250, 748, 334, 721, 892]) == 616069529",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 18,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, [700, 401, 858, 723, 538, 283, 535, 832, 242]) == 257017018",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 20,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, [459, 94, 83, 328, 897, 521, 956, 502, 112]) == 282230995",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(10, [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]) == 624867307",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(10, [2, 4, 8, 16, 32, 64, 128, 256, 512]) == 504314317",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(4, [898, 154, 946]) == 581366402",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(5, [298, 189, 194, 842]) == 892787569",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(3, [921, 871]) == 514764498",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 0,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(6, [1, 9, 2, 2, 9]) == 939634344",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(25, [222, 299, 229, 22, 999, 922, 99, 992, 22, 292, 222, 229, 992, 922, 22, 992, 222, 222, 99, 29, 92, 999, 2, 29]) == 192457116",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(6, [932, 546, 723, 830, 617]) == 539895526",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(9, [415, 941, 803, 850, 311, 992, 489, 367]) == 688982174",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(4, [34, 628, 673]) == 202441959",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(3, [196, 940]) == 582903528",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(6, [565, 299, 724, 128, 561]) == 221794852",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(7, [484, 574, 104, 363, 445, 324]) == 246975205",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(4, [318, 102, 748]) == 934370935",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, [602, 295, 456, 94, 611, 818, 395, 325, 590]) == 815372079",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(9, [848, 889, 342, 250, 748, 334, 721, 892]) == 616069529",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 18,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, [700, 401, 858, 723, 538, 283, 535, 832, 242]) == 257017018",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 20,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(10, [459, 94, 83, 328, 897, 521, 956, 502, 112]) == 282230995",
+    "touched_by_diff": false
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_96",
+  "n_submissions": 10,
+  "n_pass_all": 5,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 1,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(20, '00001100111010100101') == 261339902",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(8, '01000101') == 1758",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(18, '101000001001101101') == 33726462",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(8, '00111011') == 4718",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(43, '0110110101011001010110101100100111101110000') == 984203477",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(12, '001101110111') == 414494",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(14, '01100000000001') == 106478",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(18, '110000001110010111') == 48881790",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(7, '0101010') == 862",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(199, '0100101000100011100101111110100111101000011011101000000111010010001001011101000001111010000100001010100101111100111111000110000010011111111001110001011000010101111100110010111001011110110111001011010') == 241791245",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(20, '11001111101011000100') == 697160702",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(19, '0000110011001101010') == 71253534",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(10, '1000011111') == 30262",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(10, '1010101010') == 23166",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(221, '01101110101011101011010111001111000100010101101100101010101010011000000100111100111111100000110100100110001110010011100001011011011101000110111100100001001110111001001011010101000100100001011011001101001110001001011011001') == 894782411",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 18,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(13, '1100011100101') == 514110",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(18, '000001101001111110') == 48768894",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 20,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(142, '0101101111011000110011101100011101111100100011010101011010000111001110110000101010010000100110101000101011011010101111111100011011100010011001') == 225607829",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 21,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(13, '1010010011101') == 544126",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 22,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(25, '1011011010100101000000100') == 933387758",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 24,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(8, '10000001') == 892",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 25,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(66, '000110000110011001001001110111010010110001000000011000010111000111') == 851175088",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 26,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(20, '01101101000011000000') == 75776318",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 27,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(14, '01111001100011') == 1768846",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 29,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(20, '01010100111101110001') == 725747198",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 30,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(4, '0101') == 54",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 31,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(8, '01110001') == 2790",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 32,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(10, '1111100000') == 17822",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 33,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(206, '01100101011111100110101000100101111001100011010010011000000101100011001001110100010000100000010111001010011011011010110111010101100010111011001110101101100101110110111010001001110010000000011110110110110111') == 453158926",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 34,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(8, '11001111') == 7318",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 35,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(12, '100000001011') == 45510",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 36,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(8, '01001011') == 2974",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 37,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(183, '001001100100101110111000001011111100010111111000001000001010011000000111010001000110101000001001010011101001111101100100010110001111011100011101010010100000011000010000011110110001000') == 913456247",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 39,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(5, '00111') == 182",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 40,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(183, '010110001011100010111011110110001100010001011001111110010000100100010000010100101101100000001111111000000010101001111100101111101111111100101001111110011000010000110000101111010000110') == 554196814",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 0,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(3, '010') == 14",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 8,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(3, '000') == 7",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 23,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(10, '0000000000') == 1023",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 28,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(5, '00000') == 31",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(5, '10000') == 62",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 38,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(4, '0010') == 30",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 41,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(4, '1000') == 30",
+    "touched_by_diff": false
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 1,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(20, '00001100111010100101') == 261339902",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(8, '01000101') == 1758",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(18, '101000001001101101') == 33726462",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(8, '00111011') == 4718",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 5,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(43, '0110110101011001010110101100100111101110000') == 984203477",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(12, '001101110111') == 414494",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(14, '01100000000001') == 106478",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(18, '110000001110010111') == 48881790",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(7, '0101010') == 862",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(199, '0100101000100011100101111110100111101000011011101000000111010010001001011101000001111010000100001010100101111100111111000110000010011111111001110001011000010101111100110010111001011110110111001011010') == 241791245",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(20, '11001111101011000100') == 697160702",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(19, '0000110011001101010') == 71253534",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(10, '1000011111') == 30262",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(10, '1010101010') == 23166",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(221, '01101110101011101011010111001111000100010101101100101010101010011000000100111100111111100000110100100110001110010011100001011011011101000110111100100001001110111001001011010101000100100001011011001101001110001001011011001') == 894782411",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 18,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(13, '1100011100101') == 514110",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(18, '000001101001111110') == 48768894",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 20,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(142, '0101101111011000110011101100011101111100100011010101011010000111001110110000101010010000100110101000101011011010101111111100011011100010011001') == 225607829",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 21,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(13, '1010010011101') == 544126",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 22,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(25, '1011011010100101000000100') == 933387758",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 24,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(8, '10000001') == 892",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 25,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(66, '000110000110011001001001110111010010110001000000011000010111000111') == 851175088",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 26,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(20, '01101101000011000000') == 75776318",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 27,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(14, '01111001100011') == 1768846",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 29,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(20, '01010100111101110001') == 725747198",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 30,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(4, '0101') == 54",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 31,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(8, '01110001') == 2790",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 32,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(10, '1111100000') == 17822",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 33,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(206, '01100101011111100110101000100101111001100011010010011000000101100011001001110100010000100000010111001010011011011010110111010101100010111011001110101101100101110110111010001001110010000000011110110110110111') == 453158926",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 34,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(8, '11001111') == 7318",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 35,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(12, '100000001011') == 45510",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 36,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(8, '01001011') == 2974",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 37,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(183, '001001100100101110111000001011111100010111111000001000001010011000000111010001000110101000001001010011101001111101100100010110001111011100011101010010100000011000010000011110110001000') == 913456247",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 39,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(5, '00111') == 182",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 40,
+    "n_fail": 5,
+    "share": 0.5,
+    "text": "assert candidate(183, '010110001011100010111011110110001100010001011001111110010000100100010000010100101101100000001111111000000010101001111100101111101111111100101001111110011000010000110000101111010000110') == 554196814",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 0,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(3, '010') == 14",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 8,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(3, '000') == 7",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 23,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(10, '0000000000') == 1023",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 28,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(5, '00000') == 31",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(5, '10000') == 62",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 38,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(4, '0010') == 30",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 41,
+    "n_fail": 3,
+    "share": 0.3,
+    "text": "assert candidate(4, '1000') == 30",
+    "touched_by_diff": false
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_97",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 1,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(5, [2, 4, 1, 3, 5]) == 6",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_98",
+  "n_submissions": 10,
+  "n_pass_all": 8,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 10,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(1, 1, 1, '0', '0') == True",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_99",
+  "n_submissions": 10,
+  "n_pass_all": 6,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 3,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(128, '()()(((()(())(()))))()()()((())())(())()((())((()((((((()()()()(()))()())))))())(())()())()(()(())))(((())()))()(())((()()))()()') == 679173354",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(140, '(((()()))(()()(((())()((()(()()))))(((())))((()))(())())()(()))())()((()())())(())()((()((())(()))(()()(()())()(())())((()(()()(())(()))))))') == 843316172",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(140, '(((())()((()((()()(()))))(()()(()(())()((()()))())(())())))()())()()()(()()(()())()())(()((()()()())))(()()(()()((((()))()))))()()()(())()()') == 74966682",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 0,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(6, '(())()') == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 1,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2, '()') == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 2,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(8, '(())()()') == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(8, '(()()())') == 1",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 5,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(12, '()(()()())()') == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, '(((()))())') == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(200, '()' * 100) == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 8,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(12, '(()(()))(())') == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(6, '((()))') == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, '(())') == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, '((((()))))') == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(6, '()(())') == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(14, '(()(()))((()))') == 4",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, '()()') == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 17,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(12, '()()(((())))') == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 18,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(8, '((())())') == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, '()()()()()') == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 20,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(8, '()((()))') == 2",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 21,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(12, '(((())))()()') == 3",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 22,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, '((()(())))') == 2",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [
+   {
+    "stmt": 3,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(128, '()()(((()(())(()))))()()()((())())(())()((())((()((((((()()()()(()))()())))))())(())()())()(()(())))(((())()))()(())((()()))()()') == 679173354",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(140, '(((()()))(()()(((())()((()(()()))))(((())))((()))(())())()(()))())()((()())())(())()((()((())(()))(()()(()())()(())())((()(()()(())(()))))))') == 843316172",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 4,
+    "share": 0.4,
+    "text": "assert candidate(140, '(((())()((()((()()(()))))(()()(()(())()((()()))())(())())))()())()()()(()()(()())()())(()((()()()())))(()()(()()((((()))()))))()()()(())()()') == 74966682",
+    "touched_by_diff": false
+   }
+  ],
+  "status": "candidate (consensus failure on an assertion)"
+ },
+ {
+  "task_id": "lcbhard_100",
+  "n_submissions": 10,
+  "n_pass_all": 8,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 2,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(9, 'BWWBWBBBWWBWBBWWBW') == 240792",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 14,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(7, 'BWWBWBWBBBWWBW') == 2784",
+    "touched_by_diff": true
+   },
+   {
+    "stmt": 17,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(8, 'BBWBWWBBWWWBBBWW') == 35496",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 18,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(8, 'BWWBWBWBBBBBWWWW') == 27840",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 24,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(97, 'BWWWWWBWWWWWWWBWWWWBWBWWBBWBBWWBBWWWWWWWBBBBBWWWWBWWBBWBBBWBBWWBWBBBBWWBWWBBBBBBBBWBBWBWWWBWBBWBBWBBWBBBWBBBWWBWBWWWBWWBWWWBWBBWBBWBBBWWWWBWWWWBBBBBBWBWWBBWWWBWBWBWBBBBBBWBWWWWWBBBBWWWWBBBBBBWBW') == 560359154",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 25,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(117, 'BWBBWWWWBBWWWWWBBBWBBWWWWBWWWBBBBBBWWBWWWBWBWWWBWWBBWBWWBBWWWWWWBWWBBWBBBBBBWWBBWWWBBBWBBBWBWBWWBBBWBBBWWBBBWBBBWWWBBBBBBWWBBWWBWWBBWBBBBWBBWWWBBBWWBBBBWWBWWWBBWWBWWBWBBWWBWWBWBWBBBWWBBWWBBWWWBBWWWWBBWBWBWBBBWWBBWWWWBBBWBWWWBWWBBBWWWW') == 200142756",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 26,
+    "n_fail": 2,
+    "share": 0.2,
+    "text": "assert candidate(781, 'BWBBBWWBWWBWWBBWWWWBWBWWBBWWBBWWWWWWBWBWBWWBBWBWBWBBWWWWWWBBWWWBWWWWBWBWWWBWWBWWWWWWWBWWBBWWWBBBBBBBWWWBBWWBWBWWWBWWBBBBBWWBWBWBWWWWBBBBBWWBBWWWBWBBWWWWBBBBBBWBWBBWBWWWWBBWBWBBWBBBWWWWWBWWWWWBWBBWWWWBBWWWWBWWBWWWBBBWWBBWWWWBBWBBWBWBWBBBBBWWBWWBBBBWBWWBBWBBBWBBWWBBBWBBBBWWBBBWB",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 1,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, 'BWWBWBWB') == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 3,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(1, 'WB') == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 4,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2, 'WWBB') == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 6,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, 'WWWBBB') == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 7,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(3, 'BBWWWB') == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 8,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, 'WWWWBBBB') == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 9,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(4, 'BWBWWBWB') == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 10,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(5, 'WBWBWBWBWB') == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 11,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(6, 'WBWBWBWBWBWB') == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 12,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(7, 'WWWWBBBBWWBWBB') == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 13,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(7, 'WBBWBWWBWBBBWW') == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 15,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(8, 'WBWWWBBBWWBWWBBB') == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 19,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(9, 'WBBWWBBWBBBBWWWWBW') == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 20,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, 'WBWWBWBWWBWBWBWBBBWB') == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 21,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, 'BBWBWBWWWBWWWWBBBBWB') == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 22,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, 'WBWWBWBWWBWBWWBBBWBB') == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 23,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(10, 'WWWWBBBWWWBBWBBBWBBW') == 0",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 0,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(2, 'BWBW') == 1",
+    "touched_by_diff": false
+   },
+   {
+    "stmt": 16,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(8, 'BBBWBBBWBWBWWWWW') == 40320",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_101",
+  "n_submissions": 9,
+  "n_pass_all": 7,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 4,
+    "n_fail": 2,
+    "share": 0.22,
+    "text": "assert candidate([4], 4, 10) == 4",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ },
+ {
+  "task_id": "lcbhard_102",
+  "n_submissions": 10,
+  "n_pass_all": 9,
+  "n_load_error": 0,
+  "failing": [
+   {
+    "stmt": 13,
+    "n_fail": 1,
+    "share": 0.1,
+    "text": "assert candidate(20, 26336378880001) == []",
+    "touched_by_diff": true
+   }
+  ],
+  "suspects": [],
+  "status": "clean"
+ }
+]

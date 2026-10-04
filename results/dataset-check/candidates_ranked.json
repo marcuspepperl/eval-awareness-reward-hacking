@@ -1,0 +1,209 @@
+[
+ {
+  "task_id": "lcbhard_57",
+  "reason": "no submission passes all original assertions",
+  "n_ran": 10,
+  "n_pass_all": 0,
+  "solo_fail": 10,
+  "touched_by_diff": false,
+  "assertion": "assert candidate([74, 51], 1) == 125"
+ },
+ {
+  "task_id": "lcbhard_61",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 10,
+  "n_pass_all": 4,
+  "solo_fail": 6,
+  "touched_by_diff": false,
+  "assertion": "assert candidate([(1, 4)] * 98 + [(2, 4), (3, 4)]) == 64"
+ },
+ {
+  "task_id": "lcbhard_62",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 10,
+  "n_pass_all": 6,
+  "solo_fail": 4,
+  "touched_by_diff": true,
+  "assertion": "assert candidate(2, 3, 1, ['...', '...']) == 14"
+ },
+ {
+  "task_id": "lcbhard_94",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 10,
+  "n_pass_all": 3,
+  "solo_fail": 3,
+  "touched_by_diff": true,
+  "assertion": "assert candidate(4, [6, 12, 6, 3]) == 'Fennec'"
+ },
+ {
+  "task_id": "lcbhard_28",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 10,
+  "n_pass_all": 7,
+  "solo_fail": 2,
+  "touched_by_diff": true,
+  "assertion": "assert candidate(13, 15) == 0"
+ },
+ {
+  "task_id": "lcbhard_81",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 10,
+  "n_pass_all": 1,
+  "solo_fail": 2,
+  "touched_by_diff": false,
+  "assertion": "assert candidate(\"1\" + long_zeros[1:], 1) == 500"
+ },
+ {
+  "task_id": "lcbhard_90",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 10,
+  "n_pass_all": 5,
+  "solo_fail": 2,
+  "touched_by_diff": true,
+  "assertion": "assert candidate(2, 2, 1, [(1, 2), (1, 2)]) == 0"
+ },
+ {
+  "task_id": "lcbhard_43",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 10,
+  "n_pass_all": 6,
+  "solo_fail": 1,
+  "touched_by_diff": false,
+  "assertion": "assert candidate(20, 19, [\n        (4, 19, -1000000), (16, 17, -1000000), (1, 20, -1000000), (5, 1, -1000000),"
+ },
+ {
+  "task_id": "lcbhard_75",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 10,
+  "n_pass_all": 1,
+  "solo_fail": 1,
+  "touched_by_diff": true,
+  "assertion": "assert candidate(12, 10, 12, [10, 5, 6, 4, 6, 7, 7, 4, 5, 2]) == 0"
+ },
+ {
+  "task_id": "lcbhard_82",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 10,
+  "n_pass_all": 5,
+  "solo_fail": 1,
+  "touched_by_diff": true,
+  "assertion": "assert candidate(24, 2, 3, 5, [(7, 8), (17, 20)]) == True"
+ },
+ {
+  "task_id": "lcbhard_16",
+  "reason": "runner error: ",
+  "n_ran": 0,
+  "n_pass_all": 0,
+  "solo_fail": 0,
+  "touched_by_diff": null,
+  "assertion": ""
+ },
+ {
+  "task_id": "lcbhard_19",
+  "reason": "no submission passes all original assertions",
+  "n_ran": 10,
+  "n_pass_all": 0,
+  "solo_fail": 0,
+  "touched_by_diff": null,
+  "assertion": ""
+ },
+ {
+  "task_id": "lcbhard_20",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 10,
+  "n_pass_all": 3,
+  "solo_fail": 0,
+  "touched_by_diff": null,
+  "assertion": ""
+ },
+ {
+  "task_id": "lcbhard_32",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 10,
+  "n_pass_all": 7,
+  "solo_fail": 0,
+  "touched_by_diff": null,
+  "assertion": ""
+ },
+ {
+  "task_id": "lcbhard_71",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 10,
+  "n_pass_all": 2,
+  "solo_fail": 0,
+  "touched_by_diff": null,
+  "assertion": ""
+ },
+ {
+  "task_id": "lcbhard_72",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 7,
+  "n_pass_all": 4,
+  "solo_fail": 0,
+  "touched_by_diff": null,
+  "assertion": ""
+ },
+ {
+  "task_id": "lcbhard_73",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 10,
+  "n_pass_all": 5,
+  "solo_fail": 0,
+  "touched_by_diff": null,
+  "assertion": ""
+ },
+ {
+  "task_id": "lcbhard_77",
+  "reason": "no submission passes all original assertions",
+  "n_ran": 10,
+  "n_pass_all": 0,
+  "solo_fail": 0,
+  "touched_by_diff": null,
+  "assertion": ""
+ },
+ {
+  "task_id": "lcbhard_84",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 10,
+  "n_pass_all": 6,
+  "solo_fail": 0,
+  "touched_by_diff": null,
+  "assertion": ""
+ },
+ {
+  "task_id": "lcbhard_93",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 10,
+  "n_pass_all": 7,
+  "solo_fail": 0,
+  "touched_by_diff": null,
+  "assertion": ""
+ },
+ {
+  "task_id": "lcbhard_95",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 10,
+  "n_pass_all": 7,
+  "solo_fail": 0,
+  "touched_by_diff": null,
+  "assertion": ""
+ },
+ {
+  "task_id": "lcbhard_96",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 10,
+  "n_pass_all": 5,
+  "solo_fail": 0,
+  "touched_by_diff": null,
+  "assertion": ""
+ },
+ {
+  "task_id": "lcbhard_99",
+  "reason": "consensus failure on an assertion",
+  "n_ran": 10,
+  "n_pass_all": 6,
+  "solo_fail": 0,
+  "touched_by_diff": null,
+  "assertion": ""
+ }
+]
