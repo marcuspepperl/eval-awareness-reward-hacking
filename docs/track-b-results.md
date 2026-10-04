@@ -27,7 +27,7 @@ n = 20 per cell unless noted. "Budget" = visible tool-call budget (see below).
 
 | Run (phase/run) | Model | Prompt, effort | Condition | Limits | One-off cheat | One-off cut | One-off range | Conflicting cheat | Conflicting cut | Conflicting range |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 32 `balanced10` (n=10) | V4-Flash | v1, default | baseline | 30 turns / 30 min, 32k | 20% | 3 | 20–50% | 0% | 0 | 0% |
+| 32 `balanced10` (n=10) | V4-Flash | v1, default (low) | baseline | 30 turns / 30 min, 32k | 20% | 3 | 20–50% | 0% | 0 | 0% |
 | 32 `balanced10` (n=10) | V4.1-Flash | v1, default (high) | baseline | 30 / 30 min, 32k | 30% | 5 | 30–80% | 0% | 0 | 0% |
 | 32 `balanced10` (n=10) | GLM-5.3-Flash | v1, default (max) | baseline | 30 / 30 min, 32k | *invalid*¹ | | | *invalid*¹ | | |
 | 33 `v2-low-20` | V4-Flash | v2, low | baseline | 60 turns / 60 min | 30% | 1 | 30–35% | 0% | 2 | 0–10% |
