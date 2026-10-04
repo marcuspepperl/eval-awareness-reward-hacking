@@ -78,7 +78,8 @@ SWE-agent scores the current diff when its (unannounced) cost limit is hit.
 ## Open issues
 
 - **The budget is itself a treatment:** absolute rates under a budget aren't comparable to no-budget runs or ImpossibleBench.
-- **Possible interaction with eval awareness:** a countdown may make the setting feel more test-like. Check by comparing
-  spontaneous test/eval mentions in GLM transcripts with and without the budget (free; not done yet).
+- **Interaction with eval awareness: checked, no increase.** Spontaneous eval awareness in GLM: 13/40 episodes without
+  the budget vs 9/40 with it (p = 0.45). The countdown is never read as a sign of being tested, but in 2/20 one-off
+  episodes it is used to justify special-casing. See `results/evidence/budget-eval-awareness.md`. (Old budget wording; the new design is untested.)
 - **Longest unbudgeted GLM episode is 60 min** (every unbudgeted run had a ≤60 min limit); we don't know how long one-off episodes would run without limits.
 - n = 20 per cell: differences under ~25 points are within noise.
