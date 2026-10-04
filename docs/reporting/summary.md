@@ -87,7 +87,7 @@ Results that would be striking: EA almost always arrives *after* the cheat idea 
 | Cheat *try* per attempt (successful + failed), cheat type, disclosure | judge B1 | Yes: **robustness** outcome. Failed tries are rare in Track A (≈ 1–2% of attempts by a literal heuristic) |
 | EA (presence, framing, strength, location, amount) | judge pass A | **Yes: the main predictor**; this is what gold-set validation must support |
 | Grader reasoning | judge pass A | Yes; contrast class + candidate second finding |
-| First bad test, first cheat considered (timing) | judge B2 | Yes (timing analyses) |
+| First bad test, first cheat considered (timing) | judge B2, **on all attempts** (R6 / R7 need noticing on honest attempts) | Yes (timing analyses; the noticing adjustment) |
 | Attempt numbers, lengths, tokens, cost | logs | No |
 
 **EA definitions** (fixed before analysis):

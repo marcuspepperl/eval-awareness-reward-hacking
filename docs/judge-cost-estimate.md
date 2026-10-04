@@ -17,17 +17,17 @@ Retries for invalid outputs add ≈ 5%. Track B chunks also carry compressed too
 | Units | 412 rollouts = 1,926 attempts (phase 1, 103 problems × 2 splits × 2 epochs) | 412 episodes, assuming the same 103 × 2 × 2 (one-off measured; conflicting assumed similar length) |
 | Judged chars per unit | 47.4k per attempt (measured, phase 1) | 185.5k per episode = 164.5k reasoning + 12.5k compressed tool calls + 8.5k compressed tool outputs (measured, run 37) |
 | Total judged chars | 91.4M | 76.4M |
-| B2 subset (cheats + a sample of honest units) | ≈ 700 attempts (≈ 33M chars) | ≈ 50% of episodes (≈ 38M chars) |
+| B2 subset (cheats + a sample of honest units; no longer the default) | ≈ 700 attempts (≈ 33M chars) | ≈ 50% of episodes (≈ 38M chars) |
 
 ## Full-run judge cost
 | Pass | Track A | Track B |
 |---|---|---|
 | A (EA + grader), all units | $7.2 | $6.0 |
 | B1 (cheat verdict, + disclosure in Track B), all units | $0.8 | $0.2 |
-| B2 timing: subset (all units) | $2.4 ($6.6) | $2.8 ($5.5) |
+| B2 timing, **all units** (default; subset in brackets) | $6.6 ($2.4) | $5.5 ($2.8) |
 | 2 extra runs on the gold units (stability) | $0.4 (≈ 30 attempts) | $0.9 (≈ 15 episodes) |
 | Retries (+5%) | $0.5 | $0.5 |
-| **Total**: B2 on a subset (B2 on all units) | **≈ $11** (≈ $16) | **≈ $10** (≈ $13) |
+| **Total** (B2 on all units; subset in brackets) | **≈ $16** (≈ $11) | **≈ $13** (≈ $10) |
 
 ## Validation and iteration (before the full runs)
 | Item | Track A | Track B |
@@ -38,11 +38,11 @@ Retries for invalid outputs add ≈ 5%. Track B chunks also carry compressed too
 ## Total judge budget
 | | Low | Expected | High |
 |---|---|---|---|
-| Track A | $12 | **$13** | $24 |
-| Track B | $12 | **$14** | $28 |
-| **Both** | **$24** | **≈ $27** | **$52** |
+| Track A | $12 | **$17** | $24 |
+| Track B | $12 | **$17** | $28 |
+| **Both** | **$24** | **≈ $34** | **$52** |
 
-*Low* = B2 on a subset, one validation round. *Expected* = B2 on a subset, full validation (≤ 3 rounds). *High* = B2 on all units, one extra full re-run of pass A after a prompt fix, and Track B conflicting episodes 1.5× longer than one-off.
+*Low* = B2 on a subset, one validation round. *Expected* = **B2 on all units** (the default since 2026-10-04: noticing the bad test is needed on honest units too), full validation (≤ 3 rounds). *High* = B2 on all units, one extra full re-run of pass A after a prompt fix, and Track B conflicting episodes 1.5× longer than one-off.
 
 ## Sensitivity
 - Track B cost is driven by the long tail: p90 episode is 2.1× the mean (396k reasoning chars), max 6.9× (1.27M). A few very long episodes can move the total by ±$2.
@@ -59,4 +59,4 @@ Retries for invalid outputs add ≈ 5%. Track B chunks also carry compressed too
 | Track A phase 2, attempt-level resample (≈ 400 histories × 6 conditions × 3 samples) | — | ≈ $20 (≈ $10 with half the conditions or samples) |
 | Track B phase 2 (prefill design not decided) | — | likely ≈ $40–80: an episode costs ~7× a Track A rollout to generate ($0.089 vs $0.013) |
 
-**Suggested DeepInfra top-up for judging alone: ≈ $30** (expected case with margin; the high case is ≈ $52). With the remaining generation runs: ≈ $110–170 total, depending on the Track B phase-2 design.
+**Suggested DeepInfra top-up for judging alone: ≈ $40** (expected case with margin; the high case is ≈ $52). With the remaining generation runs: ≈ $110–170 total, depending on the Track B phase-2 design.

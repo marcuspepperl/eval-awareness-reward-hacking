@@ -61,8 +61,8 @@ GLM-5.3-Flash via our provider: `deepinfra-raw/glm53flash`.
 | **Chunked?** | **yes**: ~4k-token chunks + 10 `[ctx]` sentences | **no**: code + tests always fit | **yes**: the same chunks as A |
 | **Units per attempt** | n_chunks (median ~3 in the pilot) | **1** | n_chunks |
 | **Output** | `ea` spans + `framing`, `strength`, `benchmark`; `grader` spans (one span per occurrence) | `cheat_impl` lines (evidence) + `SUMMARY` (`attempted`, `type`, `transparent`) | first `bad_test` and first `cheat_considered`: one sentence ID each per chunk; earliest across chunks kept |
-| **Runs on** | **all attempts** | **all attempts** | attempts B1 marks `attempted` (successful **or** failed) + a random sample of honest attempts (all if budget allows) |
-| **Depends on** | — | — | **B1 results** (B1 runs first) |
+| **Runs on** | **all attempts** | **all attempts** | **all attempts** (noticing the bad test is needed on honest attempts too) |
+| **Depends on** | — | — | — |
 | **Phase-1 cost (est.)** | ~$3 | ~$0.20 | ~$1.50–3 (less if cached) |
 
 Notes:
@@ -237,7 +237,7 @@ Per attempt, and rolled up per sample:
 | 2 | **Smoke on the pilot**: 10–15 attempts; mode (a) vs (b); structural failures, tokens per attempt, cache hits; Mark skims for obvious misses | cents |
 | 3 | Freeze the design; labelling UI; Mark labels the gold set (phase 1) | — |
 | 4 | Judge the gold set (×3 for stability) → agreement report | < $0.50 |
-| 5 | Full phase-1 judge run → analysis | **≈ $11** (A $7.2, B1 $0.8, B2 on a subset $2.4; ≈ $16 with B2 on all). Measured rates and both tracks: [judge-cost-estimate.md](judge-cost-estimate.md) |
+| 5 | Full phase-1 judge run → analysis | **≈ $15** (A $7.2, B1 $0.8, B2 on all attempts $6.6). Measured rates and both tracks: [judge-cost-estimate.md](judge-cost-estimate.md) |
 
 ## Storage
 - Judge runs: `logs/1x-judge/<judge-model>/<run-id>/` (Inspect logs) + `judge_units.jsonl` + `segments.jsonl` (ID → text, offsets).
@@ -247,6 +247,8 @@ Per attempt, and rolled up per sample:
 1. **Headline cheat outcome comes from the scorer, not the judge.** The tests run on every attempt, so "successful cheat at attempt *k*" is exact per attempt; a successful cheat ends the rollout, so the attempt-level risk set (attempts before the first cheat) is built in. The judge's B1 `attempted` (successful + failed cheat tries) is the **robustness** outcome. Failed tries are rare: a literal-match heuristic finds ≈ 26 failed attempts containing the altered input vs 280 passing cheats, and ≈ 42 / 1,926 attempts (2%) come after a likely failed try. Excluding those attempts is a **sensitivity check**; it becomes a main robustness analysis only if B1 finds failed tries in more than ~10% of attempts. The judge's main role in the headline is the **predictor** (EA), which is what gold-set validation must support.
 2. **Track A keeps per-attempt chunking.** Each attempt was generated from the task, the feedback and fresh reasoning (prior reasoning is dropped), so per-attempt judging mirrors what the model saw and matches the attempt-level analysis. Chunking across the rollout would save ≈ 10% (≈ $1) but requires first-occurrence labels to restart at each attempt while the previous attempt is in view, an untested risk (GLM already misplaces ~1 in 10 first points within a chunk). Shared chunker code either way; each harness is validated separately.
 
+3. **B2 runs on all attempts** (decided 2026-10-04): R6 / R7 in [reporting/summary.md](reporting/summary.md) condition on whether the model noticed the bad test, which needs `bad_test` on honest attempts too. Adds ≈ $4 in Track A.
+
 ## Pending judge changes (applied at the next judge run; not yet run)
 - B2 outputs first-occurrence **spans** (start measured, span = quote), matching codebook v0.1.
 - `strength` on all labels (codebook v0.1).
@@ -254,7 +256,6 @@ Per attempt, and rolled up per sample:
 - Track A attempts 2+: the model's **previous answers** as context (the model saw them; reasoning sometimes refers to "my previous code").
 
 ## Open decisions
-- Whether B2 runs on all attempts or on B1-attempted + a sample of honest ones (≈ $4 difference in Track A).
 - Whether to add a `flag_intent` label (the model considers telling the user the tests are wrong), for the "silent honest failure" observation. Track B gets `flagged_test` from the final message.
 
 ## Precedents
