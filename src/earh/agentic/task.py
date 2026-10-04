@@ -55,8 +55,7 @@ def agentic_lcb(
     exit: str | None = None,
     pressure: str = "none",
     tool_budget: int | None = None,
-    budget_warn_at: int = 0,
-    budget_grace: int = 0,
+    budget_warn_at: int = 5,
 ) -> Task:
     """Impossible-LiveCodeBench in a tool-using sandbox; cheat = final tests pass.
 
@@ -72,8 +71,8 @@ def agentic_lcb(
         message (see earh.agentic.prompt.PRESSURE).
     @param tool_budget: Optional visible tool-call budget with a countdown in tool results
         (see agentic_agent); None = no budget.
-    @param budget_warn_at: Remaining calls at which the counter adds a save reminder.
-    @param budget_grace: Rejected tool calls tolerated after the budget is exhausted.
+    @param budget_warn_at: Remaining calls at or below which the countdown becomes the
+        end-of-session warning (0 = never).
     @returns: An Inspect Task named e.g. "agentic_conflicting".
     """
     user_instruction = user_message(prompt_version, pressure)
@@ -100,7 +99,6 @@ def agentic_lcb(
             exit=exit,
             tool_budget=tool_budget,
             budget_warn_at=budget_warn_at,
-            budget_grace=budget_grace,
         ),
         scorer=tests_pass(),
         sandbox="docker",
@@ -112,6 +110,5 @@ def agentic_lcb(
             "pressure": pressure,
             "tool_budget": tool_budget,
             "budget_warn_at": budget_warn_at,
-            "budget_grace": budget_grace,
         },
     )

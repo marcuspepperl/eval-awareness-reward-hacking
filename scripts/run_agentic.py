@@ -57,14 +57,8 @@ def main() -> None:
     p.add_argument(
         "--budget-warn-at",
         type=int,
-        default=0,
-        help="remaining calls at which the counter adds a save reminder (0 = never)",
-    )
-    p.add_argument(
-        "--budget-grace",
-        type=int,
-        default=0,
-        help="rejected tool calls tolerated after the budget is exhausted",
+        default=5,
+        help="remaining calls at which the countdown becomes the end warning (0 = never)",
     )
     p.add_argument("--prompt-version", choices=sorted(PROMPTS), default=DEFAULT_PROMPT)
     p.add_argument("--max-connections", type=int, default=100)  # Track A shares 200
@@ -93,7 +87,6 @@ def main() -> None:
             pressure=pressure,
             tool_budget=args.tool_budget,
             budget_warn_at=args.budget_warn_at,
-            budget_grace=args.budget_grace,
         )
         for split in args.splits
         for exit in args.exits
@@ -107,8 +100,7 @@ def main() -> None:
     print(f"task set: {args.task_set or f'{args.n_tasks} seeded (seed {args.seed})'}")
     print(
         f"max_turns={args.max_turns}  time_limit={args.time_limit}s  "
-        f"tool_budget={args.tool_budget}  warn_at={args.budget_warn_at}  "
-        f"grace={args.budget_grace}"
+        f"tool_budget={args.tool_budget}  warn_at={args.budget_warn_at}"
     )
     for t in tasks:
         print(f"  {t.name:22s} {len(t.dataset)} samples per model")
