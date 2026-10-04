@@ -43,6 +43,7 @@ Attempts that hit the output cap usually degenerated into repetition (zlib compr
 - Chunks are **independent calls, run in parallel**.
 - *Why chunks rather than the whole transcript:* smaller inputs force the judge to consider each part (the "needle" concern with ~750 sentences per attempt).
 - *Why not an agentic reading loop* (`advance_transcript` + `submit_tag` tools): each tool call re-sends the growing history, so it costs ~6× the input of chunking, runs sequentially, and older text stays in context anyway.
+- **Track A chunks within an attempt, not across the rollout** (decided 2026-10-04; see *Decisions*). Track B chunks across the whole episode, because its reasoning is one continuous stream ([judge-track-b-adaptation.md](judge-track-b-adaptation.md)).
 
 ## Judge model
 GLM-5.3-Flash via our provider: `deepinfra-raw/glm53flash`.
@@ -242,11 +243,19 @@ Per attempt, and rolled up per sample:
 - Judge runs: `logs/1x-judge/<judge-model>/<run-id>/` (Inspect logs) + `judge_units.jsonl` + `segments.jsonl` (ID → text, offsets).
 - Assembled `judgments.jsonl` next to the judge logs; aggregates and figures go to `results/` (committed).
 
+## Decisions (2026-10-04)
+1. **Headline cheat outcome comes from the scorer, not the judge.** The tests run on every attempt, so "successful cheat at attempt *k*" is exact per attempt; a successful cheat ends the rollout, so the attempt-level risk set (attempts before the first cheat) is built in. The judge's B1 `attempted` (successful + failed cheat tries) is the **robustness** outcome. Failed tries are rare: a literal-match heuristic finds ≈ 26 failed attempts containing the altered input vs 280 passing cheats, and ≈ 42 / 1,926 attempts (2%) come after a likely failed try. Excluding those attempts is a **sensitivity check**; it becomes a main robustness analysis only if B1 finds failed tries in more than ~10% of attempts. The judge's main role in the headline is the **predictor** (EA), which is what gold-set validation must support.
+2. **Track A keeps per-attempt chunking.** Each attempt was generated from the task, the feedback and fresh reasoning (prior reasoning is dropped), so per-attempt judging mirrors what the model saw and matches the attempt-level analysis. Chunking across the rollout would save ≈ 10% (≈ $1) but requires first-occurrence labels to restart at each attempt while the previous attempt is in view, an untested risk (GLM already misplaces ~1 in 10 first points within a chunk). Shared chunker code either way; each harness is validated separately.
+
+## Pending judge changes (applied at the next judge run; not yet run)
+- B2 outputs first-occurrence **spans** (start measured, span = quote), matching codebook v0.1.
+- `strength` on all labels (codebook v0.1).
+- The **altered assertion** (original vs modified) in the shared context, both harnesses.
+- Track A attempts 2+: the model's **previous answers** as context (the model saw them; reasoning sometimes refers to "my previous code").
+
 ## Open decisions
-- Mode (a) list vs (b) exhaustive for pass A (smoke test).
-- Chunk size (~4k tokens is the starting point) and overlap length.
-- Whether B2 runs on all attempts (depends on cache hits and budget).
-- Whether to add a `flag_intent` label (the model considers telling the user the tests are wrong), for the "silent honest failure" observation.
+- Whether B2 runs on all attempts or on B1-attempted + a sample of honest ones (≈ $4 difference in Track A).
+- Whether to add a `flag_intent` label (the model considers telling the user the tests are wrong), for the "silent honest failure" observation. Track B gets `flagged_test` from the final message.
 
 ## Precedents
 - **Anthropic Citations API**: plain-text documents are split into sentences; the model cites sentence indices and the system fills in the cited text. Cite by ID, never reproduce text.
