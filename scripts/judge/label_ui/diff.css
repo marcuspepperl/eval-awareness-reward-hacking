@@ -1,0 +1,34 @@
+/* Comparison page: extends label.css (base tokens, layout, rows, drawer). */
+.navlink{font-size:12px;color:var(--muted)}
+header label.muted{display:inline-flex;gap:4px;align-items:center}
+#toggles{display:flex;flex-wrap:wrap;gap:4px 10px;margin-bottom:6px}
+#toggles label{display:inline-flex;gap:4px;align-items:center;font-size:12px;cursor:pointer}
+.metrics{margin:8px 0 14px;max-width:860px}
+.metrics table{font-size:12.5px}
+.metrics td.na{color:var(--muted)}
+.legend{font-size:12px;color:var(--muted);margin:4px 0 10px;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}
+.lg{display:inline-block;width:26px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:4px}
+.att{flex-wrap:wrap}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.chip{font-size:12px;padding:1px 8px;border-radius:10px;border:1px solid var(--line);background:var(--card)}
+.chip.bad{border-color:#d33}.chip.ok{border-color:var(--accent)}
+/* sentence states */
+.rows .row.agree{}
+.rows .row.only-b{background-image:repeating-linear-gradient(135deg,var(--hl) 0 5px,transparent 5px 9px)!important;background-color:transparent!important}
+.rows .row.only-a{outline:2px dashed var(--hlA);outline-offset:-1px}
+.rows.para .row.only-a{outline-offset:0}
+.pill.src-a{background:transparent;color:var(--fg);border:1px dashed var(--fg)}
+.pill.src-b{}
+.pill.dis{box-shadow:0 0 0 2px #d33}
+.fold{color:var(--muted);font-size:12px;margin:2px 0 10px;padding-left:2px}
+.flash{animation:flash 1.2s ease}
+@keyframes flash{0%{box-shadow:0 0 0 4px var(--sel)}100%{box-shadow:0 0 0 0 transparent}}
+#disBox a{display:block;padding:4px 6px;border-radius:6px;cursor:pointer;color:inherit;text-decoration:none;margin:3px 0;border:1px solid var(--line)}
+#disBox a:hover{background:var(--line)}
+#disBox .snip{color:var(--muted);font-size:11.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.b1cmp{font-size:12.5px;margin:6px 0;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+.empty{color:var(--muted);padding:20px}
+/* altered test (same look as the labelling page) */
+.altbox{border:1px solid var(--c-bad_test);border-left-width:4px;border-radius:8px;padding:8px 10px;margin:10px 0;font-size:12.5px}
+.altrow{margin-top:6px}.altrow code{font:12px ui-monospace,monospace;word-break:break-all}
+.altbox mark{background:var(--c-bad_test);color:var(--fg);border-radius:2px;padding:0 1px}

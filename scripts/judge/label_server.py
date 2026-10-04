@@ -5,11 +5,15 @@
 
 Routes:
   GET  /                                  labelling page (scripts/judge/label_ui/label.html)
+  GET  /diff                              comparison page (scripts/judge/label_ui/diff.html)
   GET  /static/<file>                     page assets (scripts/judge/label_ui/)
   GET  /codebook.md                       docs/codebook.md
   GET  /api/set/<set>                     logs/12-judge/labelsets/<set>/data.json
   GET  /api/labels/<set>/<labeler>        {rollout: label record} for that labeller
   PUT  /api/labels/<set>/<labeler>/<idx>  save one rollout's label record (JSON body)
+  GET  /api/sets                          label set names
+  GET  /api/sources/<set>                 label sources (labellers, judge exports) for a set
+  GET  /api/diff/<set>/<a>/<b>            earh.judge.agreement comparison of b against reference a
 One record per rollout (per-attempt spans and B1 inside), written to
 logs/12-judge/labels/<set>/<labeler>/<rollout with ':' -> '__'>.json.
 Binds to 127.0.0.1 only. Names are restricted to [A-Za-z0-9_-] to keep paths inside the roots.
@@ -20,6 +24,8 @@ import json
 import re
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+
+from earh.judge.agreement import compare_sources, load_source
 
 REPO = Path(__file__).resolve().parents[2]
 UI = REPO / "scripts/judge/label_ui"
@@ -63,6 +69,21 @@ class Handler(SimpleHTTPRequestHandler):
         parts = [p for p in path.split("/") if p]
         if not parts:
             return self._file(UI / "label.html", "text/html; charset=utf-8")
+        if parts == ["diff"]:
+            return self._file(UI / "diff.html", "text/html; charset=utf-8")
+        if parts == ["api", "sets"]:
+            return self._json(sorted(p.parent.name for p in SETS.glob("*/data.json")))
+        if parts[:2] == ["api", "sources"] and len(parts) == 3 and _safe(parts[2]):
+            d = LABELS / parts[2]
+            srcs = (
+                sorted(p.name for p in d.iterdir() if p.is_dir()) if d.is_dir() else []
+            )
+            return self._json(srcs)
+        if parts[:2] == ["api", "diff"] and len(parts) == 5 and _safe(*parts[2:]):
+            data = json.loads((SETS / parts[2] / "data.json").read_text())
+            a = load_source(LABELS / parts[2] / parts[3])
+            b = load_source(LABELS / parts[2] / parts[4])
+            return self._json(compare_sources(data, a, b))
         if (
             parts[0] == "static"
             and len(parts) == 2
