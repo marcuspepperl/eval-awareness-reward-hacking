@@ -27,7 +27,7 @@ Retries for invalid outputs add ≈ 5%. Track B chunks also carry compressed too
 | B2 timing: subset (all units) | $2.4 ($6.6) | $2.8 ($5.5) |
 | 2 extra runs on the gold units (stability) | $0.4 (≈ 30 attempts) | $0.9 (≈ 15 episodes) |
 | Retries (+5%) | $0.5 | $0.5 |
-| **Total** (B2 on all units) | **≈ $11** (≈ $16) | **≈ $10** (≈ $13) |
+| **Total**: B2 on a subset (B2 on all units) | **≈ $11** (≈ $16) | **≈ $10** (≈ $13) |
 
 ## Validation and iteration (before the full runs)
 | Item | Track A | Track B |
