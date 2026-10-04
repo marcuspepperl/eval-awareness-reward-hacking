@@ -120,6 +120,34 @@ function pillText(s) {
 }
 
 // ---------- label view ----------
+// ---------- altered test (ImpossibleBench's edit; the model is not told) ----------
+// Show only the region where two assertions differ, with a little context on each side.
+function diffPair(a, b) {
+  let i = 0; while (i < a.length && i < b.length && a[i] === b[i]) i++;
+  let j = 0; while (j < a.length - i && j < b.length - i && a[a.length - 1 - j] === b[b.length - 1 - j]) j++;
+  const show = (t) => {
+    const pre = t.slice(0, i), mid = t.slice(i, t.length - j), suf = t.slice(t.length - j);
+    const p = pre.length > 60 ? "…" + pre.slice(-40) : pre, q = suf.length > 40 ? suf.slice(0, 30) + "…" : suf;
+    return `<code>${esc(p)}<mark>${esc(mid) || "∅"}</mark>${esc(q)}</code>`;
+  };
+  return [show(a), show(b)];
+}
+function alteredHTML(alt) {
+  if (!alt.length) return `<div class="altbox muted">Could not identify the altered assertion for this task.</div>`;
+  return `<div class="altbox"><b>Altered test</b> <span class="muted">(how ImpossibleBench made this task impossible; the model is not told)</span>` +
+    alt.map((x) => {
+      if (x.kind === "changed") {
+        const [o, m] = diffPair(x.original, x.modified);
+        return `<div class="altrow"><span class="muted">expected value changed</span><div>original: ${o}</div><div>modified: ${m}</div></div>`;
+      }
+      if (x.counterpart) {
+        const [o, m] = diffPair(x.counterpart, x.modified);
+        return `<div class="altrow"><span class="muted">contradicting assertion added</span><div>existing: ${o}</div><div>added: ${m}</div></div>`;
+      }
+      return `<div class="altrow"><span class="muted">assertion added</span><div><code>${esc(x.modified)}</code></div></div>`;
+    }).join("") + `</div>`;
+}
+
 // ---------- code highlighting ----------
 // Highlight a whole block, then split the HTML into lines, re-opening any spans that
 // cross a newline (so multi-line strings and docstrings stay coloured line by line).
@@ -359,8 +387,18 @@ async function openDrawer(kind) {
   $("drawer").classList.remove("hidden");
   if (kind === "problem") {
     $("dTitle").textContent = "Problem given to the model";
-    $("dBody").innerHTML = window.marked ? marked.parse(item().task_prompt) : `<pre class="ctx">${esc(item().task_prompt)}</pre>`;
-    $("dBody").querySelectorAll("pre code").forEach((el) => { el.innerHTML = hlLines(el.textContent.replace(/\n$/, "").split("\n")).join("\n"); el.classList.add("hljs"); });
+    const alt = item().altered || [];
+    const marks = new Map();
+    alt.forEach((x) => { marks.set(x.modified, "altered"); if (x.counterpart) marks.set(x.counterpart, "counterpart"); });
+    $("dBody").innerHTML = alteredHTML(alt) + (window.marked ? marked.parse(item().task_prompt) : `<pre class="ctx">${esc(item().task_prompt)}</pre>`);
+    $("dBody").querySelectorAll("pre code").forEach((el) => {
+      const raw = el.textContent.replace(/\n$/, "").split("\n");
+      el.innerHTML = hlLines(raw).map((h, i) => {
+        const m = marks.get(raw[i].trim());
+        return m ? `<span class="${m}" title="${m === "altered" ? "altered by ImpossibleBench" : "the original assertion it contradicts"}">${h}</span>` : h;
+      }).join("\n");
+      el.classList.add("hljs");
+    });
   } else {
     $("dTitle").textContent = "Codebook";
     if (!cbHTML) {

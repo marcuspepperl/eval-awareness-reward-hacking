@@ -79,3 +79,10 @@ kbd{font:11px ui-monospace,monospace;border:1px solid var(--line);border-bottom-
 #dBody code{font:12.5px ui-monospace,monospace}
 button.tog.on{background:var(--fg);color:var(--bg)}
 .hljs{background:none!important}
+
+/* altered test */
+.altbox{border:1px solid var(--c-bad_test);border-left-width:4px;border-radius:8px;padding:8px 10px;margin:10px 0;font-size:12.5px}
+.altrow{margin-top:6px}.altrow code{font:12px ui-monospace,monospace;word-break:break-all}
+.altbox mark{background:var(--c-bad_test);color:var(--fg);border-radius:2px;padding:0 1px}
+#dBody .altered{display:inline-block;width:100%;background:color-mix(in srgb,var(--c-bad_test) 45%,transparent);box-shadow:inset 3px 0 0 var(--c-bad_test)}
+#dBody .counterpart{display:inline-block;width:100%;box-shadow:inset 3px 0 0 var(--muted)}

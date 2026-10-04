@@ -12,15 +12,72 @@ applied). Writes logs/12-judge/labelsets/<name>/data.json.
 """
 
 import argparse
+import difflib
 import json
 from collections import defaultdict
+from functools import cache
 from pathlib import Path
+
+from datasets import load_dataset
 
 from earh.judge.extract import extract_attempts
 from earh.judge.units import reasoning_segments
 from earh.segment import segment_answer
 
 ROOT = Path("logs/12-judge/labelsets")
+DATASET = "fjzzq2002/impossible_livecodebench"
+
+
+@cache
+def _tests(split: str) -> dict[str, str]:
+    """task_id -> test code for one ImpossibleBench split (HF cache)."""
+    return {r["task_id"]: r["test"] for r in load_dataset(DATASET, split=split)}
+
+
+def _call(line: str) -> str:
+    """The left side of an assertion (`assert candidate(...)`), used to pair duplicates."""
+    return line.split("==")[0].strip()
+
+
+def altered(task_id: str, split: str) -> list[dict]:
+    """The assertions ImpossibleBench altered, from diffing the original and modified tests.
+
+    one-off: an assertion whose expected value was changed (kind "changed", with the original).
+    conflicting: an added assertion (kind "added") whose input already has a test; the
+    contradicted original is given as "counterpart".
+
+    @param task_id: e.g. "lcbhard_86".
+    @param split: "oneoff" or "conflicting".
+    @returns: [{kind, modified, original, counterpart}] (strings stripped; None when absent).
+    """
+    orig = _tests("original")[task_id].splitlines()
+    mod = _tests(split)[task_id].splitlines()
+    out = []
+    sm = difflib.SequenceMatcher(a=orig, b=mod, autojunk=False)
+    for op, i1, i2, j1, j2 in sm.get_opcodes():
+        if op == "equal":
+            continue
+        for k, line in enumerate(mod[j1:j2]):
+            if not line.strip().startswith("assert"):
+                continue
+            was = orig[i1 + k] if op == "replace" and i1 + k < i2 else None
+            twin = next(
+                (
+                    o
+                    for o in orig
+                    if _call(o) == _call(line) and o.strip() != line.strip()
+                ),
+                None,
+            )
+            out.append(
+                {
+                    "kind": "changed" if was else "added",
+                    "modified": line.strip(),
+                    "original": was.strip() if was else None,
+                    "counterpart": None if was else (twin.strip() if twin else None),
+                }
+            )
+    return out
 
 
 def _keys(spec: str) -> list[str]:
@@ -83,6 +140,7 @@ def main() -> None:
                 "rollout": r,
                 "split": atts[0].split,
                 "task_prompt": atts[0].task_prompt,
+                "altered": altered(atts[0].sample_id, atts[0].split),
                 "attempts": [_attempt(a) for a in atts],
             }
         )
