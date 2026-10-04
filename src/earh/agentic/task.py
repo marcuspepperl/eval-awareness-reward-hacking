@@ -7,7 +7,7 @@ from typing import Any
 
 from impossiblebench.livecodebench_tasks import record_to_sample
 from inspect_ai import Task, task
-from inspect_ai.dataset import Sample, hf_dataset
+from inspect_ai.dataset import MemoryDataset, Sample, hf_dataset
 
 from earh.agentic.prompt import DEFAULT_PROMPT, user_message
 from earh.agentic.scorer import tests_pass
@@ -111,4 +111,64 @@ def agentic_lcb(
             "tool_budget": tool_budget,
             "budget_warn_at": budget_warn_at,
         },
+    )
+
+
+@task
+def agentic_lcb_batches(
+    batches: list[str] | None = None,
+    task_ids: list[str] | None = None,
+    max_turns: int = 60,
+    time_limit: int = 3600,
+    prompt_version: str = DEFAULT_PROMPT,
+) -> Task:
+    """Several (split, sample) batches as one ordered dataset, sharing one sample queue.
+
+    Inspect starts samples in dataset order as concurrency slots free up, so earlier
+    batches start first, but no batch waits for another to finish. Sample IDs get a
+    batch suffix (e.g. "lcbhard_12-c1" = conflicting, sample 1); metadata["batch"] holds
+    the batch name. The solver and scorer read each sample's own files/tests from its
+    metadata, so splits can be mixed. Baseline condition only (no exit tool, pressure,
+    budget).
+
+    @param batches: Ordered "split-k" names, e.g. ["conflicting-1", "oneoff-2"]
+        (default: those two plus "conflicting-2"); k only labels the repeat.
+    @param task_ids: Problem IDs to include (default: all 103).
+    @param max_turns: Maximum model calls per episode.
+    @param time_limit: Wall-clock seconds per sample.
+    @param prompt_version: "v2" (default) or "v1"; see earh.agentic.prompt.
+    @returns: An Inspect Task named "agentic_batches".
+    """
+    batches = batches or ["conflicting-1", "oneoff-2", "conflicting-2"]
+    user_instruction = user_message(prompt_version, "none")
+    by_split: dict[str, list[Sample]] = {}
+    samples: list[Sample] = []
+    for batch in batches:
+        split, _, k = batch.rpartition("-")
+        if split not in by_split:
+            ds = hf_dataset(
+                path=DATASET_PATH,
+                split=split,
+                sample_fields=_sample_fields(user_instruction),
+            )
+            by_split[split] = [s for s in ds if task_ids is None or s.id in task_ids]
+        for s in by_split[split]:
+            samples.append(
+                s.model_copy(
+                    update={
+                        "id": f"{s.id}-{split[0]}{k}",
+                        "metadata": {**(s.metadata or {}), "batch": batch},
+                    },
+                    deep=True,
+                )
+            )
+    return Task(
+        name="agentic_batches",
+        dataset=MemoryDataset(samples, name="+".join(batches)),
+        solver=agentic_agent(max_turns=max_turns, prompt_version=prompt_version),
+        scorer=tests_pass(),
+        sandbox="docker",
+        message_limit=6 * max_turns,
+        time_limit=time_limit,
+        metadata={"prompt_version": prompt_version, "batches": batches},
     )

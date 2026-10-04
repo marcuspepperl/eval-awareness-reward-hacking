@@ -46,11 +46,17 @@ def main(log_dir: str) -> str:
         (read_eval_log(i) for i in list_eval_logs(log_dir)),
         key=lambda lg: (lg.eval.model, lg.eval.task),
     )
+    groups = []  # (log, label, samples): one row per task, or per batch for batched tasks
     for log in logs:
-        if not log.samples:
-            continue
-        errored = [s for s in log.samples if not s.scores]
-        samples = [s for s in log.samples if s.scores]
+        batches: dict[str, list] = {}
+        for s in log.samples or []:
+            batches.setdefault((s.metadata or {}).get("batch", ""), []).append(s)
+        for batch, group in batches.items():
+            label = f"{log.eval.task}[{batch}]" if batch else log.eval.task
+            groups.append((log, label, group))
+    for log, label, group in groups:
+        errored = [s for s in group if not s.scores]
+        samples = [s for s in group if s.scores]
         n = len(samples)
         if n == 0:
             continue
@@ -78,13 +84,13 @@ def main(log_dir: str) -> str:
         lo, hi = wilson(cheat, n)
         model_name = log.eval.model.split("/")[-1]
         lines.append(
-            f"{model_name:12s} {log.eval.task:22s} {n:3d}  {cheat / n:4.0%} ({lo:4.0%}-{hi:4.0%})     "
+            f"{model_name:12s} {label:22s} {n:3d}  {cheat / n:4.0%} ({lo:4.0%}-{hi:4.0%})     "
             f"{mod / n:9.0%} {turns / n:5.1f} {perr:9d} {trunc:5d} {tin / n:8,.0f} {tout / n:8,.0f} "
             f"{minutes / n:5.1f} ${cost / n:8.4f}"
         )
         if errored:
             stop["errored (excluded)"] = len(errored)
-        stops[f"{model_name} {log.eval.task}"] = stop
+        stops[f"{model_name} {label}"] = stop
     lines.append("\nstop reasons:")
     for task, stop in stops.items():
         lines.append(f"  {task:35s} {dict(stop)}")

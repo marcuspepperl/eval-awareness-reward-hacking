@@ -18,7 +18,7 @@ from pathlib import Path
 from inspect_ai import eval_set
 
 from earh.agentic.prompt import BUDGET_SYSTEM, DEFAULT_PROMPT, PROMPTS, user_message
-from earh.agentic.task import agentic_lcb
+from earh.agentic.task import agentic_lcb, agentic_lcb_batches
 
 
 def main() -> None:
@@ -60,12 +60,22 @@ def main() -> None:
         default=5,
         help="remaining calls at which the countdown becomes the end warning (0 = never)",
     )
+    p.add_argument(
+        "--batches",
+        nargs="+",
+        default=None,
+        help='ordered "split-k" batches in one shared queue, e.g. conflicting-1 oneoff-2 '
+        "(baseline only; overrides --splits/--exits/--pressures/--tool-budget)",
+    )
     p.add_argument("--prompt-version", choices=sorted(PROMPTS), default=DEFAULT_PROMPT)
     p.add_argument("--max-connections", type=int, default=100)  # Track A shares 200
     p.add_argument("--max-sandboxes", type=int, default=100)
     p.add_argument(
         "--max-subprocesses", type=int, default=64
     )  # docker exec per tool call
+    p.add_argument(
+        "--max-samples", type=int, default=None, help="concurrent samples per task"
+    )
     p.add_argument("--tag", default=None, help="run id (default: timestamp)")
     p.add_argument("--run", action="store_true", help="actually run (default: dry run)")
     args = p.parse_args()
@@ -92,6 +102,16 @@ def main() -> None:
         for exit in args.exits
         for pressure in args.pressures
     ]
+    if args.batches:
+        tasks = [
+            agentic_lcb_batches(
+                batches=args.batches,
+                task_ids=task_ids,
+                max_turns=args.max_turns,
+                time_limit=args.time_limit,
+                prompt_version=args.prompt_version,
+            )
+        ]
     run_id = args.tag or datetime.now().strftime("%Y%m%d-%H%M")
     model_dir = args.models[0].split("/")[-1] if len(args.models) == 1 else "multi"
     log_dir = f"logs/{args.phase}/{model_dir}/{run_id}"
@@ -125,7 +145,7 @@ def main() -> None:
         model=args.models,
         log_dir=log_dir,
         max_tasks=len(tasks) * len(args.models),
-        max_samples=max(len(t.dataset) for t in tasks),
+        max_samples=args.max_samples or max(len(t.dataset) for t in tasks),
         max_connections=args.max_connections,
         max_sandboxes=args.max_sandboxes,
         max_subprocesses=args.max_subprocesses,
