@@ -19,7 +19,7 @@ from earh.degenerate import diagnose
 from earh.judge.extract import Attempt
 from earh.segment import Segment, chunk, render, segment_answer, segment_reasoning
 
-Pass = Literal["A", "B1", "B2"]
+Pass = Literal["A", "B1", "B2", "B1A"]
 PROMPTS = Path(__file__).parent / "prompts"
 CHUNK_TOKENS = 4_000
 OVERLAP_SENTENCES = 10
