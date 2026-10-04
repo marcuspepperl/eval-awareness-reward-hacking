@@ -6,7 +6,8 @@
 
 One work item = one rollout (`<task>:<sample_id>:e<epoch>`) with all its attempts in order.
 `--keys` is a comma list or a file with one key per line; attempt keys (`...:a3`) are
-accepted and mapped to their rollout. Segmentation is the judge's (same IDs, loop cutoff
+accepted and mapped to their rollout. With `--single-attempts`, each attempt key becomes its
+own work item containing only that attempt (its prior feedback is still shown). Segmentation is the judge's (same IDs, loop cutoff
 applied). Writes logs/12-judge/labelsets/<name>/data.json.
 """
 
@@ -23,15 +24,10 @@ ROOT = Path("logs/12-judge/labelsets")
 
 
 def _keys(spec: str) -> list[str]:
-    """Rollout keys from a comma list or a file (one per line); attempt keys are truncated."""
+    """Keys from a comma list or a file (one per line), in order, without duplicates."""
     p = Path(spec)
     raw = p.read_text().split() if p.exists() else spec.split(",")
-    out = []
-    for k in (k.strip() for k in raw if k.strip()):
-        r = ":".join(k.split(":")[:3])
-        if r not in out:
-            out.append(r)
-    return out
+    return list(dict.fromkeys(k.strip() for k in raw if k.strip()))
 
 
 def _attempt(a) -> dict:
@@ -40,7 +36,8 @@ def _attempt(a) -> dict:
     # brk: what separates a sentence from the previous one in the raw text (0 same line,
     # 1 newline, 2 blank line), so the UI can rebuild the model's paragraphs.
     brk = [2] + [
-        min(2, a.reasoning[p.end : q.start].count("\n")) for p, q in zip(segs, segs[1:])
+        min(2, a.reasoning[p.end : q.start].count("\n"))
+        for p, q in zip(segs, segs[1:], strict=False)
     ]
     return {
         "key": a.key,
@@ -65,15 +62,22 @@ def main() -> None:
     ap.add_argument("log_dir")
     ap.add_argument("--keys", required=True)
     ap.add_argument("--name", required=True)
+    ap.add_argument("--single-attempts", action="store_true")
     args = ap.parse_args()
     by_rollout = defaultdict(list)
     for a in extract_attempts(args.log_dir):
         by_rollout[f"{a.task}:{a.sample_id}:e{a.epoch}"].append(a)
     items = []
-    for r in _keys(args.keys):
+    for k in _keys(args.keys):
+        r = ":".join(k.split(":")[:3])
         atts = sorted(by_rollout.get(r, []), key=lambda a: a.attempt)
+        if args.single_attempts:
+            atts = [a for a in atts if a.key == k]
+            r = k  # the work item is the attempt
         if not atts:
-            raise SystemExit(f"rollout not found in {args.log_dir}: {r}")
+            raise SystemExit(f"not found in {args.log_dir}: {k}")
+        if any(i["rollout"] == r for i in items):
+            continue
         items.append(
             {
                 "rollout": r,
