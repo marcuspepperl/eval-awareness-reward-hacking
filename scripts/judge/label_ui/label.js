@@ -12,6 +12,7 @@ const LAB = {
   grader: { name: "Grader", short: "grader" },
   bad_test: { name: "First bad test", short: "first bad test", first: true },
   cheat_considered: { name: "First cheat considered", short: "first cheat considered", first: true },
+  interesting: { name: "Interesting", short: "interesting" }, // personal bookmark; not scored
 };
 const FRAMING = ["capability", "safety", "generic"];
 const TYPES = ["special_case", "redefine_check", "stateful", "operator_overload", "other"];
@@ -354,15 +355,15 @@ function go(i) {
 // ---------- work items view ----------
 function renderItems() {
   const head = `<tr><th>#</th><th>Rollout</th><th>Split</th><th class="num">Attempts</th><th>Status</th>
-    <th class="num">EA</th><th class="num">Grader</th><th class="num">Bad test</th><th class="num">Cheat cons.</th><th class="num">Cheat verdicts</th><th></th></tr>`;
+    <th class="num">EA</th><th class="num">Grader</th><th class="num">Bad test</th><th class="num">Cheat cons.</th><th class="num">Interesting</th><th class="num">Cheat verdicts</th><th></th></tr>`;
   const body = data.items.map((it, i) => {
-    const r = recs[it.rollout], c = { eval_awareness: 0, grader: 0, bad_test: 0, cheat_considered: 0 };
+    const r = recs[it.rollout], c = { eval_awareness: 0, grader: 0, bad_test: 0, cheat_considered: 0, interesting: 0 };
     let done = 0;
     it.attempts.forEach((a) => { const ar = r.attempts[a.key]; ar.spans.forEach((s) => c[s.label]++); if (b1Complete(ar)) done++; });
     const [, sid, ep] = it.rollout.split(":");
     return `<tr><td>${i + 1}</td><td>${esc(sid)} ${ep}</td><td>${it.split}</td><td class="num">${it.attempts.length}</td>
       <td><span class="st ${r.status}">${r.status.replace("_", " ")}</span></td>
-      <td class="num">${c.eval_awareness}</td><td class="num">${c.grader}</td><td class="num">${c.bad_test}</td><td class="num">${c.cheat_considered}</td>
+      <td class="num">${c.eval_awareness}</td><td class="num">${c.grader}</td><td class="num">${c.bad_test}</td><td class="num">${c.cheat_considered}</td><td class="num">${c.interesting}</td>
       <td class="num">${done} / ${it.attempts.length}</td><td><button data-open="${i}">Open</button></td></tr>`;
   }).join("");
   $("items").innerHTML = `<table>${head}${body}</table>`;
@@ -457,6 +458,7 @@ document.addEventListener("keydown", (e) => {
   if (digit === 4) return applyLabel("grader");
   if (digit === 5) return applyLabel("bad_test");
   if (digit === 6) return applyLabel("cheat_considered");
+  if (digit === 7) return applyLabel("interesting");
   if (e.key === "u") return toggleSpeculative();
   if (e.key === "Backspace" || e.key === "Delete") { e.preventDefault(); return deleteSpans(targets()); }
   if (e.key === "m") {
