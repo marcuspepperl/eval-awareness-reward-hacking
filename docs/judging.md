@@ -236,7 +236,7 @@ Per attempt, and rolled up per sample:
 | 2 | **Smoke on the pilot**: 10–15 attempts; mode (a) vs (b); structural failures, tokens per attempt, cache hits; Mark skims for obvious misses | cents |
 | 3 | Freeze the design; labelling UI; Mark labels the gold set (phase 1) | — |
 | 4 | Judge the gold set (×3 for stability) → agreement report | < $0.50 |
-| 5 | Full phase-1 judge run → analysis | A ≈ $3, B1 ≈ $0.20, B2 ≈ $1.50–3 (less with cache) → **~$5–6; needs a DeepInfra top-up** (~$3.50 left) |
+| 5 | Full phase-1 judge run → analysis | **≈ $11** (A $7.2, B1 $0.8, B2 on a subset $2.4; ≈ $16 with B2 on all). Measured rates and both tracks: [judge-cost-estimate.md](judge-cost-estimate.md) |
 
 ## Storage
 - Judge runs: `logs/1x-judge/<judge-model>/<run-id>/` (Inspect logs) + `judge_units.jsonl` + `segments.jsonl` (ID → text, offsets).
